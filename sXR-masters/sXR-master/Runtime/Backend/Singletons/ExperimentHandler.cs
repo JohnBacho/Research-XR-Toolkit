@@ -14,17 +14,6 @@ namespace sxr_internal
         public int block;
         public int trial;
         public int stepInTrial;
-        public string OutcomeInTrial;
-        public string currentGamblingType;
-        public float BetAmount;
-        public float CurrentPayout;
-        public float wallet;
-        public string ParlaySelection;
-        public string ProgramName;
-        public float TotalOdds;
-        public int TotalLegs;
-        public bool HardEffortTask = false;
-        public int ButtonPresses = 0;
 
         private string experimentName = "";
         private string subjectFile = "";
@@ -115,7 +104,7 @@ namespace sxr_internal
         public void WriteHeaderToTaggedFile(string tag, string headerInfo)
         {
             if (subjectFile == "") { ParseFileNames(); }
-            headerInfo = "ProgramName,Date,LocalTime,UnityTime,Phase,TrialNumber,TrialTime,Outcome,GamblingType,Bet,Payout,Wallet,HardEffortTask,ButtonPresses,Total_Odds,Total_Legs,Parlay1_Team,Parlay1_Odds,Parlay2_Team,Parlay2_Odds,Parlay3_Team,Parlay3_Odds,Parlay4_Team,Parlay4_Odds,Parlay5_Team,Parlay5_Odds," + headerInfo;
+            headerInfo = "subjectID,Date,LocalTime,UnityTime,Phase,TrialNumber,TrialTime,Outcome,GamblingType,Bet,Payout,Wallet,HardEffortTask,ButtonPresses,Total_Odds,Total_Legs,Parlay1_Team,Parlay1_Odds,Parlay2_Team,Parlay2_Odds,Parlay3_Team,Parlay3_Odds,Parlay4_Team,Parlay4_Odds,Parlay5_Team,Parlay5_Odds," + headerInfo;
             fh.AppendLine(subjectFile + "_" + tag + ".csv", headerInfo);
             if (backupFile != "") fh.AppendLine(backupFile + "_" + tag + ".csv", headerInfo); }
         
@@ -128,10 +117,9 @@ namespace sxr_internal
 
         public string timeStepToWriteInfo()
         {
-            return ProgramName + "," + DateTime.Today.Month + "_" + DateTime.Today.Day + "," + DateTime.Now.Hour + "_" +
+            return subjectID + "," + DateTime.Today.Month + "_" + DateTime.Today.Day + "," + DateTime.Now.Hour + "_" +
                    DateTime.Now.Minute + "_" + DateTime.Now.Second + "," + Time.time + "," + phase + "," +
-                   trial + "," + trialTimer.GetTimePassed() + "," + OutcomeInTrial + "," + currentGamblingType +
-                    "," + BetAmount + "," + CurrentPayout + "," + wallet + "," + HardEffortTask + "," + ButtonPresses + "," + TotalOdds + "," + TotalLegs + ","  + ParlaySelection;
+                   trial + "," + trialTimer.GetTimePassed();
         }
 
         // Singleton initiated on Awake()

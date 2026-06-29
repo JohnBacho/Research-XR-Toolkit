@@ -295,33 +295,15 @@ public static class sxr
     /// </summary>
     /// <returns></returns>
     public static int GetTrial(){return ExperimentHandler.Instance.trial; }
+
+    public static int GetStepInTrial() { return ExperimentHandler.Instance.stepInTrial;}
+
+    public static string GetSubjectID() { return ExperimentHandler.Instance.subjectID;}
     
     /// <summary>
     /// Returns the current "step" in the experiment. (Phase > Block > Trial > Step)
     /// </summary>
     /// <returns></returns>
-    public static int GetStepInTrial() { return ExperimentHandler.Instance.stepInTrial;}
-    
-    /// <summary>
-    /// Returns the current "trial" in the experiment. (Phase > Block > Trial > Step)
-    /// </summary>
-    /// <returns></returns>
-    public static string GetOutcomeInTrial(){return ExperimentHandler.Instance.OutcomeInTrial; }
-
-    public static string GetGamblingType(){return ExperimentHandler.Instance.currentGamblingType; }
-
-    public static float GetBetAmount(){return ExperimentHandler.Instance.BetAmount; }
-
-    public static float GetPayout(){return ExperimentHandler.Instance.CurrentPayout; }
-
-    public static float GetWallet(){return ExperimentHandler.Instance.wallet; }
-
-    public static string GetProgramName(){ return ExperimentHandler.Instance.ProgramName; }
-    public static float GetTotalOdds(){ return ExperimentHandler.Instance.TotalOdds; }
-    public static int GetTotalLegs(){ return ExperimentHandler.Instance.TotalLegs; }
-    public static bool GetHardEffortTask(){ return ExperimentHandler.Instance.HardEffortTask; }
-    public static int GetButtonPresses(){ return ExperimentHandler.Instance.ButtonPresses; }
-
 
     /// <summary>
     /// Increments phase number by 1 and sets block/trial/step numbers to 0
@@ -356,30 +338,19 @@ public static class sxr
     /// </summary>
     /// <param name="stepNumber"></param>
     public static void SetStep(int stepNumber) { ExperimentHandler.Instance.stepInTrial = stepNumber;}
+    public static void SetSubjectID(string subjectID) { ExperimentHandler.Instance.subjectID = subjectID;}
 
     /// <summary>
     /// Sets the current "step" to the specified number
     /// </summary>
     /// <param name="stage"></param>
-    public static void SetOutcome(string Outcome) { ExperimentHandler.Instance.OutcomeInTrial = Outcome; }
 
         /// <summary>
     /// Sets the current "step" to the specified number
     /// </summary>
     /// <param name="OutCome"></param>
-    public static void SetGamblingType(string GamblingType) { ExperimentHandler.Instance.currentGamblingType = GamblingType; }
-    public static void SetBetAmount(float BetAmount) { ExperimentHandler.Instance.BetAmount = BetAmount; }
-    public static void SetPayout(float Payout) { ExperimentHandler.Instance.CurrentPayout = Payout; }
 
-    public static void SetWallet(float wallet) { ExperimentHandler.Instance.wallet = wallet; }
 
-    public static void SetParlaySelection(String ParlaySelection) { ExperimentHandler.Instance.ParlaySelection = ParlaySelection; }
-    public static void SetProgramName(String ProgramName) { ExperimentHandler.Instance.ProgramName = ProgramName; }
-    public static void SetTotalOdds(float TotalOdds) { ExperimentHandler.Instance.TotalOdds = TotalOdds; }
-    public static void SetTotalLegs(int TotalLegs) { ExperimentHandler.Instance.TotalLegs = TotalLegs; }
-    public static void SetHardEffortTask(bool HardEffortTask) { ExperimentHandler.Instance.HardEffortTask = HardEffortTask; }
-    public static void SetButtonPresses(int ButtonPresses) { ExperimentHandler.Instance.ButtonPresses = ButtonPresses; }
-    
     /// <summary>
     /// Starts a timer with the provided name. Will return "true" and the timer will be
     /// deleted if CheckTimer() is used. If no name is provided, uses the default trial
