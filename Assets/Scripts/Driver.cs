@@ -1,0 +1,461 @@
+using System.Collections;
+using UnityEngine;
+using System.Collections.Generic;
+using UnityEngine.XR.Interaction.Toolkit;
+using sxr_internal;
+using TMPro;
+
+
+[System.Serializable]
+public enum OutcomeType
+{
+    Win,
+    Loss,
+    NearMiss,
+    EffortTask,
+}
+[System.Serializable]
+public enum GamblingType
+{
+    Slot,
+    Parlay,
+    EffortTask
+}
+[System.Serializable]
+public class SlotTrialData
+{   
+    public OutcomeType outcome;
+    public float multiplier = 2f;
+    public int[] slotRow = new int[3];
+}
+
+[System.Serializable]
+public enum GamblingTypeFirst
+{
+    Slot,
+    Parlay
+}
+
+[System.Serializable]
+public class ParlayTrialData
+{
+    public OutcomeType outcome;
+    public bool[] leg3 = new bool[3];
+    public bool[] leg4 = new bool[4];
+    public bool[] leg5 = new bool[5];
+}
+
+public class Driver : MonoBehaviour
+{
+    [SerializeField] private GamblingTypeFirst gamblingTypeFirst = GamblingTypeFirst.Slot;
+    [SerializeField] private SlotTrialData[] slotTrials = new SlotTrialData[16];
+    [SerializeField] private ParlayTrialData[] parlayTrials = new ParlayTrialData[16];
+    [SerializeField] private GameObject SlotMachine;
+    [SerializeField] private GameObject Parlay;
+    [SerializeField] private GameObject SlotMachineEnvironment;
+    [SerializeField] private GameObject ParlayEnvironment;
+    [SerializeField] private GameObject Tablet;
+    [SerializeField] private GameObject WelcomeText;
+    [SerializeField] private GameObject Hand;
+    [SerializeField] private GameObject PaymentInstructions;
+    [SerializeField] private ParlayHandler parlayHandler;
+    [SerializeField] private SlotHandler slotHandler;
+    [SerializeField] private VIVE.OpenXR.Samples.FacialTracking.GazeHandler2 GazeHandler2;
+    [SerializeField] private EffortTaskHandler effortTaskHandler;
+    [SerializeField] private SwitchContextText switchContextText;
+    [SerializeField] private ParlayInstructions parlayInstructions;
+    [SerializeField] XRInteractorLineVisual rightRayLineVisual;
+    [SerializeField] XRInteractorLineVisual leftRayLineVisual;
+    [SerializeField] private GameObject LeftControllerpt1;
+    [SerializeField] private GameObject LeftControllerpt2;
+    [SerializeField] private GameObject RightControllerpt1;
+    [SerializeField] private GameObject RightControllerpt2;
+
+
+
+
+    [SerializeField] private PlayOffMusic playOffMusicScript;
+    [SerializeField] private EndProgram endProgramScript;
+
+    int offMusicToken = 0;
+    const float slotTrialDuration = 30f;
+    const float parlayTrialDuration = 100f;
+    const int lastTrialIndex = 18;
+    const int lastPhase = 1; 
+    const float disableTime = 0.5f;
+    const float disableButtonBaseline = 1f;
+    private static readonly float buttonVolume = 0.5f;
+    private static readonly float increasePitch = 3f;
+    private ParlayTrialData currentparlayTrial;
+    private SlotTrialData currentSlotTrial;
+
+    void Start()
+    {
+        GetDominateHand();
+        AudioListener.volume = 0.75f;
+        DelayedStart();
+    }
+
+    private void DelayedStart()
+    {
+        StartDataTrackers();
+        if (rightRayLineVisual != null)
+        {
+            rightRayLineVisual.enabled = false;            
+        }
+        if (leftRayLineVisual != null)
+        {
+            leftRayLineVisual.enabled = false;            
+        }
+    }
+
+    public void Right()
+    {
+        SoundManager.SoundManager.PlaySound3D(SoundType.increaseButtonSound, Hand.transform.position, buttonVolume, increasePitch);
+        LeftControllerpt1.SetActive(false);
+        LeftControllerpt2.SetActive(false);
+
+        foreach (HapticsManager haptics in FindObjectsByType<HapticsManager>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            haptics.setDominateHand(true);
+        }
+
+        StartCoroutine(switchContextAfterDelay());
+    }
+
+    public void Left()
+    {
+        SoundManager.SoundManager.PlaySound3D(SoundType.increaseButtonSound, Hand.transform.position, buttonVolume, increasePitch);
+        RightControllerpt1.SetActive(false);
+        RightControllerpt2.SetActive(false);
+
+        foreach (HapticsManager haptics in FindObjectsByType<HapticsManager>(FindObjectsInactive.Include, FindObjectsSortMode.None))
+        {
+            haptics.setDominateHand(false);
+        }
+
+        StartCoroutine(switchContextAfterDelay());
+    }
+
+    private void GetDominateHand()
+    {
+        sxr.SetGamblingType("Introduction");
+        turnOffEnvironments();
+        Hand.SetActive(true);
+    }
+
+    private IEnumerator switchContextAfterDelay()
+    {
+        Hand.SetActive(false);   
+        WelcomeText.SetActive(true);
+        yield return new WaitForSeconds(4f);
+        yield return new WaitUntil(() => sxr.GetTrigger());
+        WelcomeText.SetActive(false);
+        PaymentInstructions.SetActive(true);
+        yield return new WaitForSeconds(4f);
+        yield return new WaitUntil(() => sxr.GetTrigger());
+        PaymentInstructions.SetActive(false);
+        bool isSlotMachine = (gamblingTypeFirst == GamblingTypeFirst.Slot);
+        if(!isSlotMachine)
+        {
+            yield return StartCoroutine(parlayInstructions.ShowParlayInstructions());
+        }
+        SlotMachine.SetActive(isSlotMachine);
+        SlotMachineEnvironment.SetActive(isSlotMachine);
+        ParlayEnvironment.SetActive(!isSlotMachine);
+        Tablet.SetActive(!isSlotMachine);
+        Parlay.SetActive(!isSlotMachine);
+        SetGamblingType();
+        
+        if (isSlotMachine)
+        {
+            slotHandler.DisableButtons(disableTime);
+            sxr.SetProgramName("Lilac");
+        } 
+        else
+        {
+            sxr.SetProgramName("Sunflower");
+        }
+        StartNextTrial();   
+    }
+
+    void StartDataTrackers()
+    {
+        sxr.StartRecordingCameraPos();
+        sxr.StartRecordingEyeTrackerInfo();
+        GazeHandler2.StartRecording();
+    }
+
+    public void StartNextTrial()
+    {
+        sxr.SetParlaySelection(",,,,,,,,,,");
+        sxr.RestartTimer();
+        if (sxr.GetTrial() >= lastTrialIndex)
+        {
+            if(sxr.GetPhase() >= lastPhase)
+            {
+                turnOffEnvironments();
+                endProgramScript.StartProgramEnding();
+                return;
+            } 
+            else
+            {
+                StartCoroutine(SwitchGamblingType());
+            }
+            return;
+        }
+        if (SlotMachine.activeSelf)
+        {
+            currentSlotTrial = slotTrials[sxr.GetTrial()];
+
+            if(sxr.GetTrial() != 0)
+            {
+                slotHandler.DisableButtons(disableButtonBaseline);
+            }
+
+            if(currentSlotTrial.outcome == OutcomeType.EffortTask)
+            {
+                StartCoroutine(RunEffortTaskTrial());
+                return;
+            }
+            else
+            {
+                handleBankruptcy();
+                StartCoroutine(RunSlotTrial(currentSlotTrial.outcome, currentSlotTrial.slotRow, currentSlotTrial.multiplier));
+            }
+        }
+        else
+        {
+            currentparlayTrial = parlayTrials[sxr.GetTrial()];
+            if(sxr.GetTrial() != 0)
+            {
+                parlayHandler.DisableButtons(disableButtonBaseline);
+            }
+            else
+            {
+                parlayHandler.RunTutorial();   
+            }
+            
+            if(currentparlayTrial.outcome == OutcomeType.EffortTask)
+            {
+                StartCoroutine(RunEffortTaskTrial());
+                return;
+            }
+            else
+            {
+                handleBankruptcy();
+                StartCoroutine(RunParlayTrial(currentparlayTrial.outcome));                
+            }
+        }
+        offMusicToken++;
+        playOffMusicScript.StartPlayOffMusic(SlotMachine.activeSelf ? slotTrialDuration : parlayTrialDuration, offMusicToken);
+        GazeHandler2.StartBaseline();
+        SetTypeOutcome();
+    }
+
+    private IEnumerator RunSlotTrial(OutcomeType outcome, int[] outcomeRow, float multiplier)
+    {
+        Debug.Log($"Starting trial {sxr.GetTrial()} with outcome: {outcome}");
+
+        slotHandler.SetOutcome(outcomeRow);
+        slotHandler.SetMultiplier(multiplier);
+
+        while (!slotHandler.TrialSubmitting)
+        {
+            yield return null;
+        }
+        GazeHandler2.SetCaptureEventBaseline();
+
+        while (!slotHandler.TrialCompleted)
+        {
+            yield return null;
+        }
+
+        AdvanceTrialCounter();
+        if(sxr.GetTrial() != lastTrialIndex) slotHandler.Reset();
+        StartNextTrial();
+    }
+
+    private IEnumerator SwitchGamblingType()
+    {
+        sxr.NextPhase();
+        bool switchingToParlay = !Parlay.activeSelf;
+        turnOffEnvironments();
+        yield return StartCoroutine(switchContextText.StartContextSwitch(switchingToParlay));
+        
+        Parlay.SetActive(switchingToParlay);
+        ParlayEnvironment.SetActive(switchingToParlay);
+        Tablet.SetActive(switchingToParlay);
+        SlotMachine.SetActive(!switchingToParlay);
+        SlotMachineEnvironment.SetActive(!switchingToParlay);
+        
+        if (!switchingToParlay) {
+            slotHandler.DisableButtons(disableTime);
+        }
+        sxr.SetTotalLegs(0);
+        sxr.SetTotalOdds(0f);
+        SetGamblingType();
+        StartNextTrial();
+    }
+
+    private IEnumerator RunEffortTaskTrial()
+    {
+        bool isSlot = SlotMachine.activeSelf;
+        SetTypeOutcome();
+        playOffMusicScript.CancelOffMusic();
+        Debug.Log("Starting Effort Task Trial");
+        sxr.SetGamblingType(GamblingType.EffortTask.ToString());
+        turnOffEnvironments();
+        effortTaskHandler.SetActiveEffortTask(true);
+        effortTaskHandler.StartTutorial();
+        effortTaskHandler.setWallet(isSlot, slotHandler, parlayHandler);
+        while (!effortTaskHandler.TrialCompleted)
+        {
+            yield return null;
+        }
+        AdvanceTrialCounter();
+        SlotMachine.SetActive(isSlot);
+        SlotMachineEnvironment.SetActive(isSlot);
+        Parlay.SetActive(!isSlot);
+        Tablet.SetActive(!isSlot);
+        ParlayEnvironment.SetActive(!isSlot);
+        effortTaskHandler.SetActiveEffortTask(false);
+        SetGamblingType();
+        StartNextTrial();
+        sxr.SetHardEffortTask(false);
+        sxr.SetButtonPresses(0);
+    }
+
+    public void ParlayOutcome(int legCount)
+    {
+        int index = sxr.GetTrial();
+        List<bool> Outcome = null;
+
+        switch (legCount)
+        {
+            case 3:
+                Outcome = new List<bool>(currentparlayTrial.leg3);
+                break;
+
+            case 4:
+                Outcome = new List<bool>(currentparlayTrial.leg4);
+                break;
+
+            case 5:
+                Outcome = new List<bool>(currentparlayTrial.leg5);
+                break;
+
+            default:
+                Debug.LogError("Invalid parlay size");
+                return;
+        }
+
+        parlayHandler.SetOutcome(Outcome);
+    }
+
+    private IEnumerator RunParlayTrial(OutcomeType outcome)
+    {
+        Debug.Log($"Starting trial {sxr.GetTrial()} with outcome: {outcome}");
+
+        parlayHandler.UpdateOddsText();
+
+        while (!parlayHandler.TrialSubmitting)
+        {
+            yield return null;
+        }
+        GazeHandler2.SetCaptureEventBaseline();
+
+
+        while (!parlayHandler.TrialCompleted)
+        {
+            yield return null;
+        }
+        AdvanceTrialCounter();
+        if(sxr.GetTrial() != lastTrialIndex) parlayHandler.Reset();
+        StartNextTrial();
+    }
+
+    private void SetGamblingType()
+    {
+        if (SlotMachine.activeSelf)
+        {
+            sxr.SetGamblingType(GamblingType.Slot.ToString());
+        }
+        else if (Parlay.activeSelf)
+        {
+            sxr.SetGamblingType(GamblingType.Parlay.ToString());
+        }
+        else
+        {
+            sxr.SetGamblingType(GamblingType.EffortTask.ToString());
+        }
+
+    }
+
+    private void SetTypeOutcome()
+    {
+        if (Parlay.activeSelf)
+        {
+            sxr.SetOutcome(currentparlayTrial.outcome.ToString());            
+        }
+        else if(SlotMachine.activeSelf)
+        {
+            sxr.SetOutcome(currentSlotTrial.outcome.ToString());
+        }
+        else
+        {
+            sxr.SetOutcome(OutcomeType.EffortTask.ToString());
+        }
+    }
+
+    private void AdvanceTrialCounter()
+    {
+        Debug.Log($"Trial {sxr.GetTrial()} complete");
+        playOffMusicScript.CancelOffMusic();            
+        GazeHandler2.GrabPupilTrialAverage();
+        sxr.NextTrial();
+    }
+
+    private void turnOffEnvironments()
+    {
+        const bool turnOff = false;
+        SlotMachine.SetActive(turnOff);
+        SlotMachineEnvironment.SetActive(turnOff);
+        ParlayEnvironment.SetActive(turnOff);
+        Tablet.SetActive(turnOff);
+        Parlay.SetActive(turnOff);
+        effortTaskHandler.SetActiveEffortTask(turnOff);
+    }
+
+    private float getwallet()
+    {
+        if (SlotMachine.activeSelf)
+        {
+            return slotHandler.GetWallet();
+        }
+        else if (Parlay.activeSelf)
+        {
+            return parlayHandler.GetWallet();
+        }
+        else
+        {
+            return 1f;
+        }
+    }
+
+    private void handleBankruptcy()
+    {
+        float wallet = getwallet();
+        
+        if (wallet >= 0.5) return;
+        
+        if (sxr.GetPhase() >= lastPhase)
+        {
+            turnOffEnvironments();
+            endProgramScript.StartProgramEnding();
+            return;
+        }
+
+        StartCoroutine(SwitchGamblingType());
+    }
+}
