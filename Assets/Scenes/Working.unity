@@ -808,7 +808,7 @@ MonoBehaviour:
   onButtonPressed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1970160413}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SlotHandler, Assembly-CSharp
         m_MethodName: IncreaseBet
         m_Mode: 1
@@ -1509,7 +1509,7 @@ PrefabInstance:
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_Activated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1970160413}
+      objectReference: {fileID: 0}
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
@@ -1525,7 +1525,7 @@ PrefabInstance:
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1970160413}
+      objectReference: {fileID: 0}
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_Activated.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: IncreaseBet
@@ -1533,7 +1533,7 @@ PrefabInstance:
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1970160413}
+      objectReference: {fileID: 0}
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -2134,7 +2134,7 @@ PrefabInstance:
     - target: {fileID: 1481888289912793013, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: slotHandler
       value: 
-      objectReference: {fileID: 1970160413}
+      objectReference: {fileID: 0}
     - target: {fileID: 1481888289912793013, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: handlePullClip
       value: 
@@ -2713,7 +2713,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SubjectID: 1
-  DownloadPath: /sdcard2
+  DownloadPath: Assets/Data
   BackupDownloadPath: /sdcard
   dataPoint:
   - Toggle: 1
@@ -2740,6 +2740,52 @@ MonoBehaviour:
   - Toggle: 1
     Header: TrialTimePassed
     Field: 7
+  eyeTrackingDataPoints:
+  - Toggle: 1
+    Header: gazeOriginX
+    Field: 0
+  - Toggle: 1
+    Header: gazeOriginY
+    Field: 1
+  - Toggle: 1
+    Header: gazeOriginZ
+    Field: 2
+  - Toggle: 1
+    Header: gazeDirectionX
+    Field: 3
+  - Toggle: 1
+    Header: gazeDirectionY
+    Field: 4
+  - Toggle: 1
+    Header: gazeDirectionZ
+    Field: 5
+  - Toggle: 1
+    Header: leftPupil
+    Field: 6
+  - Toggle: 1
+    Header: rightPupil
+    Field: 7
+  - Toggle: 1
+    Header: combinedPupil
+    Field: 8
+  - Toggle: 1
+    Header: baselineCorrected
+    Field: 9
+  - Toggle: 1
+    Header: eventBaselineCorrected
+    Field: 10
+  - Toggle: 1
+    Header: hitX
+    Field: 11
+  - Toggle: 1
+    Header: hitY
+    Field: 12
+  - Toggle: 1
+    Header: hitZ
+    Field: 13
+  - Toggle: 1
+    Header: objectName
+    Field: 14
   eyeExpressionDataPoints:
   - Toggle: 1
     Header: XR_EYE_EXPRESSION_LEFT_BLINK_HTC
@@ -2929,17 +2975,6 @@ Transform:
   - {fileID: 1289879961}
   m_Father: {fileID: 1607877861}
   m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
---- !u!114 &323475715 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3840083432575533852, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
-  m_PrefabInstance: {fileID: 246862861}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d2d48ca3cd84034aa73bf331bddd5d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &428155926 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2549993465544934099, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
@@ -3139,7 +3174,7 @@ PrefabInstance:
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_Activated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1970160413}
+      objectReference: {fileID: 0}
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
@@ -3155,7 +3190,7 @@ PrefabInstance:
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1970160413}
+      objectReference: {fileID: 0}
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_Activated.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: IncreaseBet
@@ -3163,7 +3198,7 @@ PrefabInstance:
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1970160413}
+      objectReference: {fileID: 0}
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -3246,7 +3281,7 @@ MonoBehaviour:
   onButtonPressed:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1970160413}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: SlotHandler, Assembly-CSharp
         m_MethodName: DecreaseBet
         m_Mode: 1
@@ -3587,33 +3622,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 90.293, z: 0}
---- !u!114 &656054684 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1481888289912793013, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
-  m_PrefabInstance: {fileID: 246862861}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 51da8a0c193543441a9edb91b77560ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &660230684 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3399050071955168615, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-  m_PrefabInstance: {fileID: 6314304488671380585}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &708422745 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1079079012595359922, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-  m_PrefabInstance: {fileID: 6314304488671380585}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e988983f96fe1dd48800bcdfc82f23e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &718648943
 GameObject:
   m_ObjectHideFlags: 0
@@ -4099,17 +4107,6 @@ Transform:
   - {fileID: 625118649}
   m_Father: {fileID: 41502025}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!114 &1035072719 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4594206788082723168, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-  m_PrefabInstance: {fileID: 6314304488671380585}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7feffd27793c42543be61f6a6b16fdce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1047175310 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1811122272821274886, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
@@ -4573,22 +4570,6 @@ Transform:
   - {fileID: 2064185492}
   m_Father: {fileID: 49831173}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 180}
---- !u!1 &1181351466 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8531427315939631926, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-  m_PrefabInstance: {fileID: 6314304488671380585}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1186119116 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4178684612160488936, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
-  m_PrefabInstance: {fileID: 246862861}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d2d48ca3cd84034aa73bf331bddd5d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1187251182
 GameObject:
   m_ObjectHideFlags: 0
@@ -5446,7 +5427,7 @@ PrefabInstance:
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_Activated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1970160413}
+      objectReference: {fileID: 0}
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
@@ -5462,7 +5443,7 @@ PrefabInstance:
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1970160413}
+      objectReference: {fileID: 0}
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_Activated.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: IncreaseBet
@@ -5470,7 +5451,7 @@ PrefabInstance:
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1970160413}
+      objectReference: {fileID: 0}
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -5752,7 +5733,7 @@ PrefabInstance:
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_Activated.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1970160413}
+      objectReference: {fileID: 0}
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
       value: 1
@@ -5768,7 +5749,7 @@ PrefabInstance:
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1970160413}
+      objectReference: {fileID: 0}
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_Activated.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: IncreaseBet
@@ -5776,7 +5757,7 @@ PrefabInstance:
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectEntered.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
-      objectReference: {fileID: 1970160413}
+      objectReference: {fileID: 0}
     - target: {fileID: 5419331889293473514, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
       propertyPath: m_SelectExited.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
       value: 2
@@ -5932,17 +5913,6 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   IsUIButton: 0
---- !u!114 &1477498921 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4181120595086301118, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
-  m_PrefabInstance: {fileID: 246862861}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9541d86e2fd84c1d9990edf0852d74ab, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1503746060
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6713,11 +6683,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1759489795}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1766149070 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4735753089168445294, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
-  m_PrefabInstance: {fileID: 246862861}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1777795396
 GameObject:
   m_ObjectHideFlags: 0
@@ -7100,11 +7065,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1866859015}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1879330619 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8531427315612427209, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-  m_PrefabInstance: {fileID: 6314304488671380585}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1884842267
 GameObject:
   m_ObjectHideFlags: 0
@@ -7136,17 +7096,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 292147603}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1892962289 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7589821948144272765, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
-  m_PrefabInstance: {fileID: 246862861}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d2d48ca3cd84034aa73bf331bddd5d1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1896585629
 GameObject:
   m_ObjectHideFlags: 0
@@ -7668,9 +7617,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1970160397}
   - component: {fileID: 1970160412}
-  - component: {fileID: 1970160413}
-  - component: {fileID: 1970160409}
-  - component: {fileID: 1970160416}
   - component: {fileID: 1970160407}
   - component: {fileID: 1970160408}
   - component: {fileID: 1970160414}
@@ -7724,55 +7670,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 167ec0b26c077df40aa3a67e9a5a359e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1970160409
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1970160395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d10324fc77f8fd94b90d9ae6260099b4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentBet: 0
-  WagerText: {fileID: 0}
-  ToWinText: {fileID: 0}
-  PlaceBetText: {fileID: 0}
-  WinText: {fileID: 0}
-  LossText: {fileID: 0}
-  ErrorMessage: {fileID: 0}
-  WalletText: {fileID: 0}
-  CashOutPayoutText: {fileID: 0}
-  PlaceBetButtonImage: {fileID: 0}
-  PlaceBetButton: {fileID: 0}
-  BetSlipButtonImage: {fileID: 0}
-  BetSlipButton: {fileID: 0}
-  BetSlipText: {fileID: 0}
-  MiddleUI: {fileID: 0}
-  CashOutWrapper: {fileID: 0}
-  MiddleParlayUI: {fileID: 0}
-  ParlayUI: {fileID: 0}
-  BetslipUI: {fileID: 0}
-  togglePressInteractables:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  CardManager: {fileID: 0}
-  parlayTutorial: {fileID: 0}
-  driver: {fileID: 1970160412}
-  trialSubmitting: 0
-  trialCompleted: 0
-  AlreadySubmitting: 0
-  wallet: 25
-  lastLegWins: []
-  oddsArray: 
-  decimalOddsList: []
-  currentParlaySelections: []
-  hasCompletedStatsTutorial: 0
 --- !u!114 &1970160412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7785,200 +7682,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc04ca3376ea74d4bbbeeab8509b4917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gamblingTypeFirst: 0
-  slotTrials:
-  - outcome: 1
-    multiplier: 2
-    slotRow: 030000000600000009000000
-  - outcome: 2
-    multiplier: 2
-    slotRow: 040000000400000003000000
-  - outcome: 0
-    multiplier: 2
-    slotRow: 070000000700000007000000
-  - outcome: 1
-    multiplier: 2
-    slotRow: 050000000300000008000000
-  - outcome: 0
-    multiplier: 2
-    slotRow: 000000000000000000000000
-  - outcome: 3
-    multiplier: 2
-    slotRow: 040000000000000004000000
-  - outcome: 2
-    multiplier: 2
-    slotRow: 080000000800000009000000
-  - outcome: 1
-    multiplier: 2
-    slotRow: 050000000700000006000000
-  - outcome: 0
-    multiplier: 2
-    slotRow: 040000000400000004000000
-  - outcome: 1
-    multiplier: 2
-    slotRow: 030000000800000005000000
-  - outcome: 2
-    multiplier: 2
-    slotRow: 020000000200000001000000
-  - outcome: 3
-    multiplier: 2
-    slotRow: 000000000000000000000000
-  - outcome: 0
-    multiplier: 2
-    slotRow: 000000000000000000000000
-  - outcome: 1
-    multiplier: 2
-    slotRow: 090000000600000002000000
-  - outcome: 2
-    multiplier: 2
-    slotRow: 070000000700000008000000
-  - outcome: 2
-    multiplier: 2
-    slotRow: 060000000600000005000000
-  - outcome: 1
-    multiplier: 2
-    slotRow: 000000000800000003000000
-  - outcome: 3
-    multiplier: 2
-    slotRow: 040000000000000004000000
-  parlayTrials:
-  - outcome: 1
-    leg3: 
-    leg4: 
-    leg5: 
-  - outcome: 2
-    leg3: "\x01\x01"
-    leg4: "\x01\x01\x01"
-    leg5: "\x01\x01\x01\x01"
-  - outcome: 0
-    leg3: "\x01\x01\x01"
-    leg4: "\x01\x01\x01\x01"
-    leg5: "\x01\x01\x01\x01\x01"
-  - outcome: 1
-    leg3: 
-    leg4: 
-    leg5: 
-  - outcome: 0
-    leg3: "\x01\x01\x01"
-    leg4: "\x01\x01\x01\x01"
-    leg5: "\x01\x01\x01\x01\x01"
-  - outcome: 3
-    leg3: 
-    leg4: 
-    leg5: 
-  - outcome: 2
-    leg3: "\x01\x01"
-    leg4: "\x01\x01\x01"
-    leg5: "\x01\x01\x01\x01"
-  - outcome: 1
-    leg3: 
-    leg4: 
-    leg5: 
-  - outcome: 0
-    leg3: "\x01\x01\x01"
-    leg4: "\x01\x01\x01\x01"
-    leg5: "\x01\x01\x01\x01\x01"
-  - outcome: 1
-    leg3: 
-    leg4: 
-    leg5: 
-  - outcome: 2
-    leg3: "\x01\x01"
-    leg4: "\x01\x01\x01"
-    leg5: "\x01\x01\x01\x01"
-  - outcome: 3
-    leg3: 
-    leg4: 
-    leg5: 
-  - outcome: 0
-    leg3: "\x01\x01\x01"
-    leg4: "\x01\x01\x01\x01"
-    leg5: "\x01\x01\x01\x01\x01"
-  - outcome: 1
-    leg3: 
-    leg4: 
-    leg5: 
-  - outcome: 2
-    leg3: "\x01\x01"
-    leg4: "\x01\x01\x01"
-    leg5: "\x01\x01\x01\x01"
-  - outcome: 2
-    leg3: "\x01\x01"
-    leg4: "\x01\x01\x01"
-    leg5: "\x01\x01\x01\x01"
-  - outcome: 1
-    leg3: 
-    leg4: 
-    leg5: 
-  - outcome: 3
-    leg3: 
-    leg4: 
-    leg5: 
-  SlotMachine: {fileID: 1766149070}
-  Parlay: {fileID: 0}
-  SlotMachineEnvironment: {fileID: 0}
-  ParlayEnvironment: {fileID: 0}
-  Tablet: {fileID: 0}
-  WelcomeText: {fileID: 49831172}
-  Hand: {fileID: 88823446}
-  PaymentInstructions: {fileID: 41502024}
-  parlayHandler: {fileID: 1970160409}
-  slotHandler: {fileID: 1970160413}
-  GazeHandler2: {fileID: 0}
-  effortTaskHandler: {fileID: 1970160416}
-  switchContextText: {fileID: 0}
-  parlayInstructions: {fileID: 0}
-  rightRayLineVisual: {fileID: 2016147878}
-  leftRayLineVisual: {fileID: 708422745}
-  LeftControllerpt1: {fileID: 1181351466}
-  LeftControllerpt2: {fileID: 6314304488671380587}
-  RightControllerpt1: {fileID: 1879330619}
-  RightControllerpt2: {fileID: 660230684}
-  playOffMusicScript: {fileID: 1970160415}
-  endProgramScript: {fileID: 1265610749}
-  offMusicToken: 0
-  currentparlayTrial:
-    outcome: 0
-    leg3: 
-    leg4: 
-    leg5: 
-  currentSlotTrial:
-    outcome: 0
-    multiplier: 2
-    slotRow: 000000000000000000000000
---- !u!114 &1970160413
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1970160395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4aa8e8b86de404a489cb08970ca22dee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walletText: {fileID: 1777795398}
-  betText: {fileID: 186654300}
-  EstimatedPayout: {fileID: 1477498921}
-  WinText: {fileID: 1310645874}
-  LossText: {fileID: 832459729}
-  IncreaseBetButton: {fileID: 113710540}
-  DecreaseBetButton: {fileID: 598299014}
-  currentBet: 0
-  multiplier: 0
-  wallet: 25
-  reels:
-  - {fileID: 323475715}
-  - {fileID: 1186119116}
-  - {fileID: 1892962289}
-  handle: {fileID: 656054684}
-  driver: {fileID: 1970160412}
-  SlotTutorial: {fileID: 1607877862}
-  storedOutcome: 
-  trialCompleted: 0
-  trialSubmitting: 0
-  betPlaced: 0
 --- !u!82 &1970160414
 AudioSource:
   m_ObjectHideFlags: 0
@@ -8089,46 +7792,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playOffAudioSource: {fileID: 1970160414}
   EffortTask: {fileID: 0}
---- !u!114 &1970160416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1970160395}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: db37b80d58f958b47b964830a72bd4dc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  effortTaskObject: {fileID: 0}
-  practice: {fileID: 0}
-  pt1InstructionsPanel: {fileID: 0}
-  wrapper: {fileID: 0}
-  countdownText: {fileID: 0}
-  intermissionText: {fileID: 0}
-  winningsText: {fileID: 0}
-  pokeButtonTutorial: {fileID: 0}
-  practiceTutorialBlock: {fileID: 0}
-  gazeHandler: {fileID: 1035072719}
-  PracticeButton: {fileID: 0}
-  EasyButton: {fileID: 0}
-  HardButton: {fileID: 0}
-  trialCompleted: 0
-  prevWalletValue: 0
-  currentTime: 0
-  practiceTime: 10
-  practiceComplete: 0
-  counter: 0
-  PracticeCounter: 0
-  goal: 1
-  goalText: {fileID: 0}
-  trialIndexCounter: 0
-  choicePanel: {fileID: 0}
-  isHardMode: 0
-  hardChoiceText: {fileID: 0}
-  easyChoiceText: {fileID: 0}
-  trialEnded: 0
 --- !u!1 &1979036065
 GameObject:
   m_ObjectHideFlags: 0
@@ -8300,17 +7963,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &2016147878 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3079812801840990378, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-  m_PrefabInstance: {fileID: 6314304488671380585}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e988983f96fe1dd48800bcdfc82f23e9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &2064185491
 GameObject:
   m_ObjectHideFlags: 0
@@ -8713,11 +8365,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
---- !u!1 &6314304488671380587 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 16186673307562087, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-  m_PrefabInstance: {fileID: 6314304488671380585}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

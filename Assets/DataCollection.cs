@@ -182,8 +182,6 @@ namespace VIVE.OpenXR.Samples.FacialTracking
         private Vector3 hitPoint;
         private string hitObjectName = "";
 
-        private readonly float[] eyeExp = new float[14];
-        private readonly float[] lipExp = new float[37];
 
         private static readonly XrEyeExpressionHTC[] EyeExprEnums =
         {
@@ -296,6 +294,20 @@ namespace VIVE.OpenXR.Samples.FacialTracking
             };
         }
 
+        private string GetEyeExpressionValue(XrEyeExpressionHTC expression)
+        {
+            return FacialTrackingData
+                .EyeExpression(expression)
+                .ToString();
+        }
+
+        private string GetFacialExpressionValue(XrLipExpressionHTC expression)
+        {
+            return FacialTrackingData
+                .LipExpression(expression)
+                .ToString();
+        }
+
         // -------- INIT --------
         void Awake()
         {
@@ -356,46 +368,51 @@ namespace VIVE.OpenXR.Samples.FacialTracking
         void Start()
         {
             vrCamera = Camera.main;
-
             sxr.SetSubjectID("hello");
+            StartRecording();
         }
 
         void WriteHeader()
         {
-            writer.WriteLine(
-                "programName,date,localTime,unityTime,phase,trial,trialTimePassed," +
-                "gazeOriginX,gazeOriginY,gazeOriginZ," +
-                "gazeDirectionX,gazeDirectionY,gazeDirectionZ," +
-                "leftPupil,rightPupil,combinedPupil," +
-                "baselineCorrected,eventBaselineCorrected," +
-                "hitX,hitY,hitZ,objectName," +
-                "eyeLeftBlink,eyeLeftWide,eyeRightBlink,eyeRightWide," +
-                "eyeLeftSqueeze,eyeRightSqueeze," +
-                "eyeLeftDown,eyeRightDown," +
-                "eyeLeftOut,eyeRightIn," +
-                "eyeLeftIn,eyeRightOut," +
-                "eyeLeftUp,eyeRightUp," +
-                "jawRight,jawLeft,jawForward,jawOpen," +
-                "mouthApeShape," +
-                "mouthUpperRight,mouthUpperLeft," +
-                "mouthLowerRight,mouthLowerLeft," +
-                "mouthUpperOverturn,mouthLowerOverturn," +
-                "mouthPout," +
-                "mouthRaiserRight,mouthRaiserLeft," +
-                "mouthStretcherRight,mouthStretcherLeft," +
-                "cheekPuffRight,cheekPuffLeft,cheekSuck," +
-                "mouthUpperUpright,mouthUpperUpleft," +
-                "mouthLowerDownright,mouthLowerDownleft," +
-                "mouthUpperInside,mouthLowerInside," +
-                "mouthLowerOverlay," +
-                "tongueLongstep1," +
-                "tongueLeft,tongueRight,tongueUp,tongueDown," +
-                "tongueRoll," +
-                "tongueLongstep2," +
-                "tongueUprightMorph,tongueUpleftMorph," +
-                "tongueDownrightMorph,tongueDownleftMorph," +
-                "trialAvgPupil,trialBaselineCorrectedPupil,eventBaselineCorrectedPupil"
-            );
+            string headerConstructor = "";
+            foreach(var dp in dataPoint)
+            {
+                if (!dp.Toggle)
+                {
+                    continue;
+                }
+                headerConstructor += dp.Header + ",";
+
+            }
+
+            foreach(var dp in eyeTrackingDataPoints)
+            {
+                if (!dp.Toggle)
+                {
+                    continue;
+                }
+                headerConstructor += dp.Header + ",";
+            }
+
+            foreach(var dp in eyeExpressionDataPoints)
+            {
+                if (!dp.Toggle)
+                {
+                    continue;
+                }
+                headerConstructor += dp.Header + ",";
+            }
+
+            foreach(var dp in facialExpressionDataPoints)
+            {
+                if (!dp.Toggle)
+                {
+                    continue;
+                }
+                headerConstructor += dp.Header + ",";
+            }
+
+            writer.WriteLine(headerConstructor);
             headerPrinted = true;
         }
 
@@ -407,52 +424,75 @@ namespace VIVE.OpenXR.Samples.FacialTracking
             writeBuffer.Clear();
         }
 
-        void AppendFacialData(StringBuilder sb)
+        void AppendDataPoints(StringBuilder sb)
         {
-            for (int i = 0; i < EyeExprEnums.Length; i++)
-                eyeExp[i] = FacialTrackingData.EyeExpression(EyeExprEnums[i]);
-
-            for (int i = 0; i < LipExprEnums.Length; i++)
-                lipExp[i] = FacialTrackingData.LipExpression(LipExprEnums[i]);
-
-            for (int i = 0; i < eyeExp.Length; i++)
+            foreach(var dp in dataPoint)
             {
-                sb.Append(eyeExp[i]);
+                if (!dp.Toggle)
+                {
+                    continue;
+                }
+
+                sb.Append(GetDataPointValue(dp.Field));
                 sb.Append(',');
-            }
 
-            for (int i = 0; i < lipExp.Length; i++)
-            {
-                sb.Append(lipExp[i]);
-                if (i < lipExp.Length - 1) sb.Append(',');
             }
         }
 
-        // -------- RECORDING --------
+        void AppendEyeTracking(StringBuilder sb)
+        {
+            foreach(var dp in eyeTrackingDataPoints)
+            {
+                if (!dp.Toggle)
+                {
+                    continue;
+                }
+
+                sb.Append(GetEyeTrackingValue(dp.Field));
+                sb.Append(',');
+
+            }
+        }
+
+        void AppendFacialData(StringBuilder sb)
+        {
+            foreach(var dp in eyeExpressionDataPoints)
+            {
+                if (!dp.Toggle)
+                    continue;
+
+                sb.Append(GetEyeExpressionValue(dp.EyeExprEnums));
+                sb.Append(',');
+            }
+
+            foreach(var dp in facialExpressionDataPoints)
+            {
+                if (!dp.Toggle)
+                    continue;
+
+                sb.Append(GetFacialExpressionValue(dp.FacialExprEnums));
+                sb.Append(',');
+            }
+        }
+
         public void StartRecording()
         {
             if (!headerPrinted) WriteHeader();
-            recordEyeTracker = true;
         }
 
         public void PauseRecording()
         {
-            recordEyeTracker = false;
             FlushToFile();
         }
 
         public bool RecordingGaze() => recordEyeTracker;
 
-        // -------- UPDATE --------
         void Update()
         {
             UpdateGaze();
-
-            if (recordEyeTracker)
-            {
-                AppendDataRow(trialAvg: null);
-            }
-
+            UpdatePupil();
+            AppendDataRow();
+            
             flushTimer += Time.deltaTime;
             if (flushTimer >= 5f)
             {
@@ -461,77 +501,25 @@ namespace VIVE.OpenXR.Samples.FacialTracking
             }
         }
 
-        void AppendDataRow(float? trialAvg, float? baselineTrialAvg = null, float? eventBaselineTrialAvg = null)
+        void AppendDataRow()
         {
-            UpdatePupil();
 
-            var eh = ExperimentHandler.Instance;
-            if (eh != null)
-            {
-                writeBuffer.Append(eh.subjectID);        writeBuffer.Append(',');
-                writeBuffer.Append(DateTime.Today.Month + "_" + DateTime.Today.Day); writeBuffer.Append(',');
-                writeBuffer.Append(DateTime.Now.Hour + "_" + DateTime.Now.Minute + "_" + DateTime.Now.Second); writeBuffer.Append(',');
-                writeBuffer.Append(Time.time.ToString("F4")); writeBuffer.Append(',');
-                writeBuffer.Append(eh.phase);              writeBuffer.Append(',');
-                writeBuffer.Append(eh.trial);              writeBuffer.Append(',');
-                writeBuffer.Append(eh.GetTimePassed());    writeBuffer.Append(',');
-            }
-            else
-            {
-                for (int i = 0; i < 17; i++) writeBuffer.Append(','); // was 15, now 17 columns
-            }
-
-            // ── cols 17-19: gaze origin ──
-            writeBuffer.Append(combinedGazeOrigin.x); writeBuffer.Append(',');
-            writeBuffer.Append(combinedGazeOrigin.y); writeBuffer.Append(',');
-            writeBuffer.Append(combinedGazeOrigin.z); writeBuffer.Append(',');
-
-            // ── cols 20-22: gaze direction ──
-            writeBuffer.Append(combinedGazeDirection.x); writeBuffer.Append(',');
-            writeBuffer.Append(combinedGazeDirection.y); writeBuffer.Append(',');
-            writeBuffer.Append(combinedGazeDirection.z); writeBuffer.Append(',');
-
-            // ── cols 23-25: pupils ──
-            float? combined          = CombinedPupil();
-            float? baselineCorrected = combined.HasValue ? BaselineCorrected(combined.Value) : null;
-            float? eventBaseline     = (captureEventBaseline && baselineCorrected.HasValue)
-                                           ? baselineCorrected
-                                           : (float?)null;
-
-            writeBuffer.Append(leftPupilSize);  writeBuffer.Append(',');
-            writeBuffer.Append(rightPupilSize); writeBuffer.Append(',');
-            if (combined.HasValue) { writeBuffer.Append(combined.Value); }
-            writeBuffer.Append(',');
-
-            // ── cols 26-27: baseline-corrected pupils ──
-            if (baselineCorrected.HasValue) { writeBuffer.Append(baselineCorrected.Value); }
-            writeBuffer.Append(',');
-            if (eventBaseline.HasValue) { writeBuffer.Append(eventBaseline.Value); }
-            writeBuffer.Append(',');
-
-            writeBuffer.Append(hasHit ? hitPoint.x.ToString("F4") : ""); writeBuffer.Append(',');
-            writeBuffer.Append(hasHit ? hitPoint.y.ToString("F4") : ""); writeBuffer.Append(',');
-            writeBuffer.Append(hasHit ? hitPoint.z.ToString("F4") : ""); writeBuffer.Append(',');
-            writeBuffer.Append(hasHit ? hitObjectName : "");             writeBuffer.Append(',');
-
-            // ── cols 32-82: facial expressions (14 eye + 37 lip) ──
+            AppendDataPoints(writeBuffer);
+            AppendEyeTracking(writeBuffer);
             AppendFacialData(writeBuffer);
-
-            // ── col 83-85: trial average pupils ──
-            writeBuffer.Append(',');
-            if (trialAvg.HasValue)          writeBuffer.Append(trialAvg.Value);
-            writeBuffer.Append(',');
-            if (baselineTrialAvg.HasValue)  writeBuffer.Append(baselineTrialAvg.Value);
-            writeBuffer.Append(',');
-            if (eventBaselineTrialAvg.HasValue) writeBuffer.Append(eventBaselineTrialAvg.Value);
-
+            
             writeBuffer.Append('\n');
         }
 
-        // -------- GAZE --------
         void UpdateGaze()
         {
             XR_HTC_eye_tracker.Interop.GetEyeGazeData(out XrSingleEyeGazeDataHTC[] gazes);
+
+            if(gazes == null || gazes.Length < 2)
+            {
+                hasHit = false;
+                return;
+            }
 
             var left  = gazes[(int)XrEyePositionHTC.XR_EYE_POSITION_LEFT_HTC];
             var right = gazes[(int)XrEyePositionHTC.XR_EYE_POSITION_RIGHT_HTC];
@@ -576,10 +564,12 @@ namespace VIVE.OpenXR.Samples.FacialTracking
             }
         }
 
-        // -------- PUPIL --------
         void UpdatePupil()
         {
             XR_HTC_eye_tracker.Interop.GetEyePupilData(out XrSingleEyePupilDataHTC[] pupils);
+
+            if (pupils == null || pupils.Length < 2)
+                return;
 
             var left  = pupils[(int)XrEyePositionHTC.XR_EYE_POSITION_LEFT_HTC];
             var right = pupils[(int)XrEyePositionHTC.XR_EYE_POSITION_RIGHT_HTC];
@@ -609,7 +599,6 @@ namespace VIVE.OpenXR.Samples.FacialTracking
             return corrected;
         }
 
-        // -------- TRIAL AVG --------
         public void GrabPupilTrialAverage()
         {
             if (TempPupilStorage.Count == 0) return;
@@ -622,7 +611,7 @@ namespace VIVE.OpenXR.Samples.FacialTracking
                                         ? (float?)null
                                         : EventBaselinePupilStorage.Average();
 
-            AppendDataRow(trialAvg: trialAvg, baselineTrialAvg: baselineAvg, eventBaselineTrialAvg: eventBaselineAvg);
+            AppendDataRow();
 
             TempPupilStorage.Clear();
             TempBaselinePupilStorage.Clear();
@@ -630,7 +619,6 @@ namespace VIVE.OpenXR.Samples.FacialTracking
             captureEventBaseline = false;
         }
 
-        // -------- BASELINE --------
         public void StartBaseline()
         {
             StartCoroutine(SetBaseline());
