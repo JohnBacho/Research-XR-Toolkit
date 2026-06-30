@@ -2715,9 +2715,9 @@ MonoBehaviour:
   SubjectID: 1
   DownloadPath: Assets/Data
   BackupDownloadPath: /sdcard
-  EnableTrialAverage: 0
-  EnableBaseline: 1
-  SimulateEyeTracking: 1
+  GenerateTrialSummaryFile: 1
+  EnablePupilBaselineCorrections: 1
+  BaselineCaptureSeconds: 1
   dataPoint:
   - Toggle: 1
     Header: SubjectID
@@ -2775,20 +2775,17 @@ MonoBehaviour:
     Header: baselineCorrected
     Field: 9
   - Toggle: 1
-    Header: eventBaselineCorrected
+    Header: hitX
     Field: 10
   - Toggle: 1
-    Header: hitX
+    Header: hitY
     Field: 11
   - Toggle: 1
-    Header: hitY
+    Header: hitZ
     Field: 12
   - Toggle: 1
-    Header: hitZ
-    Field: 13
-  - Toggle: 1
     Header: objectName
-    Field: 14
+    Field: 13
   eyeExpressionDataPoints:
   - Toggle: 1
     Header: XR_EYE_EXPRESSION_LEFT_BLINK_HTC
@@ -2944,6 +2941,7 @@ MonoBehaviour:
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_TONGUE_DOWNLEFT_MORPH_HTC
     FacialExprEnums: 36
+  SimulateEyeTracking: 1
 --- !u!1 &292147602
 GameObject:
   m_ObjectHideFlags: 0
@@ -7794,9 +7792,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f079ec79bd775042ae1db31cc796c5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playOffAudioSource: {fileID: 1970160414}
-  EffortTask: {fileID: 0}
-  offMusicToken: 0
 --- !u!1 &1979036065
 GameObject:
   m_ObjectHideFlags: 0
