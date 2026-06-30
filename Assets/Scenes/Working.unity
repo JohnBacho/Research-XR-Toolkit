@@ -2715,6 +2715,9 @@ MonoBehaviour:
   SubjectID: 1
   DownloadPath: Assets/Data
   BackupDownloadPath: /sdcard
+  EnableTrialAverage: 0
+  EnableBaseline: 1
+  SimulateEyeTracking: 1
   dataPoint:
   - Toggle: 1
     Header: SubjectID
@@ -7682,6 +7685,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc04ca3376ea74d4bbbeeab8509b4917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  trialInterval: 5
 --- !u!82 &1970160414
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7792,6 +7796,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   playOffAudioSource: {fileID: 1970160414}
   EffortTask: {fileID: 0}
+  offMusicToken: 0
 --- !u!1 &1979036065
 GameObject:
   m_ObjectHideFlags: 0

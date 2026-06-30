@@ -138,15 +138,24 @@ namespace VIVE.OpenXR.Samples.FacialTracking
             }
         }
 
-       [SerializeField] private string SubjectID = "1";
+       [SerializeField] private string SubjectID = "Participant";
        [SerializeField] private string DownloadPath = "/sdcard2";
        [SerializeField] private string BackupDownloadPath = "/sdcard";
 
+        [SerializeField] private bool GenerateTrialSummaryFile;
+        [SerializeField] private bool EnablePupilBaselineCorrections;
+        [SerializeField] private float BaselineCaptureSeconds = 1f;
+
+        [SerializeField] private bool SimulateEyeTracking = false;
 
         public List<DataPoint> dataPoint = new();
         public List<EyeTrackingDataPoints> eyeTrackingDataPoints = new();
         public List<EyeExpressionDataPoints> eyeExpressionDataPoints = new();
         public List<FacialExpressionDataPoints> facialExpressionDataPoints = new();
+
+        private float simulatedBaseline = 3.5f;
+        private float simulatedAmplitude = 0.25f;
+        private float simulatedNoise = 0.03f;
 
 
         private Camera vrCamera;
@@ -167,7 +176,7 @@ namespace VIVE.OpenXR.Samples.FacialTracking
         private RaycastHit hit;
 
         // -------- PUPIL / BASELINE --------
-        private List<float> TempPupilStorage         = new List<float>();
+        private List<float> BaselinePupilStorage  = new List<float>();
         private List<float> TempBaselinePupilStorage  = new List<float>();
         private List<float> EventBaselinePupilStorage = new List<float>();
 
@@ -181,6 +190,8 @@ namespace VIVE.OpenXR.Samples.FacialTracking
         private bool hasHit;
         private Vector3 hitPoint;
         private string hitObjectName = "";
+        private int previousValue = -1;
+        
 
 
         private static readonly XrEyeExpressionHTC[] EyeExprEnums =
@@ -280,11 +291,6 @@ namespace VIVE.OpenXR.Samples.FacialTracking
                         ? BaselineCorrected(cp)?.ToString()
                         : "") ?? "",
 
-                EyeTrackingEnum.eventBaselineCorrected =>
-                    (captureEventBaseline && CombinedPupil() is float ep
-                        ? BaselineCorrected(ep)?.ToString()
-                        : "") ?? "",
-
                 EyeTrackingEnum.hitX => hasHit ? hitPoint.x.ToString("F4") : "",
                 EyeTrackingEnum.hitY => hasHit ? hitPoint.y.ToString("F4") : "",
                 EyeTrackingEnum.hitZ => hasHit ? hitPoint.z.ToString("F4") : "",
@@ -368,7 +374,7 @@ namespace VIVE.OpenXR.Samples.FacialTracking
         void Start()
         {
             vrCamera = Camera.main;
-            sxr.SetSubjectID("hello");
+            sxr.SetSubjectID(SubjectID);
             StartRecording();
         }
 
@@ -441,16 +447,28 @@ namespace VIVE.OpenXR.Samples.FacialTracking
 
         void AppendEyeTracking(StringBuilder sb)
         {
-            foreach(var dp in eyeTrackingDataPoints)
+            foreach (var dp in eyeTrackingDataPoints)
             {
                 if (!dp.Toggle)
+                    continue;
+
+                if (dp.Field == EyeTrackingEnum.baselineCorrected)
                 {
+                    float? corrected = CombinedPupil() is float cp
+                        ? BaselineCorrected(cp)
+                        : null;
+
+                    if (corrected.HasValue)
+                    {
+                        sb.Append(corrected.Value);
+                    }
+
+                    sb.Append(',');
                     continue;
                 }
 
                 sb.Append(GetEyeTrackingValue(dp.Field));
                 sb.Append(',');
-
             }
         }
 
@@ -492,7 +510,12 @@ namespace VIVE.OpenXR.Samples.FacialTracking
             UpdateGaze();
             UpdatePupil();
             AppendDataRow();
-            
+
+            if (EnablePupilBaselineCorrections)
+            {
+                CheckForChangeInTrial();
+            }
+
             flushTimer += Time.deltaTime;
             if (flushTimer >= 5f)
             {
@@ -566,6 +589,26 @@ namespace VIVE.OpenXR.Samples.FacialTracking
 
         void UpdatePupil()
         {
+            if (SimulateEyeTracking)
+            {
+                float noiseL = UnityEngine.Random.Range(-simulatedNoise, simulatedNoise);
+                float noiseR = UnityEngine.Random.Range(-simulatedNoise, simulatedNoise);
+
+                float wave = Mathf.Sin(Time.time * 2f) * simulatedAmplitude;
+
+                leftPupilSize = simulatedBaseline + wave + noiseL;
+                rightPupilSize = simulatedBaseline + wave + noiseR;
+
+
+                if (baselineInProgress)
+                {
+                    BaselinePupilStorage.Add(leftPupilSize);
+                    BaselinePupilStorage.Add(rightPupilSize);
+                }
+
+                return;
+            }
+
             XR_HTC_eye_tracker.Interop.GetEyePupilData(out XrSingleEyePupilDataHTC[] pupils);
 
             if (pupils == null || pupils.Length < 2)
@@ -577,8 +620,12 @@ namespace VIVE.OpenXR.Samples.FacialTracking
             leftPupilSize  = left.isDiameterValid  ? left.pupilDiameter  : -1;
             rightPupilSize = right.isDiameterValid ? right.pupilDiameter : -1;
 
-            if (leftPupilSize  > 0) TempPupilStorage.Add(leftPupilSize);
-            if (rightPupilSize > 0) TempPupilStorage.Add(rightPupilSize);
+            if (baselineInProgress)
+            {
+                if (leftPupilSize  > 0) BaselinePupilStorage.Add(leftPupilSize);
+                if (rightPupilSize > 0) BaselinePupilStorage.Add(rightPupilSize); 
+            }
+
         }
 
         float? CombinedPupil()
@@ -590,33 +637,14 @@ namespace VIVE.OpenXR.Samples.FacialTracking
             return null;
         }
 
-        float? BaselineCorrected(float value)
+        void CheckForChangeInTrial()
         {
-            if (!baselineValid || baselineInProgress) return null;
-            float corrected = value - baseline;
-            TempBaselinePupilStorage.Add(corrected);
-            if (captureEventBaseline) EventBaselinePupilStorage.Add(corrected);
-            return corrected;
-        }
+            if(previousValue != sxr.GetTrial())
+            {
+                previousValue = sxr.GetTrial();
+                StartBaseline();
+            }
 
-        public void GrabPupilTrialAverage()
-        {
-            if (TempPupilStorage.Count == 0) return;
-
-            float  trialAvg          = TempPupilStorage.Average();
-            float? baselineAvg       = (!baselineValid || TempBaselinePupilStorage.Count == 0)
-                                        ? (float?)null
-                                        : TempBaselinePupilStorage.Average();
-            float? eventBaselineAvg  = (!baselineValid || EventBaselinePupilStorage.Count == 0)
-                                        ? (float?)null
-                                        : EventBaselinePupilStorage.Average();
-
-            AppendDataRow();
-
-            TempPupilStorage.Clear();
-            TempBaselinePupilStorage.Clear();
-            EventBaselinePupilStorage.Clear();
-            captureEventBaseline = false;
         }
 
         public void StartBaseline()
@@ -626,15 +654,15 @@ namespace VIVE.OpenXR.Samples.FacialTracking
 
         IEnumerator SetBaseline()
         {
-            TempPupilStorage.Clear();
+            BaselinePupilStorage.Clear();
             baselineInProgress = true;
             baselineValid      = false;
 
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(BaselineCaptureSeconds);
 
-            if (TempPupilStorage.Count > 0)
+            if (BaselinePupilStorage.Count > 0)
             {
-                baseline      = TempPupilStorage.Average();
+                baseline      = BaselinePupilStorage.Average();
                 baselineValid = true;
             }
             else
@@ -644,13 +672,15 @@ namespace VIVE.OpenXR.Samples.FacialTracking
             }
 
             baselineInProgress = false;
-            TempPupilStorage.Clear();
-            TempBaselinePupilStorage.Clear();
+            BaselinePupilStorage.Clear();
         }
 
-        public void SetCaptureEventBaseline()
+        float? BaselineCorrected(float value)
         {
-            captureEventBaseline = true;
+            if (!baselineValid || baselineInProgress)
+                return null;
+
+            return value - baseline;
         }
 
         void OnApplicationQuit()
