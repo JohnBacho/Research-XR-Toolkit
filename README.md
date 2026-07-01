@@ -1,4 +1,4 @@
-# SSXR (Super Simple XR)
+# RXT (Research XR Toolkit)
 
 <div align="center">
 <img width="450" alt="VIBES Lab Logo" src="https://github.com/user-attachments/assets/89824d3a-373a-448f-9b5c-256f4c459466" />
