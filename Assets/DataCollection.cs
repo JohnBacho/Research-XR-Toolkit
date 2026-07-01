@@ -8,6 +8,8 @@ using UnityEngine;
 using VIVE.OpenXR.EyeTracker;
 using VIVE.OpenXR.FacialTracking;
 using sxr_internal;
+using VIVE.OpenXR.Samples.FacialTracking;
+using VIVE.OpenXR.Samples.EyeTracker;
 
 namespace VIVE.OpenXR.Samples.FacialTracking
 {
@@ -72,6 +74,20 @@ namespace VIVE.OpenXR.Samples.FacialTracking
     }
     [System.Serializable]
     class SummaryValue
+    {
+        public double Sum;
+        public int Count;
+
+        public void Add(double value)
+        {
+            Sum += value;
+            Count++;
+        }
+
+        public double Average => Count == 0 ? 0 : Sum / Count;
+    }
+
+    class EventValue
     {
         public double Sum;
         public int Count;
@@ -155,8 +171,10 @@ namespace VIVE.OpenXR.Samples.FacialTracking
         [SerializeField] private string DownloadPath = "/sdcard2";
         [SerializeField] private string BackupDownloadPath = "/sdcard";
         [SerializeField] private bool GenerateTrialSummaryFile;
+        [SerializeField] private bool GenerateEventSummaryFile;
         [SerializeField] private bool EnablePupilBaselineCorrections;
         [SerializeField] private float BaselineCaptureSeconds = 1f;
+
 
 
         public List<DataPoint> dataPoint = new();
@@ -164,9 +182,13 @@ namespace VIVE.OpenXR.Samples.FacialTracking
         public List<EyeExpressionDataPoints> eyeExpressionDataPoints = new();
         public List<FacialExpressionDataPoints> facialExpressionDataPoints = new();
         private Dictionary<string, SummaryValue> summary = new();
+        private Dictionary<string, EventValue> eventSummary = new();
         [SerializeField] private bool SimulateEyeTracking = false;
         private StreamWriter summaryWriter;
         private string summaryFilePath; 
+
+        private StreamWriter eventWriter;
+        private string eventFilePath; 
 
         private float simulatedBaseline = 3.5f;
         private float simulatedAmplitude = 0.25f;
@@ -181,7 +203,7 @@ namespace VIVE.OpenXR.Samples.FacialTracking
 
         private bool recordEyeTracker;
         private bool headerPrinted = false;
-        private bool trialSummaryHeaderPrinted = false;
+        private bool isCollectingEventData = false;
 
         private string filePath;
 
@@ -191,7 +213,6 @@ namespace VIVE.OpenXR.Samples.FacialTracking
         private Ray gazeRay;
         private RaycastHit hit;
 
-        // -------- PUPIL / BASELINE --------
         private List<float> BaselinePupilStorage  = new List<float>();
         private List<float> TempBaselinePupilStorage  = new List<float>();
 
@@ -205,6 +226,7 @@ namespace VIVE.OpenXR.Samples.FacialTracking
         private Vector3 hitPoint;
         private string hitObjectName = "";
         private int previousValue = -1;
+        private Coroutine eventCoroutine;
         
 
 
@@ -390,6 +412,15 @@ namespace VIVE.OpenXR.Samples.FacialTracking
             Debug.Log("Saving to: " + filePath);
             }
 
+            if(GenerateEventSummaryFile){
+            eventFilePath = Path.Combine(subfolderPath, "EventSummary.csv");
+
+            eventWriter = new StreamWriter(eventFilePath, false, Encoding.UTF8);
+            eventWriter.AutoFlush = true;
+
+            Debug.Log("Saving to: " + filePath);
+            }
+
         }
 
         void Start()
@@ -410,6 +441,7 @@ namespace VIVE.OpenXR.Samples.FacialTracking
                 }
                 headerConstructor += dp.Header + ",";
                 if(GenerateTrialSummaryFile) summary[dp.Header] = new SummaryValue();
+                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new EventValue();
 
             }
 
@@ -421,6 +453,7 @@ namespace VIVE.OpenXR.Samples.FacialTracking
                 }
                 headerConstructor += dp.Header + ",";
                 if(GenerateTrialSummaryFile) summary[dp.Header] = new SummaryValue();
+                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new EventValue();
             }
 
             foreach(var dp in eyeExpressionDataPoints)
@@ -431,6 +464,7 @@ namespace VIVE.OpenXR.Samples.FacialTracking
                 }
                 headerConstructor += dp.Header + ",";
                 if(GenerateTrialSummaryFile) summary[dp.Header] = new SummaryValue();
+                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new EventValue();
             }
 
             foreach(var dp in facialExpressionDataPoints)
@@ -441,10 +475,12 @@ namespace VIVE.OpenXR.Samples.FacialTracking
                 }
                 headerConstructor += dp.Header + ",";
                 if(GenerateTrialSummaryFile) summary[dp.Header] = new SummaryValue();
+                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new EventValue();
             }
 
             writer.WriteLine(headerConstructor);
             if(GenerateTrialSummaryFile) summaryWriter.WriteLine(headerConstructor);
+            if(GenerateEventSummaryFile) eventWriter.WriteLine(headerConstructor);
 
             headerPrinted = true;
         }
@@ -467,9 +503,17 @@ namespace VIVE.OpenXR.Samples.FacialTracking
                 }
                 string value = GetDataPointValue(dp.Field);
 
-                if (double.TryParse(value, out double number) && GenerateTrialSummaryFile)
+                if (double.TryParse(value, out double number))
                 {
-                    summary[dp.Header].Add(number);
+                    if (GenerateTrialSummaryFile)
+                    {
+                        summary[dp.Header].Add(number);
+                    }
+
+                    if(GenerateEventSummaryFile && isCollectingEventData)
+                    {
+                        eventSummary[dp.Header].Add(number);
+                    }
                 }
 
                 sb.Append(value);
@@ -498,9 +542,17 @@ namespace VIVE.OpenXR.Samples.FacialTracking
                     }
                 }
 
-                if (double.TryParse(value, out double number) && GenerateTrialSummaryFile)
+                if (double.TryParse(value, out double number))
                 {
-                    summary[dp.Header].Add(number);
+                    if (GenerateTrialSummaryFile)
+                    {
+                        summary[dp.Header].Add(number);
+                    }
+
+                    if(GenerateEventSummaryFile && isCollectingEventData)
+                    {
+                        eventSummary[dp.Header].Add(number);
+                    }
                 }
 
                 sb.Append(value);
@@ -517,9 +569,17 @@ namespace VIVE.OpenXR.Samples.FacialTracking
 
                 string value = GetEyeExpressionValue(dp.EyeExprEnums);
 
-                if (double.TryParse(value, out double number) && GenerateTrialSummaryFile)
+                if (double.TryParse(value, out double number))
                 {
-                    summary[dp.Header].Add(number);
+                    if (GenerateTrialSummaryFile)
+                    {
+                        summary[dp.Header].Add(number);
+                    }
+
+                    if(GenerateEventSummaryFile && isCollectingEventData)
+                    {
+                        eventSummary[dp.Header].Add(number);
+                    }
                 }
 
                 sb.Append(value);
@@ -533,9 +593,17 @@ namespace VIVE.OpenXR.Samples.FacialTracking
 
                 string value = GetFacialExpressionValue(dp.FacialExprEnums);
 
-                if (double.TryParse(value, out double number) && GenerateTrialSummaryFile)
+                if (double.TryParse(value, out double number))
                 {
-                    summary[dp.Header].Add(number);
+                    if (GenerateTrialSummaryFile)
+                    {
+                        summary[dp.Header].Add(number);
+                    }
+
+                    if(GenerateEventSummaryFile && isCollectingEventData)
+                    {
+                        eventSummary[dp.Header].Add(number);
+                    }
                 }
 
                 sb.Append(value);
@@ -756,11 +824,59 @@ namespace VIVE.OpenXR.Samples.FacialTracking
             }
         }
 
+        public void StartEventSummaryTimer(float time)
+        {
+            if (!GenerateEventSummaryFile)
+            {
+                Debug.LogWarning("Event Summary File generation is disabled.");
+                return;
+            }
+
+            if (eventCoroutine != null)
+                StopCoroutine(eventCoroutine);
+
+            eventCoroutine = StartCoroutine(EventDataCollection(time));
+        }
+
+        public void StopEventSummaryTimer()
+        {
+            isCollectingEventData = false;
+        }
+
+        IEnumerator EventDataCollection(float time)
+        {
+            isCollectingEventData = true;
+            yield return new WaitForSeconds(time);
+            isCollectingEventData = false;
+
+            foreach (var kv in eventSummary)
+            {
+                if(kv.Key == "Trial")
+                {
+                    eventWriter.Write(sxr.GetTrial());
+                    eventWriter.Write(",");
+                    continue;
+                }
+                eventWriter.Write(kv.Value.Average);
+                eventWriter.Write(",");
+            }
+
+            eventWriter.WriteLine();
+
+            foreach (var kv in eventSummary.Values)
+            {
+                kv.Sum = 0;
+                kv.Count = 0;
+            }
+            eventCoroutine = null;
+        }
+
         void OnApplicationQuit()
         {
             FlushToFile();
             writer?.Close();
             summaryWriter?.Close();
+            eventWriter?.Close();
         }
 
         void OnDestroy()
@@ -768,6 +884,7 @@ namespace VIVE.OpenXR.Samples.FacialTracking
             FlushToFile();
             writer?.Close();
             summaryWriter?.Close();
+            eventWriter?.Close();
         }
     }
 }

@@ -2716,6 +2716,7 @@ MonoBehaviour:
   DownloadPath: Assets/Data
   BackupDownloadPath: /sdcard
   GenerateTrialSummaryFile: 1
+  GenerateEventSummaryFile: 1
   EnablePupilBaselineCorrections: 1
   BaselineCaptureSeconds: 1
   dataPoint:
