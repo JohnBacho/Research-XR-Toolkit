@@ -1,0 +1,66 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6478821454558756442
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7872802396079728336}
+  - component: {fileID: 3420707744761816458}
+  m_Layer: 0
+  m_Name: SoundManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7872802396079728336
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6478821454558756442}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 2.3324325, y: 5.1, z: -1.4153357}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3420707744761816458
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6478821454558756442}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84ddb96c7eb9b54499f1c3362bd3f525, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  audioClips:
+  - AudioName: uiButton
+    clip: {fileID: 8300000, guid: 7c941ae367aae334c97c5341170d7127, type: 3}
+  - AudioName: SlotMachine
+    clip: {fileID: 8300000, guid: 37d2a58b364d0f5438b106cfbd99755e, type: 3}
+  - AudioName: Error
+    clip: {fileID: 8300000, guid: 882a3bcc555dc134d9add685b44a2614, type: 3}
+  - AudioName: button
+    clip: {fileID: 8300000, guid: 0c4c6d56fb4cbe24c80734c08db8fac4, type: 3}
+  - AudioName: button2
+    clip: {fileID: 8300000, guid: 0c4c6d56fb4cbe24c80734c08db8fac4, type: 3}
+  - AudioName: Lever
+    clip: {fileID: 8300000, guid: 9d369b1bed327164095e44cf1788fc73, type: 3}
+  - AudioName: Sucess
+    clip: {fileID: 8300000, guid: 7130cd99571a52f4c97961d7a8ead95c, type: 3}
+  - AudioName: Suspense
+    clip: {fileID: 8300000, guid: c4fea1354502e4a4a931eb15b8c7e696, type: 3}
+  - AudioName: GamePoint
+    clip: {fileID: 8300000, guid: e4142312b979bb5448af861bdaaa712d, type: 3}
+  audioPrefab: {fileID: 4772951797532029414, guid: 6a6ed095c54e99a4f8340a43c8cdf6d4, type: 3}

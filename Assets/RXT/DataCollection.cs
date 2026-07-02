@@ -89,19 +89,6 @@ namespace RXT
         public double Average => Count == 0 ? 0 : Sum / Count;
     }
 
-    class EventValue
-    {
-        public double Sum;
-        public int Count;
-
-        public void Add(double value)
-        {
-            Sum += value;
-            Count++;
-        }
-
-        public double Average => Count == 0 ? 0 : Sum / Count;
-    }
     public class DataCollection : MonoBehaviour
     {
         [ContextMenu("Populate Basic Data")]
@@ -184,7 +171,7 @@ namespace RXT
         public List<EyeExpressionDataPoints> eyeExpressionDataPoints = new();
         public List<FacialExpressionDataPoints> facialExpressionDataPoints = new();
         private Dictionary<string, SummaryValue> summary = new();
-        private Dictionary<string, EventValue> eventSummary = new();
+        private Dictionary<string, SummaryValue> eventSummary = new();
         [SerializeField] private bool SimulateEyeTracking = false;
         private StreamWriter summaryWriter;
         private string summaryFilePath; 
@@ -442,7 +429,7 @@ namespace RXT
                 }
                 headerConstructor += dp.Header + ",";
                 if(GenerateTrialSummaryFile) summary[dp.Header] = new SummaryValue();
-                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new EventValue();
+                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new SummaryValue();
 
             }
 
@@ -454,7 +441,7 @@ namespace RXT
                 }
                 headerConstructor += dp.Header + ",";
                 if(GenerateTrialSummaryFile) summary[dp.Header] = new SummaryValue();
-                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new EventValue();
+                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new SummaryValue();
             }
 
             foreach(var dp in eyeExpressionDataPoints)
@@ -465,7 +452,7 @@ namespace RXT
                 }
                 headerConstructor += dp.Header + ",";
                 if(GenerateTrialSummaryFile) summary[dp.Header] = new SummaryValue();
-                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new EventValue();
+                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new SummaryValue();
             }
 
             foreach(var dp in facialExpressionDataPoints)
@@ -476,7 +463,7 @@ namespace RXT
                 }
                 headerConstructor += dp.Header + ",";
                 if(GenerateTrialSummaryFile) summary[dp.Header] = new SummaryValue();
-                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new EventValue();
+                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new SummaryValue();
             }
 
             writer.WriteLine(headerConstructor);
