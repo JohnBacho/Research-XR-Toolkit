@@ -1,7 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using sxr_internal;
-using VIVE.OpenXR.Samples.FacialTracking;
+using RXT;
 
 public class TrialTester : MonoBehaviour
 {
@@ -11,7 +11,7 @@ public class TrialTester : MonoBehaviour
     {
         while (true)
         {
-            DataCollection.Instance.StartEventSummaryTimer(2f);
+            rxt.StartEventSummaryTimer(2f);
             yield return new WaitForSeconds(trialInterval);
 
             sxr.NextTrial();

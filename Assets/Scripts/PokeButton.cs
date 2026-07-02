@@ -41,7 +41,7 @@ public class PokeButton : MonoBehaviour
         {
             if (IsUIButton)
             {
-                SoundManager.SoundManager.PlaySound3D(SoundType.uiButton, transform.position, volume, pitch);                
+                SoundManager.SoundManager.Play(SoundType.uiButton, transform.position, volume, pitch);                
             }
             onButtonPressed?.Invoke();
             hasTriggered = true;

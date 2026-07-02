@@ -5,13 +5,15 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using UnityEngine;
+using VIVE.OpenXR;
 using VIVE.OpenXR.EyeTracker;
 using VIVE.OpenXR.FacialTracking;
 using sxr_internal;
 using VIVE.OpenXR.Samples.FacialTracking;
 using VIVE.OpenXR.Samples.EyeTracker;
+using SoundManager;
 
-namespace VIVE.OpenXR.Samples.FacialTracking
+namespace RXT
 {
     public enum DataField
     {

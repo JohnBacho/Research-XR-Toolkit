@@ -131,7 +131,7 @@ public class XRPokeToggleButton : MonoBehaviour
 
     public void PlayUISound()
     {
-        SoundManager.SoundManager.PlaySound3D(SoundType.uiButton, transform.position, volume, pitch);
+        SoundManager.SoundManager.Play(SoundType.uiButton, transform.position, volume, pitch);
     }
     public void StartPulsing(Color targetColor)
     {

@@ -28,7 +28,6 @@ namespace SoundManager
     {
         [SerializeField] private AudioClips[] audioClips;
         [SerializeField] private AudioSource audioPrefab;
-
         private static SoundManager instance = null;
 
         private void Awake()
@@ -36,11 +35,11 @@ namespace SoundManager
             if (instance == null)
             {
                 instance = this;
-                InitializeAudioSource();
+                SetupAudioSources();
             }
         }
 
-        private void InitializeAudioSource()
+        private void SetupAudioSources()
         {
             for (int i = 0; i < audioClips.Length; i++)
             {
@@ -50,60 +49,55 @@ namespace SoundManager
             }
         }
 
-        public static void PlaySound3D(
+        private static AudioSource GetSource(SoundType sound)
+        {
+            return instance.transform
+                .Find(sound.ToString())
+                .GetComponent<AudioSource>();
+        }
+
+        public static void Play(
             SoundType sound,
             Vector3 position,
             float volume = 1,
             float pitch = 1
         )
         {
-            AudioSource src = instance.transform
-                .Find(sound.ToString())
-                .GetComponent<AudioSource>();
-
+            AudioSource src = GetSource(sound);
             src.transform.position = position;
             src.volume = volume;
             src.pitch = pitch;
             src.PlayOneShot(src.clip);
         }
 
-        public static void PlaySound3DOnce(
+        public static void PlayOnce(
             SoundType sound,
             Vector3 position,
             float volume = 1,
             float pitch = 1
         )
         {
-            AudioSource src = instance.transform
-                .Find(sound.ToString())
-                .GetComponent<AudioSource>();
-
+            AudioSource src = GetSource(sound);
             src.transform.position = position;
             src.volume = volume;
             src.pitch = pitch;
             src.Play();
         }
 
-        public static void StopSound3D(SoundType sound)
+        public static void Stop(SoundType sound)
         {
-            AudioSource src = instance.transform
-                .Find(sound.ToString())
-                .GetComponent<AudioSource>();
-                src.Stop();
+            AudioSource src = GetSource(sound);
+            src.Stop();
         }
 
-        public static void PlayLoop(SoundType sound, Vector3 position, float volume = 1, float pitch = 1)
+        public static void PlayLooped(SoundType sound, Vector3 position, float volume = 1, float pitch = 1)
         {
-            AudioSource src = instance.transform
-            .Find(sound.ToString())
-            .GetComponent<AudioSource>();
-
+            AudioSource src = GetSource(sound);
             src.transform.position = position;
             src.volume = volume;
             src.pitch = pitch;
             src.loop = true;
             src.Play();
         }
-
     }
 }
