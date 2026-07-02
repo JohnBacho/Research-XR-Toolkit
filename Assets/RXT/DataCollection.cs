@@ -15,65 +15,13 @@ using SoundManager;
 
 namespace RXT
 {
-    public enum DataField
-    {
-        SubjectID,
-        Date,
-        LocalTime,
-        UnityTime,
-        Phase,
-        Trial,
-        Step,
-        TrialTimePassed
-    }
-    public enum EyeTrackingEnum
-    {
-        gazeOriginX,
-        gazeOriginY,
-        gazeOriginZ,
-        gazeDirectionX,
-        gazeDirectionY,
-        gazeDirectionZ,
-        leftPupil,
-        rightPupil,
-        combinedPupil,
-        baselineCorrected,
-        hitX,
-        hitY,
-        hitZ,
-        objectName
-    }
     [Serializable]
-    public class DataPoint
+    public class DataChannel
     {
         public bool Toggle = true;
         public string Header;
-        public DataField Field;
-    }
-    [Serializable]
-    public class EyeTrackingDataPoints
-    {
-        public bool Toggle = true;
-        public string Header;
-        public EyeTrackingEnum Field;
     }
 
-    [System.Serializable]
-    public class EyeExpressionDataPoints
-    {
-        public bool Toggle = true;
-        public string Header;
-        public XrEyeExpressionHTC EyeExprEnums;
-        
-    }
-    [System.Serializable]
-    public class FacialExpressionDataPoints
-    {
-        public bool Toggle = true;
-        public string Header;
-        public XrLipExpressionHTC FacialExprEnums;
-        
-    }
     [System.Serializable]
     class SummaryValue
     {
@@ -91,70 +39,40 @@ namespace RXT
 
     public class DataCollection : MonoBehaviour
     {
-        [ContextMenu("Populate Basic Data")]
-        private void PopulateBasicData()
+        [ContextMenu("Basic Tracking")]
+        private void PopulateBasic()
         {
-            dataPoint.Clear();
-
-            foreach (DataField field in Enum.GetValues(typeof(DataField)))
-            {
-                dataPoint.Add(new DataPoint
-                {
-                    Toggle = true,
-                    Header = field.ToString(),
-                    Field = field
-                });
-            }
+            dataPoint = BasicFieldDefs
+                .Select(d => new DataChannel { Toggle = true, Header = d.Header })
+                .ToList();
         }
 
         [ContextMenu("Populate Eye Tracking")]
         private void PopulateEyeTracking()
         {
-            eyeTrackingDataPoints.Clear();
-
-            foreach (EyeTrackingEnum field in Enum.GetValues(typeof(EyeTrackingEnum)))
-            {
-                eyeTrackingDataPoints.Add(new EyeTrackingDataPoints
-                {
-                    Toggle = true,
-                    Header = field.ToString(),
-                    Field = field
-                });
-            }
+            eyeTrackingDataPoints = EyeTrackingDefs
+                .Select(d => new DataChannel { Toggle = true, Header = d.Header })
+                .ToList();
         }
-        public static DataCollection Instance;
 
         [ContextMenu("Populate Eye Expressions")]
         private void PopulateEyeExpressions()
         {
-            eyeExpressionDataPoints.Clear();
-
-            foreach (var expression in EyeExprEnums)
-            {
-                eyeExpressionDataPoints.Add(new EyeExpressionDataPoints
-                {
-                    Toggle = true,
-                    Header = expression.ToString(),
-                    EyeExprEnums = expression
-                });
-            }
+            eyeExpressionDataPoints = EyeExpressionDefs
+                .Select(d => new DataChannel { Toggle = true, Header = d.Header })
+                .ToList();
         }
 
         [ContextMenu("Populate Facial Expressions")]
         private void PopulateFacialExpressions()
         {
-            facialExpressionDataPoints.Clear();
-
-            foreach (var expression in LipExprEnums)
-            {
-                facialExpressionDataPoints.Add(new FacialExpressionDataPoints
-                {
-                    Toggle = true,
-                    Header = expression.ToString(),
-                    FacialExprEnums = expression
-                });
-            }
+            facialExpressionDataPoints = FacialExpressionDefs
+                .Select(d => new DataChannel { Toggle = true, Header = d.Header })
+                .ToList();
         }
+
+
+        public static DataCollection Instance;
 
         [SerializeField] private string SubjectID = "Participant";
         [SerializeField] private string DownloadPath = "/sdcard2";
@@ -165,11 +83,103 @@ namespace RXT
         [SerializeField] private float BaselineCaptureSeconds = 1f;
 
 
+        private static readonly (string Header, Func<DataCollection, string> GetValue)[] BasicFieldDefs =
+        {
+            ("SubjectID",        d => sxr.GetSubjectID()),
+            ("Date",             d => DateTime.Today.ToString("M_d")),
+            ("LocalTime",        d => DateTime.Now.ToString("H_m_s")),
+            ("UnityTime",        d => Time.time.ToString("F4")),
+            ("Phase",            d => sxr.GetPhase().ToString()),
+            ("Trial",            d => sxr.GetTrial().ToString()),
+            ("Step",             d => sxr.GetStepInTrial().ToString()),
+            ("TrialTimePassed",  d => sxr.TimePassed().ToString()),
+        };
 
-        public List<DataPoint> dataPoint = new();
-        public List<EyeTrackingDataPoints> eyeTrackingDataPoints = new();
-        public List<EyeExpressionDataPoints> eyeExpressionDataPoints = new();
-        public List<FacialExpressionDataPoints> facialExpressionDataPoints = new();
+        private static readonly (string Header, Func<DataCollection, string> GetValue)[] EyeTrackingDefs =
+        {
+            ("gazeOriginX",        d => d.combinedGazeOrigin.x.ToString("F4")),
+            ("gazeOriginY",        d => d.combinedGazeOrigin.y.ToString("F4")),
+            ("gazeOriginZ",        d => d.combinedGazeOrigin.z.ToString("F4")),
+            ("gazeDirectionX",        d => d.combinedGazeDirection.x.ToString("F4")),
+            ("gazeDirectionY",            d => d.combinedGazeDirection.y.ToString("F4")),
+            ("gazeDirectionZ",            d => d.combinedGazeDirection.z.ToString("F4")),
+            ("leftPupil",             d => d.leftPupilSize.ToString()),
+            ("rightPupil",  d => d.rightPupilSize.ToString()),
+            ("combinedPupil", d => d.CombinedPupil()?.ToString() ?? ""),
+            ("baselineCorrected", d =>
+            {
+                float? cp = d.CombinedPupil();
+                return cp.HasValue ? (d.BaselineCorrected(cp.Value)?.ToString() ?? "") : "";
+            }),
+            ("hitX", d => d.hasHit ? d.hitPoint.x.ToString("F4") : ""),
+            ("hitY", d => d.hasHit ? d.hitPoint.y.ToString("F4") : ""),
+            ("hitZ", d => d.hasHit ? d.hitPoint.z.ToString("F4") : ""),
+            ("objectName", d => d.hasHit ? d.hitObjectName : ""),
+        };
+
+        private static readonly (string Header, Func<DataCollection, string> GetValue)[] EyeExpressionDefs =
+        {
+            ("EYE_EXPRESSION_LEFT_BLINK_HTC",        d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_BLINK_HTC)),
+            ("EYE_EXPRESSION_LEFT_WIDE_HTC",        d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_WIDE_HTC)),
+            ("EYE_EXPRESSION_RIGHT_BLINK_HTC",        d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_BLINK_HTC)),
+            ("EYE_EXPRESSION_RIGHT_WIDE_HTC",        d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_WIDE_HTC)),
+            ("EYE_EXPRESSION_LEFT_SQUEEZE_HTC",            d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_SQUEEZE_HTC)),
+            ("EYE_EXPRESSION_RIGHT_SQUEEZE_HTC",            d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_SQUEEZE_HTC)),
+            ("EYE_EXPRESSION_LEFT_DOWN_HTC",             d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_DOWN_HTC)),
+            ("EYE_EXPRESSION_RIGHT_DOWN_HTC",  d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_DOWN_HTC)),
+            ("EYE_EXPRESSION_LEFT_OUT_HTC", d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_OUT_HTC)),
+            ("EYE_EXPRESSION_RIGHT_IN_HTC", d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_IN_HTC)),
+            ("EYE_EXPRESSION_LEFT_IN_HTC", d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_IN_HTC)),
+            ("EYE_EXPRESSION_RIGHT_OUT_HTC", d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_OUT_HTC)),
+            ("EYE_EXPRESSION_LEFT_UP_HTC", d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_UP_HTC)),
+            ("EYE_EXPRESSION_RIGHT_UP_HTC", d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_UP_HTC)),
+        };
+
+        private static readonly (string Header, Func<DataCollection, string> GetValue)[] FacialExpressionDefs =
+        {
+            ("XR_LIP_EXPRESSION_JAW_RIGHT_HTC",           d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_JAW_RIGHT_HTC)),
+            ("XR_LIP_EXPRESSION_JAW_LEFT_HTC",            d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_JAW_LEFT_HTC)),
+            ("XR_LIP_EXPRESSION_JAW_FORWARD_HTC",         d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_JAW_FORWARD_HTC)),
+            ("XR_LIP_EXPRESSION_JAW_OPEN_HTC",            d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_JAW_OPEN_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_APE_SHAPE_HTC",     d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_APE_SHAPE_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_UPPER_RIGHT_HTC",   d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_UPPER_RIGHT_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_UPPER_LEFT_HTC",    d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_UPPER_LEFT_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_LOWER_RIGHT_HTC",   d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_LOWER_RIGHT_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_LOWER_LEFT_HTC",    d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_LOWER_LEFT_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_UPPER_OVERTURN_HTC",d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_UPPER_OVERTURN_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_LOWER_OVERTURN_HTC",d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_LOWER_OVERTURN_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_POUT_HTC",          d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_POUT_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_RAISER_RIGHT_HTC",  d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_RAISER_RIGHT_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_RAISER_LEFT_HTC",   d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_RAISER_LEFT_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_STRETCHER_RIGHT_HTC",d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_STRETCHER_RIGHT_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_STRETCHER_LEFT_HTC",d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_STRETCHER_LEFT_HTC)),
+            ("XR_LIP_EXPRESSION_CHEEK_PUFF_RIGHT_HTC",    d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_CHEEK_PUFF_RIGHT_HTC)),
+            ("XR_LIP_EXPRESSION_CHEEK_PUFF_LEFT_HTC",     d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_CHEEK_PUFF_LEFT_HTC)),
+            ("XR_LIP_EXPRESSION_CHEEK_SUCK_HTC",          d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_CHEEK_SUCK_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_UPPER_UPRIGHT_HTC", d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_UPPER_UPRIGHT_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_UPPER_UPLEFT_HTC",  d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_UPPER_UPLEFT_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_LOWER_DOWNRIGHT_HTC",d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_LOWER_DOWNRIGHT_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_LOWER_DOWNLEFT_HTC",d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_LOWER_DOWNLEFT_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_UPPER_INSIDE_HTC",  d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_UPPER_INSIDE_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_LOWER_INSIDE_HTC",  d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_LOWER_INSIDE_HTC)),
+            ("XR_LIP_EXPRESSION_MOUTH_LOWER_OVERLAY_HTC", d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_LOWER_OVERLAY_HTC)),
+            ("XR_LIP_EXPRESSION_TONGUE_LONGSTEP1_HTC",    d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_LONGSTEP1_HTC)),
+            ("XR_LIP_EXPRESSION_TONGUE_LEFT_HTC",         d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_LEFT_HTC)),
+            ("XR_LIP_EXPRESSION_TONGUE_RIGHT_HTC",        d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_RIGHT_HTC)),
+            ("XR_LIP_EXPRESSION_TONGUE_UP_HTC",           d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_UP_HTC)),
+            ("XR_LIP_EXPRESSION_TONGUE_DOWN_HTC",         d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_DOWN_HTC)),
+            ("XR_LIP_EXPRESSION_TONGUE_ROLL_HTC",         d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_ROLL_HTC)),
+            ("XR_LIP_EXPRESSION_TONGUE_LONGSTEP2_HTC",    d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_LONGSTEP2_HTC)),
+            ("XR_LIP_EXPRESSION_TONGUE_UPRIGHT_MORPH_HTC",d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_UPRIGHT_MORPH_HTC)),
+            ("XR_LIP_EXPRESSION_TONGUE_UPLEFT_MORPH_HTC", d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_UPLEFT_MORPH_HTC)),
+            ("XR_LIP_EXPRESSION_TONGUE_DOWNRIGHT_MORPH_HTC",d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_DOWNRIGHT_MORPH_HTC)),
+            ("XR_LIP_EXPRESSION_TONGUE_DOWNLEFT_MORPH_HTC", d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_DOWNLEFT_MORPH_HTC)),
+        };
+
+        public List<DataChannel> dataPoint = new();
+        public List<DataChannel> eyeTrackingDataPoints = new();
+        public List<DataChannel> eyeExpressionDataPoints = new();
+        public List<DataChannel> facialExpressionDataPoints = new();
         private Dictionary<string, SummaryValue> summary = new();
         private Dictionary<string, SummaryValue> eventSummary = new();
         [SerializeField] private bool SimulateEyeTracking = false;
@@ -215,114 +225,6 @@ namespace RXT
         private string hitObjectName = "";
         private int previousValue = -1;
         private Coroutine eventCoroutine;
-        
-
-
-        private static readonly XrEyeExpressionHTC[] EyeExprEnums =
-        {
-            XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_BLINK_HTC,
-            XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_WIDE_HTC,
-            XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_BLINK_HTC,
-            XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_WIDE_HTC,
-            XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_SQUEEZE_HTC,
-            XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_SQUEEZE_HTC,
-            XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_DOWN_HTC,
-            XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_DOWN_HTC,
-            XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_OUT_HTC,
-            XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_IN_HTC,
-            XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_IN_HTC,
-            XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_OUT_HTC,
-            XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_UP_HTC,
-            XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_UP_HTC,
-        };
-
-        private static readonly XrLipExpressionHTC[] LipExprEnums =
-        {
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_JAW_RIGHT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_JAW_LEFT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_JAW_FORWARD_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_JAW_OPEN_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_APE_SHAPE_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_UPPER_RIGHT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_UPPER_LEFT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_LOWER_RIGHT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_LOWER_LEFT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_UPPER_OVERTURN_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_LOWER_OVERTURN_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_POUT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_RAISER_RIGHT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_RAISER_LEFT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_STRETCHER_RIGHT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_STRETCHER_LEFT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_CHEEK_PUFF_RIGHT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_CHEEK_PUFF_LEFT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_CHEEK_SUCK_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_UPPER_UPRIGHT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_UPPER_UPLEFT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_LOWER_DOWNRIGHT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_LOWER_DOWNLEFT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_UPPER_INSIDE_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_LOWER_INSIDE_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_MOUTH_LOWER_OVERLAY_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_LONGSTEP1_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_LEFT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_RIGHT_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_UP_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_DOWN_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_ROLL_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_LONGSTEP2_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_UPRIGHT_MORPH_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_UPLEFT_MORPH_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_DOWNRIGHT_MORPH_HTC,
-            XrLipExpressionHTC.XR_LIP_EXPRESSION_TONGUE_DOWNLEFT_MORPH_HTC,
-        };
-
-        private string GetDataPointValue(DataField field)
-        {
-            return field switch
-            {
-                DataField.SubjectID => sxr.GetSubjectID(),
-                DataField.Date => DateTime.Today.ToString("M_d"),
-                DataField.LocalTime => DateTime.Now.ToString("H_m_s"),
-                DataField.UnityTime => Time.time.ToString("F4"),
-                DataField.Phase => sxr.GetPhase().ToString(),
-                DataField.Trial => sxr.GetTrial().ToString(),
-                DataField.Step => sxr.GetStepInTrial().ToString(),
-                DataField.TrialTimePassed => sxr.TimePassed().ToString(),
-                _ => ""
-            };
-        }
-
-        private string GetEyeTrackingValue(EyeTrackingEnum field)
-        {
-            return field switch
-            {
-                EyeTrackingEnum.gazeOriginX => combinedGazeOrigin.x.ToString("F4"),
-                EyeTrackingEnum.gazeOriginY => combinedGazeOrigin.y.ToString("F4"),
-                EyeTrackingEnum.gazeOriginZ => combinedGazeOrigin.z.ToString("F4"),
-
-                EyeTrackingEnum.gazeDirectionX => combinedGazeDirection.x.ToString("F4"),
-                EyeTrackingEnum.gazeDirectionY => combinedGazeDirection.y.ToString("F4"),
-                EyeTrackingEnum.gazeDirectionZ => combinedGazeDirection.z.ToString("F4"),
-
-                EyeTrackingEnum.leftPupil => leftPupilSize.ToString(),
-                EyeTrackingEnum.rightPupil => rightPupilSize.ToString(),
-
-                EyeTrackingEnum.combinedPupil => CombinedPupil()?.ToString() ?? "",
-
-                EyeTrackingEnum.baselineCorrected =>
-                    (CombinedPupil() is float cp
-                        ? BaselineCorrected(cp)?.ToString()
-                        : "") ?? "",
-
-                EyeTrackingEnum.hitX => hasHit ? hitPoint.x.ToString("F4") : "",
-                EyeTrackingEnum.hitY => hasHit ? hitPoint.y.ToString("F4") : "",
-                EyeTrackingEnum.hitZ => hasHit ? hitPoint.z.ToString("F4") : "",
-                EyeTrackingEnum.objectName => hasHit ? hitObjectName : "",
-
-                _ => ""
-            };
-        }
 
         private string GetEyeExpressionValue(XrEyeExpressionHTC expression)
         {
@@ -481,123 +383,36 @@ namespace RXT
             writeBuffer.Clear();
         }
 
-        void AppendDataPoints(StringBuilder sb)
+
+    void AppendChannelGroup(
+    StringBuilder sb,
+    List<DataChannel> channels,
+    (string Header, Func<DataCollection, string> GetValue)[] defs)
+    {
+        foreach (var dp in channels)
         {
-            foreach(var dp in dataPoint)
+            if (!dp.Toggle) continue;
+
+            var def = Array.Find(defs, d => d.Header == dp.Header);
+            if (def.GetValue == null)
             {
-                if (!dp.Toggle)
-                {
-                    continue;
-                }
-                string value = GetDataPointValue(dp.Field);
-
-                if (double.TryParse(value, out double number))
-                {
-                    if (GenerateTrialSummaryFile)
-                    {
-                        summary[dp.Header].Add(number);
-                    }
-
-                    if(GenerateEventSummaryFile && isCollectingEventData)
-                    {
-                        eventSummary[dp.Header].Add(number);
-                    }
-                }
-
-                sb.Append(value);
-                sb.Append(',');
-
+                Debug.LogWarning($"No matching field def for header '{dp.Header}' — skipping.");
+                continue;
             }
+
+            string value = def.GetValue(this);
+
+            if (double.TryParse(value, out double number))
+            {
+                if (GenerateTrialSummaryFile) summary[dp.Header].Add(number);
+                if (GenerateEventSummaryFile && isCollectingEventData) eventSummary[dp.Header].Add(number);
+            }
+
+            sb.Append(value);
+            sb.Append(',');
         }
+    }
 
-        void AppendEyeTracking(StringBuilder sb)
-        {
-            foreach (var dp in eyeTrackingDataPoints)
-            {
-                if (!dp.Toggle)
-                    continue;
-
-                string value = GetEyeTrackingValue(dp.Field);
-                if (dp.Field == EyeTrackingEnum.baselineCorrected)
-                {
-                    float? corrected = CombinedPupil() is float cp
-                        ? BaselineCorrected(cp)
-                        : null;
-
-                    if (corrected.HasValue)
-                    {
-                        value = corrected.Value.ToString();
-                    }
-                }
-
-                if (double.TryParse(value, out double number))
-                {
-                    if (GenerateTrialSummaryFile)
-                    {
-                        summary[dp.Header].Add(number);
-                    }
-
-                    if(GenerateEventSummaryFile && isCollectingEventData)
-                    {
-                        eventSummary[dp.Header].Add(number);
-                    }
-                }
-
-                sb.Append(value);
-                sb.Append(',');
-            }
-        }
-
-        void AppendFacialData(StringBuilder sb)
-        {
-            foreach(var dp in eyeExpressionDataPoints)
-            {
-                if (!dp.Toggle)
-                    continue;
-
-                string value = GetEyeExpressionValue(dp.EyeExprEnums);
-
-                if (double.TryParse(value, out double number))
-                {
-                    if (GenerateTrialSummaryFile)
-                    {
-                        summary[dp.Header].Add(number);
-                    }
-
-                    if(GenerateEventSummaryFile && isCollectingEventData)
-                    {
-                        eventSummary[dp.Header].Add(number);
-                    }
-                }
-
-                sb.Append(value);
-                sb.Append(',');
-            }
-
-            foreach(var dp in facialExpressionDataPoints)
-            {
-                if (!dp.Toggle)
-                    continue;
-
-                string value = GetFacialExpressionValue(dp.FacialExprEnums);
-
-                if (double.TryParse(value, out double number))
-                {
-                    if (GenerateTrialSummaryFile)
-                    {
-                        summary[dp.Header].Add(number);
-                    }
-
-                    if(GenerateEventSummaryFile && isCollectingEventData)
-                    {
-                        eventSummary[dp.Header].Add(number);
-                    }
-                }
-
-                sb.Append(value);
-                sb.Append(',');
-            }
-        }
 
         public void StartRecording()
         {
@@ -631,11 +446,11 @@ namespace RXT
         void AppendDataRow()
         {
 
-            AppendDataPoints(writeBuffer);
-            AppendEyeTracking(writeBuffer);
-            AppendFacialData(writeBuffer);
-            
-            writeBuffer.Append('\n');
+            AppendChannelGroup(writeBuffer, dataPoint, BasicFieldDefs);
+            AppendChannelGroup(writeBuffer, eyeTrackingDataPoints, EyeTrackingDefs);
+            AppendChannelGroup(writeBuffer, eyeExpressionDataPoints, EyeExpressionDefs);
+            AppendChannelGroup(writeBuffer, facialExpressionDataPoints, FacialExpressionDefs);
+            writeBuffer.Append("\r\n");
         }
 
         void UpdateGaze()

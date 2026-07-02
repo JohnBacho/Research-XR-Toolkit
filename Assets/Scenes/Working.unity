@@ -2722,226 +2722,153 @@ MonoBehaviour:
   dataPoint:
   - Toggle: 1
     Header: SubjectID
-    Field: 0
   - Toggle: 1
     Header: Date
-    Field: 1
   - Toggle: 1
     Header: LocalTime
-    Field: 2
   - Toggle: 1
     Header: UnityTime
-    Field: 3
   - Toggle: 1
     Header: Phase
-    Field: 4
   - Toggle: 1
     Header: Trial
-    Field: 5
   - Toggle: 1
     Header: Step
-    Field: 6
   - Toggle: 1
     Header: TrialTimePassed
-    Field: 7
   eyeTrackingDataPoints:
   - Toggle: 1
     Header: gazeOriginX
-    Field: 0
   - Toggle: 1
     Header: gazeOriginY
-    Field: 1
   - Toggle: 1
     Header: gazeOriginZ
-    Field: 2
   - Toggle: 1
     Header: gazeDirectionX
-    Field: 3
   - Toggle: 1
     Header: gazeDirectionY
-    Field: 4
   - Toggle: 1
     Header: gazeDirectionZ
-    Field: 5
   - Toggle: 1
     Header: leftPupil
-    Field: 6
   - Toggle: 1
     Header: rightPupil
-    Field: 7
   - Toggle: 1
     Header: combinedPupil
-    Field: 8
   - Toggle: 1
     Header: baselineCorrected
-    Field: 9
   - Toggle: 1
     Header: hitX
-    Field: 10
   - Toggle: 1
     Header: hitY
-    Field: 11
   - Toggle: 1
     Header: hitZ
-    Field: 12
   - Toggle: 1
     Header: objectName
-    Field: 13
   eyeExpressionDataPoints:
   - Toggle: 1
-    Header: XR_EYE_EXPRESSION_LEFT_BLINK_HTC
-    EyeExprEnums: 0
+    Header: EYE_EXPRESSION_LEFT_BLINK_HTC
   - Toggle: 1
-    Header: XR_EYE_EXPRESSION_LEFT_WIDE_HTC
-    EyeExprEnums: 1
+    Header: EYE_EXPRESSION_LEFT_WIDE_HTC
   - Toggle: 1
-    Header: XR_EYE_EXPRESSION_RIGHT_BLINK_HTC
-    EyeExprEnums: 2
+    Header: EYE_EXPRESSION_RIGHT_BLINK_HTC
   - Toggle: 1
-    Header: XR_EYE_EXPRESSION_RIGHT_WIDE_HTC
-    EyeExprEnums: 3
+    Header: EYE_EXPRESSION_RIGHT_WIDE_HTC
   - Toggle: 1
-    Header: XR_EYE_EXPRESSION_LEFT_SQUEEZE_HTC
-    EyeExprEnums: 4
+    Header: EYE_EXPRESSION_LEFT_SQUEEZE_HTC
   - Toggle: 1
-    Header: XR_EYE_EXPRESSION_RIGHT_SQUEEZE_HTC
-    EyeExprEnums: 5
+    Header: EYE_EXPRESSION_RIGHT_SQUEEZE_HTC
   - Toggle: 1
-    Header: XR_EYE_EXPRESSION_LEFT_DOWN_HTC
-    EyeExprEnums: 6
+    Header: EYE_EXPRESSION_LEFT_DOWN_HTC
   - Toggle: 1
-    Header: XR_EYE_EXPRESSION_RIGHT_DOWN_HTC
-    EyeExprEnums: 7
+    Header: EYE_EXPRESSION_RIGHT_DOWN_HTC
   - Toggle: 1
-    Header: XR_EYE_EXPRESSION_LEFT_OUT_HTC
-    EyeExprEnums: 8
+    Header: EYE_EXPRESSION_LEFT_OUT_HTC
   - Toggle: 1
-    Header: XR_EYE_EXPRESSION_RIGHT_IN_HTC
-    EyeExprEnums: 9
+    Header: EYE_EXPRESSION_RIGHT_IN_HTC
   - Toggle: 1
-    Header: XR_EYE_EXPRESSION_LEFT_IN_HTC
-    EyeExprEnums: 10
+    Header: EYE_EXPRESSION_LEFT_IN_HTC
   - Toggle: 1
-    Header: XR_EYE_EXPRESSION_RIGHT_OUT_HTC
-    EyeExprEnums: 11
+    Header: EYE_EXPRESSION_RIGHT_OUT_HTC
   - Toggle: 1
-    Header: XR_EYE_EXPRESSION_LEFT_UP_HTC
-    EyeExprEnums: 12
+    Header: EYE_EXPRESSION_LEFT_UP_HTC
   - Toggle: 1
-    Header: XR_EYE_EXPRESSION_RIGHT_UP_HTC
-    EyeExprEnums: 13
+    Header: EYE_EXPRESSION_RIGHT_UP_HTC
   facialExpressionDataPoints:
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_JAW_RIGHT_HTC
-    FacialExprEnums: 0
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_JAW_LEFT_HTC
-    FacialExprEnums: 1
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_JAW_FORWARD_HTC
-    FacialExprEnums: 2
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_JAW_OPEN_HTC
-    FacialExprEnums: 3
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_APE_SHAPE_HTC
-    FacialExprEnums: 4
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_UPPER_RIGHT_HTC
-    FacialExprEnums: 5
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_UPPER_LEFT_HTC
-    FacialExprEnums: 6
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_LOWER_RIGHT_HTC
-    FacialExprEnums: 7
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_LOWER_LEFT_HTC
-    FacialExprEnums: 8
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_UPPER_OVERTURN_HTC
-    FacialExprEnums: 9
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_LOWER_OVERTURN_HTC
-    FacialExprEnums: 10
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_POUT_HTC
-    FacialExprEnums: 11
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_RAISER_RIGHT_HTC
-    FacialExprEnums: 12
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_RAISER_LEFT_HTC
-    FacialExprEnums: 13
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_STRETCHER_RIGHT_HTC
-    FacialExprEnums: 14
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_STRETCHER_LEFT_HTC
-    FacialExprEnums: 15
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_CHEEK_PUFF_RIGHT_HTC
-    FacialExprEnums: 16
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_CHEEK_PUFF_LEFT_HTC
-    FacialExprEnums: 17
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_CHEEK_SUCK_HTC
-    FacialExprEnums: 18
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_UPPER_UPRIGHT_HTC
-    FacialExprEnums: 19
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_UPPER_UPLEFT_HTC
-    FacialExprEnums: 20
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_LOWER_DOWNRIGHT_HTC
-    FacialExprEnums: 21
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_LOWER_DOWNLEFT_HTC
-    FacialExprEnums: 22
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_UPPER_INSIDE_HTC
-    FacialExprEnums: 23
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_LOWER_INSIDE_HTC
-    FacialExprEnums: 24
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_MOUTH_LOWER_OVERLAY_HTC
-    FacialExprEnums: 25
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_TONGUE_LONGSTEP1_HTC
-    FacialExprEnums: 26
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_TONGUE_LEFT_HTC
-    FacialExprEnums: 27
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_TONGUE_RIGHT_HTC
-    FacialExprEnums: 28
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_TONGUE_UP_HTC
-    FacialExprEnums: 29
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_TONGUE_DOWN_HTC
-    FacialExprEnums: 30
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_TONGUE_ROLL_HTC
-    FacialExprEnums: 31
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_TONGUE_LONGSTEP2_HTC
-    FacialExprEnums: 32
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_TONGUE_UPRIGHT_MORPH_HTC
-    FacialExprEnums: 33
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_TONGUE_UPLEFT_MORPH_HTC
-    FacialExprEnums: 34
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_TONGUE_DOWNRIGHT_MORPH_HTC
-    FacialExprEnums: 35
   - Toggle: 1
     Header: XR_LIP_EXPRESSION_TONGUE_DOWNLEFT_MORPH_HTC
-    FacialExprEnums: 36
   SimulateEyeTracking: 1
 --- !u!1 &292147602
 GameObject:
@@ -2982,70 +2909,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2549993465544934099, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
   m_PrefabInstance: {fileID: 246862861}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &555355015
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 555355017}
-  - component: {fileID: 555355016}
-  m_Layer: 0
-  m_Name: SoundManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &555355016
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555355015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84ddb96c7eb9b54499f1c3362bd3f525, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioClips:
-  - AudioName: uiButton
-    clip: {fileID: 8300000, guid: 7c941ae367aae334c97c5341170d7127, type: 3}
-  - AudioName: SlotMachine
-    clip: {fileID: 8300000, guid: 37d2a58b364d0f5438b106cfbd99755e, type: 3}
-  - AudioName: Error
-    clip: {fileID: 8300000, guid: 882a3bcc555dc134d9add685b44a2614, type: 3}
-  - AudioName: button
-    clip: {fileID: 8300000, guid: 0c4c6d56fb4cbe24c80734c08db8fac4, type: 3}
-  - AudioName: button2
-    clip: {fileID: 8300000, guid: 0c4c6d56fb4cbe24c80734c08db8fac4, type: 3}
-  - AudioName: Lever
-    clip: {fileID: 8300000, guid: 9d369b1bed327164095e44cf1788fc73, type: 3}
-  - AudioName: Sucess
-    clip: {fileID: 8300000, guid: 7130cd99571a52f4c97961d7a8ead95c, type: 3}
-  - AudioName: Suspense
-    clip: {fileID: 8300000, guid: c4fea1354502e4a4a931eb15b8c7e696, type: 3}
-  - AudioName: GamePoint
-    clip: {fileID: 8300000, guid: e4142312b979bb5448af861bdaaa712d, type: 3}
-  audioPrefab: {fileID: 4772951797532029414, guid: 6a6ed095c54e99a4f8340a43c8cdf6d4, type: 3}
---- !u!4 &555355017
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 555355015}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.3324325, y: 5.1, z: -1.4153357}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &569503320
 GameObject:
   m_ObjectHideFlags: 0
@@ -8167,6 +8030,63 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1491653845645109054
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6478821454558756442, guid: 0f96c4a888b8205469db5ea6c6c7bb98, type: 3}
+      propertyPath: m_Name
+      value: SoundManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872802396079728336, guid: 0f96c4a888b8205469db5ea6c6c7bb98, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.3324325
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872802396079728336, guid: 0f96c4a888b8205469db5ea6c6c7bb98, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 5.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872802396079728336, guid: 0f96c4a888b8205469db5ea6c6c7bb98, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -1.4153357
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872802396079728336, guid: 0f96c4a888b8205469db5ea6c6c7bb98, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872802396079728336, guid: 0f96c4a888b8205469db5ea6c6c7bb98, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872802396079728336, guid: 0f96c4a888b8205469db5ea6c6c7bb98, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872802396079728336, guid: 0f96c4a888b8205469db5ea6c6c7bb98, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872802396079728336, guid: 0f96c4a888b8205469db5ea6c6c7bb98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872802396079728336, guid: 0f96c4a888b8205469db5ea6c6c7bb98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7872802396079728336, guid: 0f96c4a888b8205469db5ea6c6c7bb98, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 0f96c4a888b8205469db5ea6c6c7bb98, type: 3}
 --- !u!1001 &6314304488671380585
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8355,8 +8275,7 @@ PrefabInstance:
       propertyPath: m_TagString
       value: GameController
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 5278962377993014432, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 2372602584980056643, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
     m_AddedGameObjects: []
@@ -8367,7 +8286,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1970160397}
-  - {fileID: 555355017}
+  - {fileID: 1491653845645109054}
   - {fileID: 2110663370}
   - {fileID: 655699599}
   - {fileID: 6314304488671380585}
