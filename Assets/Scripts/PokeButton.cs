@@ -3,6 +3,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.XR.Interaction.Toolkit.AffordanceSystem.State;
 using UnityEngine.XR.Interaction.Toolkit.Transformers;
 using UnityEngine;
+using RXT;
 
 public class PokeButton : MonoBehaviour
 {
@@ -41,7 +42,7 @@ public class PokeButton : MonoBehaviour
         {
             if (IsUIButton)
             {
-                SoundManager.SoundManager.Play(SoundType.uiButton, transform.position, volume, pitch);                
+                rxt.PlayAudio("uiButton", transform.position, volume, pitch);
             }
             onButtonPressed?.Invoke();
             hasTriggered = true;

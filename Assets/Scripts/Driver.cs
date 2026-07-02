@@ -13,6 +13,7 @@ public class TrialTester : MonoBehaviour
         {
             rxt.StartEventSummaryTimer(2f);
             yield return new WaitForSeconds(trialInterval);
+            rxt.PlayAudio("GamePoint", transform.position);
 
             sxr.NextTrial();
 

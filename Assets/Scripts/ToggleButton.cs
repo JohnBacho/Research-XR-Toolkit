@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.XR.Interaction.Toolkit;
 using System.Collections;
 using System.Collections.Generic;
+using RXT;
 
 public class XRPokeToggleButton : MonoBehaviour
 {
@@ -131,7 +132,7 @@ public class XRPokeToggleButton : MonoBehaviour
 
     public void PlayUISound()
     {
-        SoundManager.SoundManager.Play(SoundType.uiButton, transform.position, volume, pitch);
+        rxt.PlayAudio("uiButton", transform.position, volume, pitch);
     }
     public void StartPulsing(Color targetColor)
     {

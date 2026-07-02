@@ -203,7 +203,6 @@ namespace RXT
         private readonly StringBuilder writeBuffer = new StringBuilder(1024 * 64);
         private StreamWriter writer;
 
-        private bool recordEyeTracker;
         private bool headerPrinted = false;
         private bool isCollectingEventData = false;
 
@@ -622,8 +621,6 @@ namespace RXT
         {
             FlushToFile();
         }
-
-        public bool RecordingGaze() => recordEyeTracker;
 
         void Update()
         {

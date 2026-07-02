@@ -3012,23 +3012,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClips:
-  - sounds: 0
+  - AudioName: uiButton
     clip: {fileID: 8300000, guid: 7c941ae367aae334c97c5341170d7127, type: 3}
-  - sounds: 1
+  - AudioName: SlotMachine
     clip: {fileID: 8300000, guid: 37d2a58b364d0f5438b106cfbd99755e, type: 3}
-  - sounds: 2
+  - AudioName: Error
     clip: {fileID: 8300000, guid: 882a3bcc555dc134d9add685b44a2614, type: 3}
-  - sounds: 4
+  - AudioName: button
     clip: {fileID: 8300000, guid: 0c4c6d56fb4cbe24c80734c08db8fac4, type: 3}
-  - sounds: 5
+  - AudioName: button2
     clip: {fileID: 8300000, guid: 0c4c6d56fb4cbe24c80734c08db8fac4, type: 3}
-  - sounds: 6
+  - AudioName: Lever
     clip: {fileID: 8300000, guid: 9d369b1bed327164095e44cf1788fc73, type: 3}
-  - sounds: 7
+  - AudioName: Sucess
     clip: {fileID: 8300000, guid: 7130cd99571a52f4c97961d7a8ead95c, type: 3}
-  - sounds: 8
+  - AudioName: Suspense
     clip: {fileID: 8300000, guid: c4fea1354502e4a4a931eb15b8c7e696, type: 3}
-  - sounds: 3
+  - AudioName: GamePoint
     clip: {fileID: 8300000, guid: e4142312b979bb5448af861bdaaa712d, type: 3}
   audioPrefab: {fileID: 4772951797532029414, guid: 6a6ed095c54e99a4f8340a43c8cdf6d4, type: 3}
 --- !u!4 &555355017
@@ -6118,8 +6118,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8c9349a0bc26bf47b53fbbae7c2ed09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPoint: {fileID: 569503321}
-  speed: 0.2
 --- !u!1 &1607877860
 GameObject:
   m_ObjectHideFlags: 0
@@ -6407,8 +6405,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8c9349a0bc26bf47b53fbbae7c2ed09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetPoint: {fileID: 1884842268}
-  speed: 0.2
 --- !u!1 &1664088120
 GameObject:
   m_ObjectHideFlags: 0

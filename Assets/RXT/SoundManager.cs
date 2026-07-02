@@ -1,24 +1,13 @@
 using System;
 using UnityEngine;
 using UnityEngine.Audio;
-
-public enum SoundType
-{
-    uiButton,
-    winAudio,
-    lossAudio,
-    minigamePointSound,
-    increaseButtonSound,
-    decreaseButtonSound,
-    handleSound,
-    successTone,
-    suspenseLoop,
-}
+using System.Collections;
+using System.Collections.Generic;
 
 [System.Serializable]
 public class AudioClips
 {
-    public SoundType sounds;
+    public string AudioName;
     public AudioClip clip;
 }
 
@@ -28,37 +17,43 @@ namespace SoundManager
     {
         [SerializeField] private AudioClips[] audioClips;
         [SerializeField] private AudioSource audioPrefab;
+        private Dictionary<string, AudioClip> AudioFiles = new();
+
         private static SoundManager instance = null;
 
         private void Awake()
         {
             if (instance == null)
-            {
                 instance = this;
-                SetupAudioSources();
+
+            foreach (AudioClips audio in audioClips)
+            {
+                if (audio.clip == null) continue;
+                if (audio.AudioName == null) audio.AudioName = audio.clip != null ? audio.clip.name : "";
+                AudioFiles[audio.AudioName.ToLower()] = audio.clip;
             }
+
+            SetupAudioSources();
         }
 
         private void SetupAudioSources()
         {
-            for (int i = 0; i < audioClips.Length; i++)
+            foreach(KeyValuePair<string, AudioClip> kvp in AudioFiles)
             {
                 AudioSource src = Instantiate(audioPrefab, transform);
-                src.clip = audioClips[i].clip;
-                src.gameObject.name = audioClips[i].sounds.ToString();
+                src.clip = kvp.Value;
+                src.gameObject.name = kvp.Key;
             }
         }
 
-        private static AudioSource GetSource(SoundType sound)
+        private static AudioSource GetSource(string sound)
         {
-            return instance.transform
-                .Find(sound.ToString())
-                .GetComponent<AudioSource>();
+            return instance.transform.Find(sound.ToLower())?.GetComponent<AudioSource>();
         }
 
         public static void Play(
-            SoundType sound,
-            Vector3 position,
+            string sound,
+            Vector3 position = default(Vector3),
             float volume = 1,
             float pitch = 1
         )
@@ -71,8 +66,8 @@ namespace SoundManager
         }
 
         public static void PlayOnce(
-            SoundType sound,
-            Vector3 position,
+            string sound,
+            Vector3 position = default(Vector3),
             float volume = 1,
             float pitch = 1
         )
@@ -84,13 +79,13 @@ namespace SoundManager
             src.Play();
         }
 
-        public static void Stop(SoundType sound)
+        public static void Stop(string sound)
         {
             AudioSource src = GetSource(sound);
             src.Stop();
         }
 
-        public static void PlayLooped(SoundType sound, Vector3 position, float volume = 1, float pitch = 1)
+        public static void PlayLooped(string sound, Vector3 position = default(Vector3), float volume = 1, float pitch = 1)
         {
             AudioSource src = GetSource(sound);
             src.transform.position = position;
