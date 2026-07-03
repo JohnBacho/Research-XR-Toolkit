@@ -18,6 +18,9 @@ namespace RXT
 
         public static void StopEventSummaryTimer()
             => DataCollection.Instance?.StopEventSummaryTimer();
+
+        public static void StartBaseline(float time = 1f)
+            => DataCollection.Instance?.StartBaseline(time);
         
         public static void PlayAudio(
             string sound,

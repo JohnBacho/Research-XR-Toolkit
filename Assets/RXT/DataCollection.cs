@@ -27,12 +27,22 @@ namespace RXT
     {
         public double Sum;
         public int Count;
+        public string Text;
 
         public void Add(double value)
         {
             Sum += value;
             Count++;
         }
+
+        public void SetText(string value)
+        {
+            Text = value;
+        }
+
+        public bool IsNumeric => Count > 0;
+
+        public string Output => IsNumeric ? Average.ToString() : Text;
 
         public double Average => Count == 0 ? 0 : Sum / Count;
     }
@@ -79,8 +89,9 @@ namespace RXT
         [SerializeField] private string BackupDownloadPath = "/sdcard";
         [SerializeField] private bool GenerateTrialSummaryFile;
         [SerializeField] private bool GenerateEventSummaryFile;
-        [SerializeField] private bool EnablePupilBaselineCorrections;
-        [SerializeField] private float BaselineCaptureSeconds = 1f;
+        [SerializeField] private bool RecaptureBaselineOnTrialChange = false;
+
+        private float BaselineCaptureSeconds;
 
 
         private static readonly (string Header, Func<DataCollection, string> GetValue)[] BasicFieldDefs =
@@ -240,7 +251,6 @@ namespace RXT
                 .ToString();
         }
 
-        // -------- INIT --------
         void Awake()
         {
             if (Instance == null)
@@ -404,8 +414,19 @@ namespace RXT
 
             if (double.TryParse(value, out double number))
             {
-                if (GenerateTrialSummaryFile) summary[dp.Header].Add(number);
-                if (GenerateEventSummaryFile && isCollectingEventData) eventSummary[dp.Header].Add(number);
+                if (GenerateTrialSummaryFile)
+                    summary[dp.Header].Add(number);
+
+                if (GenerateEventSummaryFile && isCollectingEventData)
+                    eventSummary[dp.Header].Add(number);
+            }
+            else
+            {
+                if (GenerateTrialSummaryFile)
+                    summary[dp.Header].SetText(value);
+
+                if (GenerateEventSummaryFile && isCollectingEventData)
+                    eventSummary[dp.Header].SetText(value);
             }
 
             sb.Append(value);
@@ -429,11 +450,7 @@ namespace RXT
             UpdateGaze();
             UpdatePupil();
             AppendDataRow();
-
-            if (EnablePupilBaselineCorrections)
-            {
-                CheckForChangeInTrial();
-            }
+            CheckForChangeInTrial();
 
             flushTimer += Time.deltaTime;
             if (flushTimer >= 5f)
@@ -561,13 +578,27 @@ namespace RXT
             if(previousValue != sxr.GetTrial())
             {
                 if(GenerateTrialSummaryFile) WriteTrialSummary();
+
                 previousValue = sxr.GetTrial();
-                StartBaseline();
+
+                if (GenerateTrialSummaryFile)
+                {
+                    StartBaseline();
+                }
             }
         }
 
-        public void StartBaseline()
+        public void StartBaseline(float BaselineCaptureDuration = 1f)
         {
+            if (BaselineCaptureDuration > 0f)
+                BaselineCaptureSeconds = BaselineCaptureDuration;
+
+            if (baselineInProgress)
+            {
+                Debug.LogWarning("Baseline capture already in progress.");
+                return;
+            }
+
             StartCoroutine(SetBaseline());
         }
 
@@ -606,13 +637,7 @@ namespace RXT
         {
             foreach (var kv in summary)
             {
-                if(kv.Key == "Trial")
-                {
-                    summaryWriter.Write(sxr.GetTrial() -1);
-                    summaryWriter.Write(",");
-                    continue;
-                }
-                summaryWriter.Write(kv.Value.Average);
+                summaryWriter.Write(kv.Value.Output);
                 summaryWriter.Write(",");
             }
 
@@ -622,6 +647,7 @@ namespace RXT
             {
                 kv.Sum = 0;
                 kv.Count = 0;
+                kv.Text = null;
             }
         }
 
@@ -652,13 +678,7 @@ namespace RXT
 
             foreach (var kv in eventSummary)
             {
-                if(kv.Key == "Trial")
-                {
-                    eventWriter.Write(sxr.GetTrial());
-                    eventWriter.Write(",");
-                    continue;
-                }
-                eventWriter.Write(kv.Value.Average);
+                eventWriter.Write(kv.Value.Output);
                 eventWriter.Write(",");
             }
 
@@ -668,7 +688,9 @@ namespace RXT
             {
                 kv.Sum = 0;
                 kv.Count = 0;
+                kv.Text = null;
             }
+
             eventCoroutine = null;
         }
 

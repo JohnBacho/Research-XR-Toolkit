@@ -2712,13 +2712,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a00d0dbfe6a666243b767de9148d13fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SubjectID: 1
+  SubjectID: Participant
   DownloadPath: Assets/Data
   BackupDownloadPath: /sdcard
   GenerateTrialSummaryFile: 1
   GenerateEventSummaryFile: 1
-  EnablePupilBaselineCorrections: 1
-  BaselineCaptureSeconds: 1
+  RecaptureBaselineOnTrialChange: 0
   dataPoint:
   - Toggle: 1
     Header: SubjectID
