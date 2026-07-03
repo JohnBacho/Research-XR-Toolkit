@@ -299,6 +299,8 @@ public static class sxr
     public static int GetStepInTrial() { return ExperimentHandler.Instance.stepInTrial;}
 
     public static string GetSubjectID() { return ExperimentHandler.Instance.subjectID;}
+
+    public static string GetState() { return ExperimentHandler.Instance.state;}
     
     /// <summary>
     /// Returns the current "step" in the experiment. (Phase > Block > Trial > Step)
@@ -329,6 +331,7 @@ public static class sxr
     /// </summary>
     public static void NextTrial() {
         ExperimentHandler.Instance.trial++;
+        ExperimentHandler.Instance.RestartTimer();
         ExperimentHandler.Instance.stepInTrial = 0; }
     
     public static void NextStep() { ExperimentHandler.Instance.stepInTrial++;}
@@ -339,6 +342,7 @@ public static class sxr
     /// <param name="stepNumber"></param>
     public static void SetStep(int stepNumber) { ExperimentHandler.Instance.stepInTrial = stepNumber;}
     public static void SetSubjectID(string subjectID) { ExperimentHandler.Instance.subjectID = subjectID;}
+    public static void SetState(string state) { ExperimentHandler.Instance.state = state;}
 
     /// <summary>
     /// Sets the current "step" to the specified number

@@ -11,15 +11,15 @@ using VIVE.OpenXR.FacialTracking;
 using sxr_internal;
 using VIVE.OpenXR.Samples.FacialTracking;
 using VIVE.OpenXR.Samples.EyeTracker;
-using SoundManager;
 
 namespace RXT
 {
-    [Serializable]
+    [System.Serializable]
     public class DataChannel
     {
-        public bool Toggle = true;
+        [HideInInspector] public string DataField;
         public string Header;
+        public bool Toggle = true;
     }
 
     [System.Serializable]
@@ -53,7 +53,15 @@ namespace RXT
         private void PopulateBasic()
         {
             dataPoint = BasicFieldDefs
-                .Select(d => new DataChannel { Toggle = true, Header = d.Header })
+                .Select(d => new DataChannel { Toggle = true, DataField = d.DataField, Header = d.DataField })
+                .ToList();
+        }
+
+        [ContextMenu("Camera Tracking")]
+        private void PopulateCameraTracking()
+        {
+            cameraTrackingDataPoints = CameraTrackingdDefs
+                .Select(d => new DataChannel { Toggle = true, DataField = d.DataField, Header = d.DataField })
                 .ToList();
         }
 
@@ -61,7 +69,7 @@ namespace RXT
         private void PopulateEyeTracking()
         {
             eyeTrackingDataPoints = EyeTrackingDefs
-                .Select(d => new DataChannel { Toggle = true, Header = d.Header })
+                .Select(d => new DataChannel { Toggle = true, DataField = d.DataField, Header = d.DataField })
                 .ToList();
         }
 
@@ -69,7 +77,7 @@ namespace RXT
         private void PopulateEyeExpressions()
         {
             eyeExpressionDataPoints = EyeExpressionDefs
-                .Select(d => new DataChannel { Toggle = true, Header = d.Header })
+                .Select(d => new DataChannel { Toggle = true, DataField = d.DataField, Header = d.DataField })
                 .ToList();
         }
 
@@ -77,7 +85,7 @@ namespace RXT
         private void PopulateFacialExpressions()
         {
             facialExpressionDataPoints = FacialExpressionDefs
-                .Select(d => new DataChannel { Toggle = true, Header = d.Header })
+                .Select(d => new DataChannel { Toggle = true, DataField = d.DataField, Header = d.DataField })
                 .ToList();
         }
 
@@ -94,7 +102,7 @@ namespace RXT
         private float BaselineCaptureSeconds;
 
 
-        private static readonly (string Header, Func<DataCollection, string> GetValue)[] BasicFieldDefs =
+        private static readonly (string DataField, Func<DataCollection, string> GetValue)[] BasicFieldDefs =
         {
             ("SubjectID",        d => sxr.GetSubjectID()),
             ("Date",             d => DateTime.Today.ToString("M_d")),
@@ -104,9 +112,20 @@ namespace RXT
             ("Trial",            d => sxr.GetTrial().ToString()),
             ("Step",             d => sxr.GetStepInTrial().ToString()),
             ("TrialTimePassed",  d => sxr.TimePassed().ToString()),
+            ("State",            d => sxr.GetState()),
         };
 
-        private static readonly (string Header, Func<DataCollection, string> GetValue)[] EyeTrackingDefs =
+        private static readonly (string DataField, Func<DataCollection, string> GetValue)[] CameraTrackingdDefs =
+        {
+            ("xPos",        d => d.UpdateCamera("xPos")),
+            ("yPos",             d => d.UpdateCamera("yPos")),
+            ("zPos",        d => d.UpdateCamera("zPos")),
+            ("xRot",        d => d.UpdateCamera("xRot")),
+            ("yRot",            d => d.UpdateCamera("yRot")),
+            ("zRot",            d => d.UpdateCamera("zRot")),
+        };
+
+        private static readonly (string DataField, Func<DataCollection, string> GetValue)[] EyeTrackingDefs =
         {
             ("gazeOriginX",        d => d.combinedGazeOrigin.x.ToString("F4")),
             ("gazeOriginY",        d => d.combinedGazeOrigin.y.ToString("F4")),
@@ -128,7 +147,7 @@ namespace RXT
             ("objectName", d => d.hasHit ? d.hitObjectName : ""),
         };
 
-        private static readonly (string Header, Func<DataCollection, string> GetValue)[] EyeExpressionDefs =
+        private static readonly (string DataField, Func<DataCollection, string> GetValue)[] EyeExpressionDefs =
         {
             ("EYE_EXPRESSION_LEFT_BLINK_HTC",        d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_BLINK_HTC)),
             ("EYE_EXPRESSION_LEFT_WIDE_HTC",        d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_LEFT_WIDE_HTC)),
@@ -146,7 +165,7 @@ namespace RXT
             ("EYE_EXPRESSION_RIGHT_UP_HTC", d => d.GetEyeExpressionValue(XrEyeExpressionHTC.XR_EYE_EXPRESSION_RIGHT_UP_HTC)),
         };
 
-        private static readonly (string Header, Func<DataCollection, string> GetValue)[] FacialExpressionDefs =
+        private static readonly (string DataField, Func<DataCollection, string> GetValue)[] FacialExpressionDefs =
         {
             ("XR_LIP_EXPRESSION_JAW_RIGHT_HTC",           d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_JAW_RIGHT_HTC)),
             ("XR_LIP_EXPRESSION_JAW_LEFT_HTC",            d => d.GetFacialExpressionValue(XrLipExpressionHTC.XR_LIP_EXPRESSION_JAW_LEFT_HTC)),
@@ -188,6 +207,7 @@ namespace RXT
         };
 
         public List<DataChannel> dataPoint = new();
+        public List<DataChannel> cameraTrackingDataPoints = new();
         public List<DataChannel> eyeTrackingDataPoints = new();
         public List<DataChannel> eyeExpressionDataPoints = new();
         public List<DataChannel> facialExpressionDataPoints = new();
@@ -320,7 +340,6 @@ namespace RXT
 
             Debug.Log("Saving to: " + filePath);
             }
-
         }
 
         void Start()
@@ -340,8 +359,20 @@ namespace RXT
                     continue;
                 }
                 headerConstructor += dp.Header + ",";
-                if(GenerateTrialSummaryFile) summary[dp.Header] = new SummaryValue();
-                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new SummaryValue();
+                if(GenerateTrialSummaryFile) summary[dp.DataField] = new SummaryValue();
+                if(GenerateEventSummaryFile) eventSummary[dp.DataField] = new SummaryValue();
+
+            }
+
+            foreach(var dp in cameraTrackingDataPoints)
+            {
+                if (!dp.Toggle)
+                {
+                    continue;
+                }
+                headerConstructor += dp.Header + ",";
+                if(GenerateTrialSummaryFile) summary[dp.DataField] = new SummaryValue();
+                if(GenerateEventSummaryFile) eventSummary[dp.DataField] = new SummaryValue();
 
             }
 
@@ -352,8 +383,8 @@ namespace RXT
                     continue;
                 }
                 headerConstructor += dp.Header + ",";
-                if(GenerateTrialSummaryFile) summary[dp.Header] = new SummaryValue();
-                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new SummaryValue();
+                if(GenerateTrialSummaryFile) summary[dp.DataField] = new SummaryValue();
+                if(GenerateEventSummaryFile) eventSummary[dp.DataField] = new SummaryValue();
             }
 
             foreach(var dp in eyeExpressionDataPoints)
@@ -363,8 +394,8 @@ namespace RXT
                     continue;
                 }
                 headerConstructor += dp.Header + ",";
-                if(GenerateTrialSummaryFile) summary[dp.Header] = new SummaryValue();
-                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new SummaryValue();
+                if(GenerateTrialSummaryFile) summary[dp.DataField] = new SummaryValue();
+                if(GenerateEventSummaryFile) eventSummary[dp.DataField] = new SummaryValue();
             }
 
             foreach(var dp in facialExpressionDataPoints)
@@ -374,8 +405,8 @@ namespace RXT
                     continue;
                 }
                 headerConstructor += dp.Header + ",";
-                if(GenerateTrialSummaryFile) summary[dp.Header] = new SummaryValue();
-                if(GenerateEventSummaryFile) eventSummary[dp.Header] = new SummaryValue();
+                if(GenerateTrialSummaryFile) summary[dp.DataField] = new SummaryValue();
+                if(GenerateEventSummaryFile) eventSummary[dp.DataField] = new SummaryValue();
             }
 
             writer.WriteLine(headerConstructor);
@@ -397,16 +428,16 @@ namespace RXT
     void AppendChannelGroup(
     StringBuilder sb,
     List<DataChannel> channels,
-    (string Header, Func<DataCollection, string> GetValue)[] defs)
+    (string DataField, Func<DataCollection, string> GetValue)[] defs)
     {
         foreach (var dp in channels)
         {
             if (!dp.Toggle) continue;
 
-            var def = Array.Find(defs, d => d.Header == dp.Header);
+            var def = Array.Find(defs, d => d.DataField == dp.DataField);
             if (def.GetValue == null)
             {
-                Debug.LogWarning($"No matching field def for header '{dp.Header}' — skipping.");
+                Debug.LogWarning($"No matching field def for header '{dp.DataField}' — skipping.");
                 continue;
             }
 
@@ -415,18 +446,18 @@ namespace RXT
             if (double.TryParse(value, out double number))
             {
                 if (GenerateTrialSummaryFile)
-                    summary[dp.Header].Add(number);
+                    summary[dp.DataField].Add(number);
 
                 if (GenerateEventSummaryFile && isCollectingEventData)
-                    eventSummary[dp.Header].Add(number);
+                    eventSummary[dp.DataField].Add(number);
             }
             else
             {
                 if (GenerateTrialSummaryFile)
-                    summary[dp.Header].SetText(value);
+                    summary[dp.DataField].SetText(value);
 
                 if (GenerateEventSummaryFile && isCollectingEventData)
-                    eventSummary[dp.Header].SetText(value);
+                    eventSummary[dp.DataField].SetText(value);
             }
 
             sb.Append(value);
@@ -464,10 +495,35 @@ namespace RXT
         {
 
             AppendChannelGroup(writeBuffer, dataPoint, BasicFieldDefs);
+            AppendChannelGroup(writeBuffer, cameraTrackingDataPoints, CameraTrackingdDefs);
             AppendChannelGroup(writeBuffer, eyeTrackingDataPoints, EyeTrackingDefs);
             AppendChannelGroup(writeBuffer, eyeExpressionDataPoints, EyeExpressionDefs);
             AppendChannelGroup(writeBuffer, facialExpressionDataPoints, FacialExpressionDefs);
             writeBuffer.Append("\r\n");
+        }
+
+        string UpdateCamera(string dataField)
+        {
+            var trans = vrCamera.transform;
+            var pos = trans.position;
+            var rot = trans.rotation;
+            switch (dataField)
+            {
+                case "xPos":
+                    return pos.x.ToString();
+                case "yPos":
+                    return pos.y.ToString();
+                case "zPos":
+                    return pos.z.ToString();
+                case "xRot":
+                    return rot.eulerAngles.x.ToString();
+                case "yRot":
+                    return rot.eulerAngles.y.ToString();
+                case "zRot":
+                    return rot.eulerAngles.z.ToString();
+            }
+
+            return "";
         }
 
         void UpdateGaze()

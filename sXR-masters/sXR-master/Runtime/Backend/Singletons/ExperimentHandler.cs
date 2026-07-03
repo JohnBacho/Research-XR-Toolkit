@@ -14,6 +14,7 @@ namespace sxr_internal
         public int block;
         public int trial;
         public int stepInTrial;
+        public string state;
 
         private string experimentName = "";
         private string subjectFile = "";
