@@ -2,7 +2,7 @@
 
 <div align="center">
 
-<img width="500" height="500" alt="RXT_Logo" src="https://github.com/user-attachments/assets/3df2a36b-ff6e-4c9a-9da8-22da29c3225c" />
+<img width="500" height="500" alt="RXT_Logo" src="Assets/RXT/RXT_Logo.png" />
 
 
 [![License: CC BY-NC 4.0](https://img.shields.io/badge/License-CC%20BY--NC%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
