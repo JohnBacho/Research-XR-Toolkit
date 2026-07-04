@@ -40,5 +40,9 @@ namespace RXT
             => SoundManager.SoundManager.PlayLooped(sound, position, volume, pitch);
         public static void StopAudio(string sound)
             => SoundManager.SoundManager.Stop(sound);
+
+        public static void EndProgram()
+            => Application.Quit(); 
+            // You must Build and Run the application for this to work. It will not work in the editor.
     }
 }
