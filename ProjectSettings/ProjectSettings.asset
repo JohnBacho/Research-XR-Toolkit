@@ -13,7 +13,7 @@ PlayerSettings:
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: VIBES-Lab
-  productName: PassthroughTest
+  productName: RXT
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0, g: 0, b: 0, a: 1}
@@ -788,7 +788,7 @@ PlayerSettings:
   webGLPowerPreference: 2
   scriptingDefineSymbols:
     Android: USE_INPUT_SYSTEM_POSE_CONTROL
-    Standalone: USE_INPUT_SYSTEM_POSE_CONTROL;SXR_USE_AUTOVR;SXR_USE_AUTOSAVER;SXR_USE_STARTSCREEN
+    Standalone: USE_INPUT_SYSTEM_POSE_CONTROL;SXR_USE_AUTOVR;SXR_USE_AUTOSAVER
     Windows Store Apps: USE_INPUT_SYSTEM_POSE_CONTROL
   additionalCompilerArguments: {}
   platformArchitecture: {}

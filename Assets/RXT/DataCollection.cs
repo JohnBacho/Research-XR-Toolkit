@@ -83,8 +83,8 @@ namespace RXT
 
         public static DataCollection Instance;
 
-        [SerializeField] private string DownloadPath = "/Assets/Data";
-        [SerializeField] private string BackupDownloadPath = "/sdcard";
+        [SerializeField] private string DownloadPath = "Data";
+        [SerializeField] private string BackupDownloadPath = "sdcard";
         [SerializeField] private bool RunOnStartup = true;
         [SerializeField] private bool GenerateTrialSummaryFile;
         [SerializeField] private bool GenerateEventSummaryFile;
@@ -267,7 +267,7 @@ namespace RXT
                 .ToString();
         }
 
-        void Awake()
+        void Start()
         {
             if (Instance == null)
             {
@@ -280,7 +280,7 @@ namespace RXT
                 return;
             }
 
-            string storageRoot = DownloadPath;
+            string storageRoot = Path.Combine(Application.dataPath, DownloadPath);
             try
             {
                 if (!Directory.Exists(storageRoot))
@@ -288,25 +288,15 @@ namespace RXT
             }
             catch
             {
-                storageRoot = BackupDownloadPath;
+                storageRoot = Path.Combine(Application.dataPath, BackupDownloadPath);
             }
 
             string folderName = "";
 
             string subfolderBase = folderName.ToLowerInvariant();
 
-            string subfolderName =$"{subfolderBase}{1}";
+            string subfolderName =$"{subfolderBase}{rxt.GetUniqueID().ToString()}";
             string subfolderPath = Path.Combine(storageRoot, subfolderName);
-
-            int suffix = 1;
-            while (Directory.Exists(subfolderPath))
-            {
-                suffix++;
-                subfolderName = $"{subfolderBase}{suffix}";
-                subfolderPath = Path.Combine(storageRoot, subfolderName);
-            }
-            rxt.SetUniqueID(suffix);
-            sxr.SetSubjectID(suffix.ToString());
 
             Directory.CreateDirectory(subfolderPath);
 
@@ -333,16 +323,14 @@ namespace RXT
 
             Debug.Log("Saving to: " + filePath);
             }
-        }
 
-        void Start()
-        {
-            vrCamera = Camera.main;
-            
+                vrCamera = Camera.main;
+
             if(RunOnStartup)
             {
                 StartRecording();
             }
+            sxr.SetSubjectID(rxt.GetUniqueID().ToString());
         }
 
         string BuildHeader(DataChannelGroup data)
@@ -717,11 +705,15 @@ namespace RXT
             eventCoroutine = null;
         }
 
-        void OnApplicationQuit()
+        private void OnApplicationQuit()
         {
-            FlushToFile();
+            writer?.Flush();
             writer?.Close();
+
+            summaryWriter?.Flush();
             summaryWriter?.Close();
+
+            eventWriter?.Flush();
             eventWriter?.Close();
         }
 

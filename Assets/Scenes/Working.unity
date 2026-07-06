@@ -324,7 +324,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &49831173
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2666,6 +2666,7 @@ GameObject:
   - component: {fileID: 272285040}
   - component: {fileID: 272285041}
   - component: {fileID: 272285042}
+  - component: {fileID: 272285043}
   m_Layer: 0
   m_Name: GameObject
   m_TagString: Untagged
@@ -2712,9 +2713,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a00d0dbfe6a666243b767de9148d13fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SubjectID: Participant
-  DownloadPath: Assets/Data
+  DownloadPath: Data
   BackupDownloadPath: /sdcard
+  RunOnStartup: 1
   GenerateTrialSummaryFile: 1
   GenerateEventSummaryFile: 1
   RecaptureBaselineOnTrialChange: 0
@@ -2974,6 +2975,18 @@ MonoBehaviour:
       Header: XR_LIP_EXPRESSION_TONGUE_DOWNLEFT_MORPH_HTC
       Toggle: 1
   SimulateEyeTracking: 1
+--- !u!114 &272285043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 272285038}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5a0585f276e47b46be3319f5c8cb7ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &292147602
 GameObject:
   m_ObjectHideFlags: 0
@@ -4773,8 +4786,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9507b4c401545524bab6f53a55dbe38c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EndingProgramText: {fileID: 156524377}
-  EndProgramScene: {fileID: 1265610748}
 --- !u!4 &1265610750
 Transform:
   m_ObjectHideFlags: 0
