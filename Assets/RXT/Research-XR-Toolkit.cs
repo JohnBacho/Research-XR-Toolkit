@@ -5,8 +5,9 @@ using UnityEngine;
 
 namespace RXT
 {
-        public static class rxt
+    public static class rxt
     {
+        private static int uniqueID = -1;
         public static void StartRecording()
             => DataCollection.Instance?.StartRecording();
 
@@ -44,5 +45,29 @@ namespace RXT
         public static void EndProgram()
             => Application.Quit(); 
             // You must Build and Run the application for this to work. It will not work in the editor.
+        
+        public static void SetUniqueID(int id)
+            => uniqueID = id;
+        public static int GetUniqueID()
+            => uniqueID;
+        public static int RandomizeInt(int min, int max)
+            => RandomizeManager.RandomizeInt(min, max);
+        public static float RandomizeFloat(float min, float max)
+            => RandomizeManager.RandomizeFloat(min, max);
+        public static int[] RandomizeIntArray(int min, int max, int length)
+            => RandomizeManager.RandomizeIntArray(min, max, length);
+        public static int[] RandomizeIntArray(int[] array)
+            => RandomizeManager.RandomizeIntArray(array);
+        public static float[] RandomizeFloatArray(float min, float max, int length)
+            => RandomizeManager.RandomizeFloatArray(min, max, length);  
+        public static float[] RandomizeFloatArray(float[] array)
+            => RandomizeManager.RandomizeFloatArray(array);
+        public static string[] RandomizeStringArray(string[] array)
+            => RandomizeManager.RandomizeStringArray(array);
+        public static string[] LatinSquare(string[] conditions, int participantID)
+            => RandomizeManager.LatinSquare(conditions, participantID);
+        public static string[] GenerateTrialOrder(string[] conditions, int repeats, bool randomize = true)
+            => RandomizeManager.GenerateTrialOrder(conditions, repeats, randomize);
+        
     }
 }
