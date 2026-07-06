@@ -83,9 +83,9 @@ namespace RXT
 
         public static DataCollection Instance;
 
-        [SerializeField] private string SubjectID = "Participant";
-        [SerializeField] private string DownloadPath = "/sdcard2";
+        [SerializeField] private string DownloadPath = "/Assets/Data";
         [SerializeField] private string BackupDownloadPath = "/sdcard";
+        [SerializeField] private bool RunOnStartup = true;
         [SerializeField] private bool GenerateTrialSummaryFile;
         [SerializeField] private bool GenerateEventSummaryFile;
         [SerializeField] private bool RecaptureBaselineOnTrialChange = false;
@@ -283,38 +283,35 @@ namespace RXT
             string storageRoot = DownloadPath;
             try
             {
-                string testPath = Path.Combine(storageRoot, "Download", "Experiments");
-                if (!Directory.Exists(testPath))
-                    Directory.CreateDirectory(testPath);
+                if (!Directory.Exists(storageRoot))
+                    Directory.CreateDirectory(storageRoot);
             }
             catch
             {
                 storageRoot = BackupDownloadPath;
             }
 
-            string experimentsRoot = Path.Combine(storageRoot, "Download", "Experiments");
-            if (!Directory.Exists(experimentsRoot))
-                Directory.CreateDirectory(experimentsRoot);
-
-            string folderName = SubjectID;
+            string folderName = "";
 
             string subfolderBase = folderName.ToLowerInvariant();
 
-            string subfolderName = subfolderBase;
-            string subfolderPath = Path.Combine(experimentsRoot, subfolderName);
+            string subfolderName =$"{subfolderBase}{1}";
+            string subfolderPath = Path.Combine(storageRoot, subfolderName);
 
             int suffix = 1;
             while (Directory.Exists(subfolderPath))
             {
-                subfolderName = $"{subfolderBase}({suffix})";
-                subfolderPath = Path.Combine(experimentsRoot, subfolderName);
                 suffix++;
+                subfolderName = $"{subfolderBase}{suffix}";
+                subfolderPath = Path.Combine(storageRoot, subfolderName);
             }
+            rxt.SetUniqueID(suffix);
+            sxr.SetSubjectID(suffix.ToString());
 
             Directory.CreateDirectory(subfolderPath);
 
             string timestamp = DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
-            filePath = Path.Combine(subfolderPath, $"eyetracker_{timestamp}.csv");
+            filePath = Path.Combine(subfolderPath, $"Data_{timestamp}.csv");
 
             writer = new StreamWriter(filePath, append: false, encoding: Encoding.UTF8, bufferSize: 65536);
             writer.AutoFlush = false;
@@ -341,8 +338,11 @@ namespace RXT
         void Start()
         {
             vrCamera = Camera.main;
-            sxr.SetSubjectID(SubjectID);
-            StartRecording();
+            
+            if(RunOnStartup)
+            {
+                StartRecording();
+            }
         }
 
         string BuildHeader(DataChannelGroup data)
