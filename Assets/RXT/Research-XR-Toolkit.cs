@@ -68,6 +68,10 @@ namespace RXT
             => RandomizeManager.LatinSquare(conditions, participantID);
         public static string[] GenerateTrialOrder(string[] conditions, int repeats, bool randomize = true)
             => RandomizeManager.GenerateTrialOrder(conditions, repeats, randomize);
+
+        
         
     }
+
+    
 }
