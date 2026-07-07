@@ -69,7 +69,10 @@ namespace RXT
         public static string[] GenerateTrialOrder(string[] conditions, int repeats, bool randomize = true)
             => RandomizeManager.GenerateTrialOrder(conditions, repeats, randomize);
 
-        
+        public static void TriggerHaptic(float amplitude = 1f, float duration = 1f)
+            => HapticsManager.CustomTriggerHaptic(amplitude, duration);
+        public static void TriggerHaptic()
+            => HapticsManager.TriggerHaptic();
         
     }
 

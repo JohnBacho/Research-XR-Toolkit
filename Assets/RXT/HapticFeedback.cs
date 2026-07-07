@@ -3,46 +3,31 @@ using UnityEngine.XR;
 
 public class HapticsManager : MonoBehaviour
 {
-    private bool isRightHanded = true;
-
-    private InputDevice GetController()
+    private static InputDevice GetController(bool isRightHanded = true)
     {
         return InputDevices.GetDeviceAtXRNode(
             isRightHanded ? XRNode.RightHand : XRNode.LeftHand
         );
     }
 
-    public void setDominateHand(bool rightHanded)
+    public static void CustomTriggerHaptic(float amplitude, float duration)
     {
-        isRightHanded = rightHanded;
-    }
-
-    public void CustomTriggerHaptic(float amplitude, float duration)
-    {
-        InputDevice controller = GetController();
-        if (controller.isValid && controller.TryGetHapticCapabilities(out HapticCapabilities capabilities))
+        InputDevice Rightcontroller = GetController(true);
+        InputDevice Leftcontroller = GetController(false);
+        if (Rightcontroller.isValid && Rightcontroller.TryGetHapticCapabilities(out HapticCapabilities capabilities))
         {
             if (capabilities.supportsImpulse)
-                controller.SendHapticImpulse(0, amplitude, duration);
+                Rightcontroller.SendHapticImpulse(0, amplitude, duration);
+        }
+        if (Leftcontroller.isValid && Leftcontroller.TryGetHapticCapabilities(out HapticCapabilities Capabilities))
+        {
+            if (Capabilities.supportsImpulse)
+                Leftcontroller.SendHapticImpulse(0, amplitude, duration);
         }
     }
 
-    public void TriggerHaptic()
+    public static void TriggerHaptic()
     {
-        CustomTriggerHaptic(0.5f, 0.1f);
-    }
-
-    public void HapticIncreaseBet()  { CustomTriggerHaptic(0.7f, 0.1f); }
-    public void HapticDecreaseBet()  { CustomTriggerHaptic(0.5f, 0.15f); }
-
-    public void HapticUntoggle()
-    {
-        CustomTriggerHaptic(0.5f, 0.05f);
-        Invoke(nameof(SecondUntogglePulse), 0.07f);
-    }
-
-    private void SecondUntogglePulse()
-    {
-        CustomTriggerHaptic(0.5f, 0.05f);
+        CustomTriggerHaptic(1f, 1f);
     }
 }
