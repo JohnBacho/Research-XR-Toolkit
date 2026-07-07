@@ -705,15 +705,11 @@ namespace RXT
             eventCoroutine = null;
         }
 
-        private void OnApplicationQuit()
+        void OnApplicationQuit()
         {
-            writer?.Flush();
+            FlushToFile();
             writer?.Close();
-
-            summaryWriter?.Flush();
             summaryWriter?.Close();
-
-            eventWriter?.Flush();
             eventWriter?.Close();
         }
 

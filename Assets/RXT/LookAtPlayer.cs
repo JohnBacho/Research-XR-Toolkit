@@ -4,13 +4,17 @@ using UnityEngine;
 
 public class LookAtPlayer : MonoBehaviour
 {
+    private Camera vrCamera;
 
-    [SerializeField] private Transform playerCamera;
-
+void Start()
+    {
+        vrCamera = Camera.main;
+    }
 
 void Update()
 {
-    Vector3 targetDirection = transform.position - playerCamera.position;
+    var trans = vrCamera.transform;
+    Vector3 targetDirection = transform.position - trans.position;
         transform.rotation = Quaternion.LookRotation(targetDirection);
 }
 }

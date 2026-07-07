@@ -468,11 +468,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 697777116765190965}
-  - component: {fileID: 2406531904229766790}
   - component: {fileID: 5070510760917176865}
-  - component: {fileID: 2135494507377289803}
   - component: {fileID: 4628739034210268166}
-  - component: {fileID: 7212701274430900276}
   - component: {fileID: 697777116765190969}
   - component: {fileID: 8287732890275959451}
   - component: {fileID: 6457949566599413551}
@@ -501,20 +498,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 697777116264440786}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2406531904229766790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697777116765190964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 786cf71e849fadb42b4af5ee187039b7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  recordCamera: 0
-  recordGaze: 0
 --- !u!114 &5070510760917176865
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -527,28 +510,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db557e4a009c77a40ba0cb3abf24dd55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &2135494507377289803
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697777116765190964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec92c43910212f047a43d9f636bedd66, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  defaultDisplayTexts: 1
-  subjID: {fileID: 0}
-  phaseNum: {fileID: 0}
-  blockNum: {fileID: 0}
-  trialNum: {fileID: 0}
-  displayText1: {fileID: 0}
-  displayText2: {fileID: 0}
-  displayText3: {fileID: 0}
-  displayText4: {fileID: 0}
-  displayText5: {fileID: 0}
 --- !u!114 &4628739034210268166
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -566,18 +527,7 @@ MonoBehaviour:
   block: 0
   trial: 0
   stepInTrial: 0
---- !u!114 &7212701274430900276
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 697777116765190964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7feffd27793c42543be61f6a6b16fdce, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  state: 
 --- !u!114 &697777116765190969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4923,7 +4873,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2135494507377289803}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: sxr_internal.ExperimenterDisplayHandler, Assembly-CSharp
         m_MethodName: ReplayButton
         m_Mode: 1
@@ -7017,7 +6967,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2135494507377289803}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: sxr_internal.ExperimenterDisplayHandler, Assembly-CSharp
         m_MethodName: StartButton
         m_Mode: 1
