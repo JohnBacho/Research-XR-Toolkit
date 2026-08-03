@@ -11,6 +11,10 @@ using VIVE.OpenXR.FacialTracking;
 using sxr_internal;
 using VIVE.OpenXR.Samples.FacialTracking;
 using VIVE.OpenXR.Samples.EyeTracker;
+using ViveSR.anipal.Eye;
+using EyeFocusInfo = ViveSR.anipal.Eye.FocusInfo;
+using GazeIndexInfo = ViveSR.anipal.Eye.GazeIndex;
+using VerboseDataInfo = ViveSR.anipal.Eye.VerboseData;
 
 namespace RXT
 {
@@ -83,12 +87,24 @@ namespace RXT
 
         public static DataCollection Instance;
 
+        [SerializeField] private bool IsViveFocusVision = true;
         [SerializeField] private string DownloadPath = "Data";
         [SerializeField] private string BackupDownloadPath = "sdcard";
+        [SerializeField] private string FocusDownloadPath = "/sdcard2";
+        [SerializeField] private string FocusBackupDownloadPath = "/sdcard";
         [SerializeField] private bool RunOnStartup = true;
         [SerializeField] private bool GenerateTrialSummaryFile;
         [SerializeField] private bool GenerateEventSummaryFile;
         [SerializeField] private bool RecaptureBaselineOnTrialChange = false;
+
+        //HTC VIVE Pro EYE
+        private string FocusedGameObject = ""; // used for Sranipal
+        private Ray testRay; // used for Sranipal
+        private EyeFocusInfo focusInfo; // used for Sranipal
+        private VerboseDataInfo verboseData = new VerboseDataInfo();
+        private Action updateGazeFunc;
+        private Action updatePupilFunc;
+
 
         private float BaselineCaptureSeconds;
 
@@ -280,7 +296,20 @@ namespace RXT
                 return;
             }
 
-            string storageRoot = Path.Combine(Application.dataPath, DownloadPath);
+            string storageRoot;
+            if(IsViveFocusVision)
+            {
+                storageRoot = FocusDownloadPath;
+                updateGazeFunc = UpdateFocusVisionGaze;
+                updatePupilFunc = UpdateFocusVisionPupil;
+            }
+            else
+            {
+                storageRoot = Path.Combine(Application.dataPath, DownloadPath);
+                updateGazeFunc = UpdateProEyeGaze;
+                updatePupilFunc = UpdateProEyePupil;
+            }
+
             try
             {
                 if (!Directory.Exists(storageRoot))
@@ -288,14 +317,10 @@ namespace RXT
             }
             catch
             {
-                storageRoot = Path.Combine(Application.dataPath, BackupDownloadPath);
+                storageRoot = IsViveFocusVision ? FocusBackupDownloadPath : Path.Combine(Application.dataPath, BackupDownloadPath);
             }
 
-            string folderName = "";
-
-            string subfolderBase = folderName.ToLowerInvariant();
-
-            string subfolderName =$"{subfolderBase}{rxt.GetUniqueID().ToString()}";
+            string subfolderName =$"{rxt.GetUniqueID().ToString()}";
             string subfolderPath = Path.Combine(storageRoot, subfolderName);
 
             Directory.CreateDirectory(subfolderPath);
@@ -433,8 +458,8 @@ namespace RXT
 
         void Update()
         {
-            UpdateGaze();
-            UpdatePupil();
+            updateGazeFunc?.Invoke();
+            updatePupilFunc?.Invoke();
             AppendDataRow();
             CheckForChangeInTrial();
 
@@ -481,7 +506,7 @@ namespace RXT
             return "";
         }
 
-        void UpdateGaze()
+        void UpdateFocusVisionGaze()
         {
             XR_HTC_eye_tracker.Interop.GetEyeGazeData(out XrSingleEyeGazeDataHTC[] gazes);
 
@@ -534,7 +559,7 @@ namespace RXT
             }
         }
 
-        void UpdatePupil()
+        void UpdateFocusVisionPupil()
         {
             if (SimulateEyeTracking)
             {
@@ -719,6 +744,72 @@ namespace RXT
             writer?.Close();
             summaryWriter?.Close();
             eventWriter?.Close();
+        }
+
+        // HTC Pro Eye
+        void UpdateProEyeGaze()
+        {
+            combinedGazeOrigin = testRay.origin;
+            combinedGazeDirection = testRay.direction.normalized;
+
+            gazeRay = testRay;
+
+            hasHit = Physics.Raycast(gazeRay, out hit);
+
+            if (hasHit)
+            {
+                hitPoint = hit.point;
+                hitObjectName = hit.collider.gameObject.name;
+            }
+            else
+            {
+                hitPoint = Vector3.zero;
+                hitObjectName = "";
+            }
+        }
+
+        void UpdateProEyePupil()
+        {
+            float? left = LeftEyePupilSize();
+            float? right = RightEyePupilSize();
+
+            leftPupilSize = left ?? -1f;
+            rightPupilSize = right ?? -1f;
+
+            if (baselineInProgress)
+            {
+                if (left.HasValue)
+                    BaselinePupilStorage.Add(left.Value);
+
+                if (right.HasValue)
+                    BaselinePupilStorage.Add(right.Value);
+            }
+        }
+        private string CheckFocusedObject()
+        {
+
+            if (!SRanipal_Eye.Focus(GazeIndexInfo.COMBINE, out testRay, out focusInfo) &&
+                !SRanipal_Eye.Focus(GazeIndexInfo.LEFT, out testRay, out focusInfo) &&
+                !SRanipal_Eye.Focus(GazeIndexInfo.RIGHT, out testRay, out focusInfo))
+            {
+                return "," + "" + "," + "" + "," + "" + "," + "";
+            }
+
+            string focusedGameObject = focusInfo.collider.gameObject.name;
+            Vector3 gazeHitPoint = focusInfo.point;
+            return "," + gazeHitPoint.x + "," + gazeHitPoint.y + "," + gazeHitPoint.z + "," + focusedGameObject;
+        }
+
+                public float? LeftEyePupilSize() {
+            float value = verboseData.left.pupil_diameter_mm;
+            leftPupilSize = value;
+            return value < 0 ? (float?)null : value;
+        }
+
+        public float? RightEyePupilSize() {
+            float value = verboseData.right.pupil_diameter_mm;
+            rightPupilSize = value;
+            return value < 0 ? (float?)null : value;
         }
     }
 }
