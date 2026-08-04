@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+
 
 public class XRPokeSmoothScale : MonoBehaviour
 {
@@ -8,14 +8,14 @@ public class XRPokeSmoothScale : MonoBehaviour
 
     private Vector3 startScale;
     private Vector3 targetScale;
-    private XRSimpleInteractable interactable;
+    private UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable interactable;
 
     void Awake()
     {
         startScale = transform.localScale;
         targetScale = startScale;
 
-        interactable = GetComponent<XRSimpleInteractable>();
+        interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable>();
         interactable.selectEntered.AddListener(_ => Press());
         interactable.selectExited.AddListener(_ => Release());
     }

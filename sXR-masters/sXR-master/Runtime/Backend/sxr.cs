@@ -801,7 +801,7 @@ public static class sxr
                 physicsCollider = gameObject.AddComponent<BoxCollider>();
         }
 
-        physicsCollider.material = new PhysicMaterial {
+        physicsCollider.material = new PhysicsMaterial {
             bounciness = bounciness,
             staticFriction = staticFriction,
             dynamicFriction = dynamicFriction

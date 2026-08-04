@@ -1,5 +1,5 @@
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+
 using UnityEngine.XR.Interaction.Toolkit.Filtering;
 
 public class CustomPokeFilter : MonoBehaviour, IXRHoverFilter, IXRSelectFilter
@@ -12,7 +12,7 @@ public class CustomPokeFilter : MonoBehaviour, IXRHoverFilter, IXRSelectFilter
         if (pokeFilter == null)
             pokeFilter = GetComponent<XRPokeFilter>();
 
-        var interactable = GetComponent<XRBaseInteractable>();
+        var interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable>();
         if (interactable != null)
         {
             // Add ourselves as filters AFTER the poke filter
@@ -24,7 +24,7 @@ public class CustomPokeFilter : MonoBehaviour, IXRHoverFilter, IXRSelectFilter
 
     void OnDestroy()
     {
-        var interactable = GetComponent<XRBaseInteractable>();
+        var interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable>();
         if (interactable != null)
         {
             interactable.hoverFilters.Remove(this);
@@ -34,13 +34,13 @@ public class CustomPokeFilter : MonoBehaviour, IXRHoverFilter, IXRSelectFilter
 
     public bool canProcess => isActiveAndEnabled;
 
-    public bool Process(IXRHoverInteractor interactor, IXRHoverInteractable interactable)
+    public bool Process(UnityEngine.XR.Interaction.Toolkit.Interactors.IXRHoverInteractor interactor, UnityEngine.XR.Interaction.Toolkit.Interactables.IXRHoverInteractable interactable)
     {
-        return interactor is XRPokeInteractor;
+        return interactor is UnityEngine.XR.Interaction.Toolkit.Interactors.XRPokeInteractor;
     }
 
-    public bool Process(IXRSelectInteractor interactor, IXRSelectInteractable interactable)
+    public bool Process(UnityEngine.XR.Interaction.Toolkit.Interactors.IXRSelectInteractor interactor, UnityEngine.XR.Interaction.Toolkit.Interactables.IXRSelectInteractable interactable)
     {
-        return interactor is XRPokeInteractor;
+        return interactor is UnityEngine.XR.Interaction.Toolkit.Interactors.XRPokeInteractor;
     }
 }

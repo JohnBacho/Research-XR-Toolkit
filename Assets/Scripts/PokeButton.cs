@@ -7,7 +7,7 @@ using RXT;
 
 public class PokeButton : MonoBehaviour
 {
-    private XRSimpleInteractable interactable;
+    private UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable interactable;
     private bool hasTriggered = false;
 
     [Header("Button Events")]
@@ -21,7 +21,7 @@ public class PokeButton : MonoBehaviour
 
     void Awake()
     {
-        interactable = GetComponent<XRSimpleInteractable>();
+        interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable>();
         interactable.hoverEntered.AddListener(OnPokeEntered);
         interactable.hoverExited.AddListener(OnPokeExited);
     }
@@ -38,7 +38,7 @@ public class PokeButton : MonoBehaviour
     public void OnPokeEntered(HoverEnterEventArgs args)
     {
         if (!interactable.enabled) return;
-        if (args.interactorObject is XRPokeInteractor && !hasTriggered)
+        if (args.interactorObject is UnityEngine.XR.Interaction.Toolkit.Interactors.XRPokeInteractor && !hasTriggered)
         {
             if (IsUIButton)
             {
@@ -53,7 +53,7 @@ public class PokeButton : MonoBehaviour
     {
         if (!interactable.enabled) return;
 
-        if (args.interactorObject is XRPokeInteractor)
+        if (args.interactorObject is UnityEngine.XR.Interaction.Toolkit.Interactors.XRPokeInteractor)
         {
             onButtonReleased?.Invoke();
             hasTriggered = false;

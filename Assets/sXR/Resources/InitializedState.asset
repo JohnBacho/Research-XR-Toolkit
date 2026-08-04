@@ -11,5 +11,5 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b41a25fbfdde4eb6be473dec98012be6, type: 3}
   m_Name: InitializedState
-  m_EditorClassIdentifier: 
+  m_EditorClassIdentifier: com.simpleomnia.simplexr.Editor::sxr_internal.sXR_Initialized_State
   hasBeenInitialized: 1

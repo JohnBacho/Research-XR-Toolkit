@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.XR.Interaction.Toolkit;
+
 
 namespace sxr_internal
 {
@@ -79,8 +79,8 @@ namespace sxr_internal
             }
 
             activeLasers = true;
-            rightLaser.GetComponent<XRRayInteractor>().raycastMask |= (1 << LayerMask.NameToLayer("InteractiveUI"));
-            leftLaser.GetComponent<XRRayInteractor>().raycastMask |= (1 << LayerMask.NameToLayer("InteractiveUI"));
+            rightLaser.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor>().raycastMask |= (1 << LayerMask.NameToLayer("InteractiveUI"));
+            leftLaser.GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor>().raycastMask |= (1 << LayerMask.NameToLayer("InteractiveUI"));
 
         }
 

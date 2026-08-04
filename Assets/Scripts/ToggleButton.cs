@@ -8,7 +8,7 @@ using RXT;
 
 public class XRPokeToggleButton : MonoBehaviour
 {
-    private XRSimpleInteractable interactable;
+    private UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable interactable;
     private bool isToggled = false;
     private bool isInteractable = true;
     private bool stop = false;
@@ -37,7 +37,7 @@ public class XRPokeToggleButton : MonoBehaviour
 
     void Start()
     {
-        interactable = GetComponent<XRSimpleInteractable>();
+        interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable>();
         interactable.selectEntered.AddListener(OnPokeSelect);
 
         if (targetImage == null)
@@ -61,7 +61,7 @@ public class XRPokeToggleButton : MonoBehaviour
         if (Time.time - lastInteractionTime < cooldownTime)
             return;
 
-        if (args.interactorObject is XRPokeInteractor)
+        if (args.interactorObject is UnityEngine.XR.Interaction.Toolkit.Interactors.XRPokeInteractor)
         {
             lastInteractionTime = Time.time;
             isToggled = !isToggled;

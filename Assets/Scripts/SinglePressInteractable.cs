@@ -4,7 +4,7 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class SinglePressInteractable : MonoBehaviour
 {
-    private XRSimpleInteractable interactable;
+    private UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable interactable;
     private float lastActivationTime = -999f;
     [SerializeField] private float cooldownTime = .7f; // 1 second cooldown for poke
     
@@ -12,7 +12,7 @@ public class SinglePressInteractable : MonoBehaviour
 
     void Start()
     {
-        interactable = GetComponent<XRSimpleInteractable>();
+        interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRSimpleInteractable>();
         interactable.selectEntered.AddListener(OnSelectEntered);
     }
 

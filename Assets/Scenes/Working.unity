@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,13 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.12731713, g: 0.13414738, b: 0.121078536, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
-  m_GIWorkflowMode: 1
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -94,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: a3ae8d0b1761e714d96b4d94f5328aff, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: d1b4122e26836434eba8dbb7e3c9e24c, type: 2}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -228,20 +227,23 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 5
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -279,6 +281,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -300,9 +307,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &76538108
 GameObject:
@@ -399,20 +408,23 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -450,6 +462,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -471,9 +488,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &88823446
 GameObject:
@@ -513,6 +532,84 @@ Transform:
   - {fileID: 1455072216}
   m_Father: {fileID: 1970160397}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &96598135
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 2402321898755550532, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_ActiveFontFeatures.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520260461726346329, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_Name
+      value: RXT_prefab
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520260461726346330, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 2.229
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520260461726346330, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.6192
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520260461726346330, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.133
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520260461726346330, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520260461726346330, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520260461726346330, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520260461726346330, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520260461726346330, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520260461726346330, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7520260461726346330, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7650382977918531297, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_ActiveFontFeatures.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972218205468639694, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_ActiveFontFeatures.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7972218206510336973, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_ActiveFontFeatures.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8148727083180701293, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: m_ActiveFontFeatures.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 1658465052825462835, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
 --- !u!1 &113710534 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4922582553321831162, guid: 76f3439a0ae796e4b81bee3f91f888ee, type: 3}
@@ -674,6 +771,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -695,9 +797,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &120082393
 MeshFilter:
@@ -839,6 +943,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -860,9 +969,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &177096600
 MeshFilter:
@@ -1209,6 +1320,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1230,9 +1346,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!114 &186654300
 MonoBehaviour:
@@ -1292,20 +1410,23 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -1421,20 +1542,23 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 3.3
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -1472,6 +1596,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1493,9 +1622,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1001 &246862861
 PrefabInstance:
@@ -1573,6 +1704,14 @@ PrefabInstance:
       propertyPath: m_AngularDrag
       value: 800
       objectReference: {fileID: 0}
+    - target: {fileID: 1126718956086362698, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
+      propertyPath: m_LinearDamping
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 1126718956086362698, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
+      propertyPath: m_AngularDamping
+      value: 800
+      objectReference: {fileID: 0}
     - target: {fileID: 1198603461989738600, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -1581,6 +1720,10 @@ PrefabInstance:
       propertyPath: m_Volume
       value: 0.75
       objectReference: {fileID: 0}
+    - target: {fileID: 1440299432236639541, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 2e485137061b5c045b3ff068f8c8f33d, type: 3}
     - target: {fileID: 1440299432236639541, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: MaxDistance
       value: 7
@@ -1592,7 +1735,7 @@ PrefabInstance:
     - target: {fileID: 1440299432236639541, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 2e485137061b5c045b3ff068f8c8f33d, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 1440299432236639541, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 1
@@ -1687,7 +1830,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2930676291222295015, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.14
+      value: -0.447
       objectReference: {fileID: 0}
     - target: {fileID: 2930676291222295015, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1797,6 +1940,10 @@ PrefabInstance:
       propertyPath: m_HorizontalAlignment
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 4181120595086301118, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
+      propertyPath: 'm_ActiveFontFeatures.Array.data[0]'
+      value: 1801810542
+      objectReference: {fileID: 0}
     - target: {fileID: 4191160155894840077, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: m_Layer
       value: 0
@@ -1851,12 +1998,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4735753089168445294, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4851825857746216352, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: m_Volume
       value: 0.75
       objectReference: {fileID: 0}
+    - target: {fileID: 4851825857746216352, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 2e485137061b5c045b3ff068f8c8f33d, type: 3}
     - target: {fileID: 4851825857746216352, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: MaxDistance
       value: 7
@@ -1868,7 +2019,7 @@ PrefabInstance:
     - target: {fileID: 4851825857746216352, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 2e485137061b5c045b3ff068f8c8f33d, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 4851825857746216352, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 1
@@ -1902,6 +2053,10 @@ PrefabInstance:
       value: 0.75
       objectReference: {fileID: 0}
     - target: {fileID: 5756226924908389204, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 8300000, guid: 2e485137061b5c045b3ff068f8c8f33d, type: 3}
+    - target: {fileID: 5756226924908389204, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: MaxDistance
       value: 7
       objectReference: {fileID: 0}
@@ -1912,7 +2067,7 @@ PrefabInstance:
     - target: {fileID: 5756226924908389204, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: m_audioClip
       value: 
-      objectReference: {fileID: 8300000, guid: 2e485137061b5c045b3ff068f8c8f33d, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 5756226924908389204, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       propertyPath: panLevelCustomCurve.m_Curve.Array.data[0].value
       value: 1
@@ -2119,7 +2274,10 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 8823499593277214084, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
       insertIndex: 4
       addedObject: {fileID: 794404578}
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9196584345299264884, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 0}
   m_SourcePrefab: {fileID: 100100000, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
 --- !u!4 &246862862 stripped
 Transform:
@@ -2160,374 +2318,6 @@ Transform:
   - {fileID: 1289879961}
   m_Father: {fileID: 1607877861}
   m_LocalEulerAnglesHint: {x: 0, y: 30, z: 0}
---- !u!1 &395736937
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 395736938}
-  - component: {fileID: 395736941}
-  - component: {fileID: 395736940}
-  - component: {fileID: 395736939}
-  - component: {fileID: 395736942}
-  m_Layer: 0
-  m_Name: rxtBackend
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &395736938
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395736937}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1522388346}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &395736939
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395736937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b06f26a652a44f645a7f7c2066389f31, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &395736940
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395736937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 84ddb96c7eb9b54499f1c3362bd3f525, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioClips:
-  - AudioName: uiButton
-    clip: {fileID: 8300000, guid: 7c941ae367aae334c97c5341170d7127, type: 3}
-  - AudioName: SlotMachine
-    clip: {fileID: 8300000, guid: 37d2a58b364d0f5438b106cfbd99755e, type: 3}
-  - AudioName: Error
-    clip: {fileID: 8300000, guid: 882a3bcc555dc134d9add685b44a2614, type: 3}
-  - AudioName: button
-    clip: {fileID: 8300000, guid: 0c4c6d56fb4cbe24c80734c08db8fac4, type: 3}
-  - AudioName: button2
-    clip: {fileID: 8300000, guid: 0c4c6d56fb4cbe24c80734c08db8fac4, type: 3}
-  - AudioName: Lever
-    clip: {fileID: 8300000, guid: 9d369b1bed327164095e44cf1788fc73, type: 3}
-  - AudioName: Sucess
-    clip: {fileID: 8300000, guid: 7130cd99571a52f4c97961d7a8ead95c, type: 3}
-  - AudioName: Suspense
-    clip: {fileID: 8300000, guid: c4fea1354502e4a4a931eb15b8c7e696, type: 3}
-  - AudioName: GamePoint
-    clip: {fileID: 8300000, guid: e4142312b979bb5448af861bdaaa712d, type: 3}
-  audioPrefab: {fileID: 4772951797532029414, guid: 6a6ed095c54e99a4f8340a43c8cdf6d4, type: 3}
---- !u!114 &395736941
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395736937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a00d0dbfe6a666243b767de9148d13fe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  IsViveFocusVision: 0
-  DownloadPath: Data
-  BackupDownloadPath: sdcard
-  FocusDownloadPath: /sdcard2
-  FocusBackupDownloadPath: /sdcard
-  RunOnStartup: 1
-  GenerateTrialSummaryFile: 1
-  GenerateEventSummaryFile: 1
-  RecaptureBaselineOnTrialChange: 0
-  BasicData:
-    Enabled: 1
-    Channels:
-    - DataField: SubjectID
-      Header: SubjectID
-      Toggle: 1
-    - DataField: Date
-      Header: Date
-      Toggle: 1
-    - DataField: LocalTime
-      Header: LocalTime
-      Toggle: 1
-    - DataField: UnityTime
-      Header: UnityTime
-      Toggle: 1
-    - DataField: Phase
-      Header: Phase
-      Toggle: 1
-    - DataField: Trial
-      Header: Trial
-      Toggle: 1
-    - DataField: Step
-      Header: Step
-      Toggle: 1
-    - DataField: TrialTimePassed
-      Header: TrialTimePassed
-      Toggle: 1
-    - DataField: State
-      Header: State
-      Toggle: 1
-  CameraTracking:
-    Enabled: 1
-    Channels:
-    - DataField: xPos
-      Header: xPos
-      Toggle: 1
-    - DataField: yPos
-      Header: yPos
-      Toggle: 1
-    - DataField: zPos
-      Header: zPos
-      Toggle: 1
-    - DataField: xRot
-      Header: xRot
-      Toggle: 1
-    - DataField: yRot
-      Header: yRot
-      Toggle: 1
-    - DataField: zRot
-      Header: zRot
-      Toggle: 1
-  EyeTracking:
-    Enabled: 1
-    Channels:
-    - DataField: gazeOriginX
-      Header: gazeOriginX
-      Toggle: 1
-    - DataField: gazeOriginY
-      Header: gazeOriginY
-      Toggle: 1
-    - DataField: gazeOriginZ
-      Header: gazeOriginZ
-      Toggle: 1
-    - DataField: gazeDirectionX
-      Header: gazeDirectionX
-      Toggle: 1
-    - DataField: gazeDirectionY
-      Header: gazeDirectionY
-      Toggle: 1
-    - DataField: gazeDirectionZ
-      Header: gazeDirectionZ
-      Toggle: 1
-    - DataField: leftPupil
-      Header: leftPupil
-      Toggle: 1
-    - DataField: rightPupil
-      Header: rightPupil
-      Toggle: 1
-    - DataField: combinedPupil
-      Header: combinedPupil
-      Toggle: 1
-    - DataField: baselineCorrected
-      Header: baselineCorrected
-      Toggle: 1
-    - DataField: hitX
-      Header: hitX
-      Toggle: 1
-    - DataField: hitY
-      Header: hitY
-      Toggle: 1
-    - DataField: hitZ
-      Header: hitZ
-      Toggle: 1
-    - DataField: objectName
-      Header: objectName
-      Toggle: 1
-  EyeExpressions:
-    Enabled: 1
-    Channels:
-    - DataField: EYE_EXPRESSION_LEFT_BLINK_HTC
-      Header: EYE_EXPRESSION_LEFT_BLINK_HTC
-      Toggle: 1
-    - DataField: EYE_EXPRESSION_LEFT_WIDE_HTC
-      Header: EYE_EXPRESSION_LEFT_WIDE_HTC
-      Toggle: 1
-    - DataField: EYE_EXPRESSION_RIGHT_BLINK_HTC
-      Header: EYE_EXPRESSION_RIGHT_BLINK_HTC
-      Toggle: 1
-    - DataField: EYE_EXPRESSION_RIGHT_WIDE_HTC
-      Header: EYE_EXPRESSION_RIGHT_WIDE_HTC
-      Toggle: 1
-    - DataField: EYE_EXPRESSION_LEFT_SQUEEZE_HTC
-      Header: EYE_EXPRESSION_LEFT_SQUEEZE_HTC
-      Toggle: 1
-    - DataField: EYE_EXPRESSION_RIGHT_SQUEEZE_HTC
-      Header: EYE_EXPRESSION_RIGHT_SQUEEZE_HTC
-      Toggle: 1
-    - DataField: EYE_EXPRESSION_LEFT_DOWN_HTC
-      Header: EYE_EXPRESSION_LEFT_DOWN_HTC
-      Toggle: 1
-    - DataField: EYE_EXPRESSION_RIGHT_DOWN_HTC
-      Header: EYE_EXPRESSION_RIGHT_DOWN_HTC
-      Toggle: 1
-    - DataField: EYE_EXPRESSION_LEFT_OUT_HTC
-      Header: EYE_EXPRESSION_LEFT_OUT_HTC
-      Toggle: 1
-    - DataField: EYE_EXPRESSION_RIGHT_IN_HTC
-      Header: EYE_EXPRESSION_RIGHT_IN_HTC
-      Toggle: 1
-    - DataField: EYE_EXPRESSION_LEFT_IN_HTC
-      Header: EYE_EXPRESSION_LEFT_IN_HTC
-      Toggle: 1
-    - DataField: EYE_EXPRESSION_RIGHT_OUT_HTC
-      Header: EYE_EXPRESSION_RIGHT_OUT_HTC
-      Toggle: 1
-    - DataField: EYE_EXPRESSION_LEFT_UP_HTC
-      Header: EYE_EXPRESSION_LEFT_UP_HTC
-      Toggle: 1
-    - DataField: EYE_EXPRESSION_RIGHT_UP_HTC
-      Header: EYE_EXPRESSION_RIGHT_UP_HTC
-      Toggle: 1
-  FacialExpressions:
-    Enabled: 1
-    Channels:
-    - DataField: XR_LIP_EXPRESSION_JAW_RIGHT_HTC
-      Header: XR_LIP_EXPRESSION_JAW_RIGHT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_JAW_LEFT_HTC
-      Header: XR_LIP_EXPRESSION_JAW_LEFT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_JAW_FORWARD_HTC
-      Header: XR_LIP_EXPRESSION_JAW_FORWARD_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_JAW_OPEN_HTC
-      Header: XR_LIP_EXPRESSION_JAW_OPEN_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_APE_SHAPE_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_APE_SHAPE_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_UPPER_RIGHT_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_UPPER_RIGHT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_UPPER_LEFT_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_UPPER_LEFT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_LOWER_RIGHT_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_LOWER_RIGHT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_LOWER_LEFT_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_LOWER_LEFT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_UPPER_OVERTURN_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_UPPER_OVERTURN_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_LOWER_OVERTURN_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_LOWER_OVERTURN_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_POUT_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_POUT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_RAISER_RIGHT_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_RAISER_RIGHT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_RAISER_LEFT_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_RAISER_LEFT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_STRETCHER_RIGHT_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_STRETCHER_RIGHT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_STRETCHER_LEFT_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_STRETCHER_LEFT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_CHEEK_PUFF_RIGHT_HTC
-      Header: XR_LIP_EXPRESSION_CHEEK_PUFF_RIGHT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_CHEEK_PUFF_LEFT_HTC
-      Header: XR_LIP_EXPRESSION_CHEEK_PUFF_LEFT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_CHEEK_SUCK_HTC
-      Header: XR_LIP_EXPRESSION_CHEEK_SUCK_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_UPPER_UPRIGHT_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_UPPER_UPRIGHT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_UPPER_UPLEFT_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_UPPER_UPLEFT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_LOWER_DOWNRIGHT_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_LOWER_DOWNRIGHT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_LOWER_DOWNLEFT_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_LOWER_DOWNLEFT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_UPPER_INSIDE_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_UPPER_INSIDE_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_LOWER_INSIDE_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_LOWER_INSIDE_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_MOUTH_LOWER_OVERLAY_HTC
-      Header: XR_LIP_EXPRESSION_MOUTH_LOWER_OVERLAY_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_TONGUE_LONGSTEP1_HTC
-      Header: XR_LIP_EXPRESSION_TONGUE_LONGSTEP1_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_TONGUE_LEFT_HTC
-      Header: XR_LIP_EXPRESSION_TONGUE_LEFT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_TONGUE_RIGHT_HTC
-      Header: XR_LIP_EXPRESSION_TONGUE_RIGHT_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_TONGUE_UP_HTC
-      Header: XR_LIP_EXPRESSION_TONGUE_UP_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_TONGUE_DOWN_HTC
-      Header: XR_LIP_EXPRESSION_TONGUE_DOWN_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_TONGUE_ROLL_HTC
-      Header: XR_LIP_EXPRESSION_TONGUE_ROLL_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_TONGUE_LONGSTEP2_HTC
-      Header: XR_LIP_EXPRESSION_TONGUE_LONGSTEP2_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_TONGUE_UPRIGHT_MORPH_HTC
-      Header: XR_LIP_EXPRESSION_TONGUE_UPRIGHT_MORPH_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_TONGUE_UPLEFT_MORPH_HTC
-      Header: XR_LIP_EXPRESSION_TONGUE_UPLEFT_MORPH_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_TONGUE_DOWNRIGHT_MORPH_HTC
-      Header: XR_LIP_EXPRESSION_TONGUE_DOWNRIGHT_MORPH_HTC
-      Toggle: 1
-    - DataField: XR_LIP_EXPRESSION_TONGUE_DOWNLEFT_MORPH_HTC
-      Header: XR_LIP_EXPRESSION_TONGUE_DOWNLEFT_MORPH_HTC
-      Toggle: 1
-  SimulateEyeTracking: 1
---- !u!114 &395736942
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 395736937}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a5a0585f276e47b46be3319f5c8cb7ca, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &428155926 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2549993465544934099, guid: ee10902f936fcae41a04432dd2e0aacd, type: 3}
@@ -2892,6 +2682,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2913,9 +2708,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &655699598
 MeshFilter:
@@ -3035,20 +2832,23 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -3086,6 +2886,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3107,9 +2912,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &794404577
 GameObject:
@@ -3183,6 +2990,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3204,9 +3016,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &794404581
 MeshFilter:
@@ -3311,20 +3125,23 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -3362,6 +3179,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3383,9 +3205,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!4 &849091839 stripped
 Transform:
@@ -3447,6 +3271,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3468,9 +3297,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1049163306
 MeshFilter:
@@ -3575,20 +3406,23 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -3626,6 +3460,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3647,9 +3486,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1103930879
 GameObject:
@@ -3746,20 +3587,23 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -3797,6 +3641,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3818,9 +3667,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1121958443
 GameObject:
@@ -3950,20 +3801,23 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -4001,6 +3855,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4022,9 +3881,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1222023771
 GameObject:
@@ -4132,6 +3993,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4153,9 +4019,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1280227689
 MeshFilter:
@@ -4311,20 +4179,23 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -4362,6 +4233,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4383,9 +4259,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1323040613
 GameObject:
@@ -4482,20 +4360,23 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -4533,6 +4414,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4554,9 +4440,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1001 &1342004913
 PrefabInstance:
@@ -4814,6 +4702,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -4835,9 +4728,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1411188309
 MeshFilter:
@@ -5220,11 +5115,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e31fdca2c82f9ef4ab4ec9420f9e89f2, type: 3}
---- !u!4 &1522388346 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5942024395600642694, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-  m_PrefabInstance: {fileID: 6314304488671380585}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1534885863
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5479,6 +5369,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5500,9 +5395,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1632042490
 MeshFilter:
@@ -5741,20 +5638,23 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -5792,6 +5692,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5813,9 +5718,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1759489795
 GameObject:
@@ -5889,6 +5796,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -5910,9 +5822,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1759489799
 MeshFilter:
@@ -6017,20 +5931,23 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 0
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -6068,6 +5985,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6089,9 +6011,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1801627107
 GameObject:
@@ -6166,6 +6090,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6187,9 +6116,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1801627111
 MeshFilter:
@@ -6271,6 +6202,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6292,9 +6228,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1866859019
 MeshFilter:
@@ -6385,6 +6323,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6406,9 +6349,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1896585632
 MeshFilter:
@@ -6490,6 +6435,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6511,9 +6461,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1910058152
 MeshFilter:
@@ -6573,6 +6525,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6594,9 +6551,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!33 &1918427790
 MeshFilter:
@@ -6770,20 +6729,23 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 6e72656b
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -6821,6 +6783,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -6842,9 +6809,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &1970160395
 GameObject:
@@ -6930,7 +6899,8 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: bf1718264393e2f42b894315330bd624, type: 3}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 8300000, guid: bf1718264393e2f42b894315330bd624, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 0.8
   m_Pitch: 1
@@ -7111,20 +7081,23 @@ MonoBehaviour:
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -7162,6 +7135,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -7183,9 +7161,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!1 &2064185491
 GameObject:
@@ -7282,20 +7262,23 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
+  m_characterHorizontalScale: 1
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_enableWordWrapping: 1
+  m_TextWrappingMode: 1
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
+  m_ActiveFontFeatures: 00000000
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
+  m_EmojiFallbackSupport: 1
   m_parseCtrlCharacters: 1
   m_isOrthographic: 0
   m_isCullingEnabled: 0
@@ -7333,6 +7316,11 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
+  m_SmallMeshCulling: 1
+  m_ForceMeshLod: -1
+  m_MeshLodSelectionBias: 0
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -7354,9 +7342,11 @@ MeshRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
+  m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+  m_MaskInteraction: 0
   m_AdditionalVertexStreams: {fileID: 0}
 --- !u!4 &2080513141 stripped
 Transform:
@@ -7394,203 +7384,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1001 &6314304488671380585
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 16186673307562087, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 1655703816319797520, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 2603460925423916708, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 2801252303875859122, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 3137205616889570617, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3360373491172048402, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3399050071955168615, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 4274412723539295910, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 4510259342699626576, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 4720977080666306751, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 5509152587099309873, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 5764998799649208035, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942024395600642693, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_Name
-      value: sXR_prefab
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942024395600642693, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942024395600642694, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 2.308
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942024395600642694, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942024395600642694, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942024395600642694, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942024395600642694, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942024395600642694, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942024395600642694, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942024395600642694, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942024395600642694, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5942024395600642694, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5975749475294738323, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 6179386430843218810, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 6200571278304470865, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 6552125529242596653, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 6685462794939441667, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7062432555479266393, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8203719064038667527, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: cameraSpawnPoint
-      value: 
-      objectReference: {fileID: 2110663370}
-    - target: {fileID: 8226478674542204276, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: inputText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8226478674542204276, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: buttonText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8226478674542204276, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: scrollText
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8226478674542204276, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: inputSlider
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8226478674542204276, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: inputWindow
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8226478674542204276, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: scrollTitle
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8226478674542204276, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: scrollObject
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8226478674542204276, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: submitButton
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8226478674542204276, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: inputDropdown
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8226478674542204276, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: interactiveUI
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 8291483258750112650, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 8513777265127588982, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531427315612427209, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    - target: {fileID: 8531427315939631926, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      propertyPath: m_TagString
-      value: GameController
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 2372602584980056643, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 5942024395600642694, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 395736938}
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 0ab7aae56dcde6e4890b56db83ea690f, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -7598,5 +7391,5 @@ SceneRoots:
   - {fileID: 1970160397}
   - {fileID: 2110663370}
   - {fileID: 655699599}
-  - {fileID: 6314304488671380585}
   - {fileID: 246862861}
+  - {fileID: 96598135}
