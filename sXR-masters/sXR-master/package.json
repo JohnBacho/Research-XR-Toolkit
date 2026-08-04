@@ -34,11 +34,6 @@
       "displayName": "Shader Sample",
       "description": "A sample scene showing how to implement shaders with sXR.",
       "path": "Samples~/ShadersSample"
-    },
-    {
-      "displayName": "AR Sample",
-      "description": "A sample scene showing how to set up camera passthrough. Requires SteamVR package",
-      "path": "Samples~/AugmentedReality"
     }
   ],
   "keywords": [
