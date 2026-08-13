@@ -976,7 +976,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 697777116264440785, guid: 34c12b16e3cad5542bd2d6f0a98ee900, type: 3}
       propertyPath: m_Name
-      value: sXR_prefab
+      value: RXT_prefab
       objectReference: {fileID: 0}
     - target: {fileID: 697777116264440785, guid: 34c12b16e3cad5542bd2d6f0a98ee900, type: 3}
       propertyPath: m_IsActive

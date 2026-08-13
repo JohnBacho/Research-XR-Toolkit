@@ -770,6 +770,27 @@ namespace RXT
 
         void UpdateProEyePupil()
         {
+            
+            if (SimulateEyeTracking)
+            {
+                float noiseL = UnityEngine.Random.Range(-simulatedNoise, simulatedNoise);
+                float noiseR = UnityEngine.Random.Range(-simulatedNoise, simulatedNoise);
+
+                float wave = Mathf.Sin(Time.time * 2f) * simulatedAmplitude;
+
+                leftPupilSize = simulatedBaseline + wave + noiseL;
+                rightPupilSize = simulatedBaseline + wave + noiseR;
+
+
+                if (baselineInProgress)
+                {
+                    BaselinePupilStorage.Add(leftPupilSize);
+                    BaselinePupilStorage.Add(rightPupilSize);
+                }
+
+                return;
+            }
+            
             float? left = LeftEyePupilSize();
             float? right = RightEyePupilSize();
 

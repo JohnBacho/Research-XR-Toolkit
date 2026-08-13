@@ -544,6 +544,10 @@ PrefabInstance:
       propertyPath: m_ActiveFontFeatures.Array.size
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6305930038107483779, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: cameraSpawnPoint
+      value: 
+      objectReference: {fileID: 2110663370}
     - target: {fileID: 7520260461726346329, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
       propertyPath: m_Name
       value: RXT_prefab
@@ -602,6 +606,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8148727083180701293, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
       propertyPath: m_ActiveFontFeatures.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9062446106574189862, guid: 30b6ff1a36b7bd5428d2ee1d716d1ee8, type: 3}
+      propertyPath: fixedVerticalHeadRotation
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -6888,7 +6896,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc04ca3376ea74d4bbbeeab8509b4917, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  trialInterval: 5
+  baselineDuration: 2
+  eventSummaryDuration: 2
+  delayBetweenTrials: 3
+  conditions:
+  - Control
+  - Condition A
+  - Condition B
 --- !u!82 &1970160414
 AudioSource:
   m_ObjectHideFlags: 0
@@ -7378,7 +7392,7 @@ Transform:
   m_GameObject: {fileID: 2110663369}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.337, y: 0.992, z: -1.0017784}
+  m_LocalPosition: {x: 2.245, y: 0.732, z: -2.098}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
