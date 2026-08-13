@@ -14,35 +14,47 @@ Research XR Toolkit (RXT) was created to eliminate the repetitive work involved 
 
 Instead of writing custom scripts every time you need to:
 
-- Record participant data
-- Save eye tracking
-- Capture facial expressions
-- Generate CSV files
-- Randomize trials
-- Manage participant IDs
-- Play audio
-- Trigger haptics
+* Record participant data
+* Save eye tracking
+* Capture facial expressions
+* Generate CSV files
+* Randomize trials
+* Manage participant IDs
+* Play audio
+* Trigger haptics
 
 RXT provides a single API that handles these tasks automatically so researchers can focus on designing experiments rather than infrastructure.
+
+RXT builds on top of [SXR](https://github.com/simpleOmnia/sXR).
+
+---
+
+# Walkthrough
+
+Check out the walkthrough video to see RXT in action and learn how the toolkit can be used to build and manage VR research experiments.
+
+[![RXT Walkthrough](https://img.youtube.com/vi/-x7reIK7L5E/maxresdefault.jpg)](https://youtu.be/-x7reIK7L5E)
+
+**[Watch the RXT Walkthrough on YouTube](https://youtu.be/-x7reIK7L5E)**
 
 ---
 
 # Features
 
-- ✅ Automatic CSV data collection
-- ✅ HTC Vive Focus Vision Support
-- ✅ HTC Vive Pro Eye Support
-- ✅ Eye Tracking
-- ✅ Facial Tracking
-- ✅ Camera Tracking
-- ✅ Baseline Corrected Pupil Diameter
-- ✅ Trial Summary Generation
-- ✅ Timed Event Summary Generation
-- ✅ Audio Manager
-- ✅ Randomization Utilities
-- ✅ Latin Square Generation
-- ✅ Haptic Feedback
-- ✅ Participant ID Management
+* ✅ Automatic CSV data collection
+* ✅ HTC Vive Focus Vision Support
+* ✅ HTC Vive Pro Eye Support
+* ✅ Eye Tracking
+* ✅ Facial Tracking
+* ✅ Camera Tracking
+* ✅ Baseline Corrected Pupil Diameter
+* ✅ Trial Summary Generation
+* ✅ Timed Event Summary Generation
+* ✅ Audio Manager
+* ✅ Randomization Utilities
+* ✅ Latin Square Generation
+* ✅ Haptic Feedback
+* ✅ Participant ID Management
 
 ---
 
@@ -52,10 +64,10 @@ Research XR Toolkit is distributed as a complete Unity project rather than a Uni
 
 ## Requirements
 
-- Unity **6**
-- Git
-- HTC OpenXR Plugin
-- SXR (included in this repository)
+* Unity **6**
+* Git
+* HTC OpenXR Plugin
+* SXR (included in this repository)
 
 ## Installation
 
@@ -69,7 +81,7 @@ Open **Unity Hub**.
 
 Select
 
-```
+```text
 Add → Add project from disk
 ```
 
@@ -83,27 +95,27 @@ Once the project finishes importing, open the sample scene or begin building you
 
 ## Built on SXR
 
-RXT is built on top of the **Simple XR (SXR)** framework developed by Justin Kasowski.
+RXT is built on top of the **[Simple XR (SXR)](https://github.com/simpleOmnia/sXR)** framework developed by Justin Kasowski.
 
 SXR provides the core experiment framework including:
 
-- Experiment state management
-- Trial management
-- Phase management
-- Step management
-- Timing utilities
+* Experiment state management
+* Trial management
+* Phase management
+* Step management
+* Timing utilities
 
 RXT extends SXR by adding:
 
-- Automatic data collection
-- Eye tracking
-- Facial tracking
-- Trial summaries
-- Event summaries
-- Audio utilities
-- Haptics
-- Randomization utilities
-- Participant management
+* Automatic data collection
+* Eye tracking
+* Facial tracking
+* Trial summaries
+* Event summaries
+* Audio utilities
+* Haptics
+* Randomization utilities
+* Participant management
 
 Rather than replacing SXR, RXT expands it into a complete research toolkit.
 
@@ -117,7 +129,7 @@ Unlike many research frameworks that require manually constructing CSV files, RX
 
 Each participant receives their own folder:
 
-```
+```text
 001/
 
     Data_2026-08-04_14-52-33.csv
@@ -137,7 +149,7 @@ The toolkit can automatically record:
 
 ### Basic Experiment Information
 
-```
+```text
 SubjectID
 Date
 Time
@@ -152,7 +164,7 @@ Unity Time
 
 ### Camera Tracking
 
-```
+```text
 Position X
 Position Y
 Position Z
@@ -166,7 +178,7 @@ Rotation Z
 
 ### Eye Tracking
 
-```
+```text
 Combined Gaze Origin
 
 Combined Gaze Direction
@@ -190,7 +202,7 @@ Hit Position
 
 All HTC OpenXR Eye Expression blendshapes including:
 
-```
+```text
 Blink
 Wide
 Squeeze
@@ -206,7 +218,7 @@ Right
 
 Every HTC Lip Expression value including:
 
-```
+```text
 Jaw
 Cheeks
 Tongue
@@ -230,7 +242,7 @@ Individual variables can also be toggled.
 
 For example:
 
-```
+```text
 ☑ Camera Position
 
 ☐ Camera Rotation
@@ -262,11 +274,11 @@ rxt.PauseRecording();
 
 The toolkit automatically:
 
-- creates headers
-- writes data every frame
-- buffers writes for performance
-- flushes data to disk
-- safely closes files when the application exits
+* creates headers
+* writes data every frame
+* buffers writes for performance
+* flushes data to disk
+* safely closes files when the application exits
 
 ---
 
@@ -278,7 +290,7 @@ Instead they need a single average value for an entire trial.
 
 Enable:
 
-```
+```text
 Generate Trial Summary File
 ```
 
@@ -286,7 +298,7 @@ RXT will automatically average every numeric value over the duration of the tria
 
 Example:
 
-```
+```text
 Trial
 
 Average Pupil Diameter
@@ -310,10 +322,10 @@ No additional scripting is required.
 
 Researchers often need to summarize a short event such as:
 
-- watching a stimulus
-- solving a puzzle
-- pressing a button
-- viewing an image
+* watching a stimulus
+* solving a puzzle
+* pressing a button
+* viewing an image
 
 Instead of averaging an entire trial, RXT can average only a timed section.
 
@@ -327,7 +339,7 @@ This records data for five seconds.
 
 When the timer ends, RXT automatically writes one summarized row into:
 
-```
+```text
 EventSummary.csv
 ```
 
@@ -355,7 +367,7 @@ RXT stores pupil values for two seconds.
 
 Afterward every recorded pupil diameter includes:
 
-```
+```text
 Current Pupil
 
 Baseline
@@ -363,7 +375,7 @@ Baseline
 Baseline Corrected Pupil
 ```
 
-```
+```text
 Corrected = Current - Baseline
 ```
 
@@ -467,8 +479,8 @@ rxt.TriggerHaptic(
 
 Current support includes:
 
-- HTC Vive Focus Vision
-- HTC Vive Pro Eye
+* HTC Vive Focus Vision
+* HTC Vive Pro Eye
 
 The toolkit automatically switches between supported eye tracking systems depending on the selected headset.
 
@@ -480,10 +492,10 @@ The data collection system was designed specifically for research.
 
 Rather than writing directly to disk every frame, RXT:
 
-- Buffers CSV output
-- Batches file writes
-- Periodically flushes to disk
-- Safely closes streams when the application exits
+* Buffers CSV output
+* Batches file writes
+* Periodically flushes to disk
+* Safely closes streams when the application exits
 
 This minimizes disk overhead while maintaining data integrity.
 
@@ -495,7 +507,7 @@ This minimizes disk overhead while maintaining data integrity.
 
 John Bacho
 
-📧 bachojohn2@gmail.com
+📧 [bachojohn2@gmail.com](mailto:bachojohn2@gmail.com)
 
 **Faculty Advisor**
 
