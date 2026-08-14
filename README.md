@@ -66,7 +66,7 @@ Research XR Toolkit is distributed as a complete Unity project rather than a Uni
 
 * Unity **6**
 * Git
-* HTC OpenXR Plugin
+* HTC OpenXR Plugin (included in this repository)
 * SXR (included in this repository)
 
 ## Installation
@@ -500,6 +500,72 @@ Rather than writing directly to disk every frame, RXT:
 This minimizes disk overhead while maintaining data integrity.
 
 ---
+## Building RXT
+
+RXT can be built for either **PC VR using the HTC Vive Pro Eye** or **Android using the HTC Vive Focus Vision**. The build process differs depending on the target headset.
+
+### PC / HTC Vive Pro Eye
+
+The Vive Pro Eye uses a PC-based VR workflow.
+
+1. Open the RXT project in **Unity 6**.
+2. Open:
+
+```text
+File → Build Profiles
+```
+
+3. Select **Windows** as the target platform.
+4. Make sure the required RXT scenes are included in the build.
+5. Select **Build**.
+6. Choose an output folder for the application.
+7. Run the generated `.exe` on the research computer.
+8. Connect the **HTC Vive Pro Eye** to the computer and ensure the required HTC/VIVE software is running.
+9. Launch the RXT application.
+
+The experiment runs directly on the PC while the Vive Pro Eye provides the VR display and eye-tracking data.
+
+---
+
+### Android / HTC Vive Focus Vision
+
+The Vive Focus Vision uses an Android-based build.
+
+Before building, install and configure the required Android development tools and make sure **ADB** is available.
+
+1. Open the RXT project in **Unity 6**.
+2. Open:
+
+```text
+File → Build Profiles
+```
+
+3. Select **Android** as the target platform.
+4. Connect the **HTC Vive Focus Vision** to the development computer.
+5. Enable USB debugging on the headset if prompted.
+6. Verify that the headset is detected through ADB.
+7. Make sure the required RXT scenes are included in the build.
+8. Configure the Android build settings for the Focus Vision.
+9. Select **Build And Run**.
+10. Unity will build the Android application and deploy it to the connected headset.
+
+The resulting application runs on the Focus Vision as an Android application.
+
+### Build Targets
+
+| Target        | Unity Platform | Headset               | Build Output |
+| ------------- | -------------- | --------------------- | ------------ |
+| PC VR         | Windows        | HTC Vive Pro Eye      | `.exe`       |
+| Standalone VR | Android        | HTC Vive Focus Vision | `.apk`       |
+
+### Important
+
+The two headsets require different build targets. **Do not build the Focus Vision application using the Windows target**, or build the Vive Pro Eye application using the Android target.
+
+For the Vive Pro Eye, build for **Windows**.
+
+For the Vive Focus Vision, build for **Android** and use **ADB** to deploy the application to the headset.
+
 
 # Contact
 
